@@ -2,4 +2,4 @@
 ##用go语言写的im
 
 #一.项目架构
-[iamge] (https://github.com/andwang130/ZQim/images/067ba378ece525cef97cc82d84369d1.png)
+![iamge]（https://github.com/andwang130/ZQim/blob/master/images/067ba378ece525cef97cc82d84369d1.png)
