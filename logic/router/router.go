@@ -14,11 +14,11 @@ func init()  {
 	Route.POST("/login", handles.Login)
 	Route.POST("/register", handles.Register)
 	Route.POST("/logout", handles.Login)
-
 	authrization.POST("/friend/add",handles.AddFriend)
 	authrization.POST("/friend/agree",handles.Agree)
 	authrization.POST("/friend/refuse",handles.Refuse)
 	authrization.POST("/friend/delete", handles.DeleteFirend)
 	authrization.POST("/friend/list", handles.FirendList)
+
 
 }
