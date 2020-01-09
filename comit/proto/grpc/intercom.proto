@@ -1,0 +1,8 @@
+syntax="proto3";
+package intercom;
+import  "message.proto";
+
+service Greeter{
+    //接收起来连接服务器发送过来的中转消息
+    rpc transfer(OneMessage) returns(AckMessage);
+}

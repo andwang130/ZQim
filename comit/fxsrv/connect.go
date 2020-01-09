@@ -19,6 +19,7 @@ var requstPool=sync.Pool{
 }
 var timeout int64=100
 type Connect struct {
+	id uint32
 	conn *net.TCPConn
 	routes map[uint16]Route
 	buff bytes.Buffer
@@ -28,6 +29,7 @@ type Connect struct {
 	heartTime int64
 	isClose  int32
 	tk  *time.Ticker
+	auth bool
 }
 
 func (this *Connect)work(){
@@ -74,8 +76,6 @@ func (this *Connect)unpack()  {
 		binary.Read(buf, binary.BigEndian, &request.Flag)
 		request.Body = byts[7 : bodylen+7]
 		this.buff.Next(int(7 + bodylen))
-
-		this.heartTime=time.Now().Unix()
 		this.routesRun(request)
 	}
 }
@@ -162,7 +162,25 @@ func (this *Connect)routesRun(req *Request){
 
 }
 
+func (this *Connect)SetheartTime(nowtime int64)  {
+	this.heartTime=nowtime
+}
+func (this *Connect)SetAuth(status bool)  {
 
+	this.auth=status
+}
+func (this *Connect)IsAuth()bool  {
+
+	return this.auth
+}
+func (this *Connect)SetId(id uint32)  {
+
+	this.id=id
+}
+func (this *Connect)GetId()uint32  {
+
+	return this.id
+}
 //func (this *Connect)  {
 //	this.conn.RemoteAddr()
 //}

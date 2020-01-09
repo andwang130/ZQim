@@ -1,7 +1,7 @@
 package main
 
-import "comit/fxsrv"
+import "comit/router"
 
 func main()  {
-	fxsrv.NewServer("127.0.0.1",8089,"server")
+	router.Server.Run()
 }

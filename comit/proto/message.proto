@@ -1,0 +1,45 @@
+syntax="proto3";
+
+
+
+message OneMessage{
+    //消息编号
+    uint64 rek=1;
+    //发送方id
+    uint32 sender=2;
+    //接收方id
+    uint32 receiver=3;
+    //消息内容
+    string msgbody=4;
+    //消息类型
+    uint32 msgtype=5;
+    //消息时序
+    uint32 time=6;
+
+}
+
+message GroupMessage{
+    uint32 sender=2;
+
+    //群组Id
+    uint32 groupid=3;
+
+    string msgbody=4;
+
+    uint32 msgtype=5;
+
+    uint32 time=6;
+
+}
+message AuthMessage{
+    string token=1;
+}
+message AuthSuccessMessage{
+    uint32 status=1;
+
+}
+message AckMessage{
+    uint64 rek=1;
+    uint32 msgtype=2;
+    uint32 status=3;
+}

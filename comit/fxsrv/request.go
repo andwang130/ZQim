@@ -18,6 +18,6 @@ func (this *Request)GetBytes() []byte{
 		binary.Write(buf,binary.BigEndian,this.Type)
 		binary.Write(buf,binary.BigEndian,this.BodyLen)
 		binary.Write(buf,binary.BigEndian,this.Flag)
-		binary.Write(buf,binary.BigEndian,this.Body)
+		buf.Write(this.Body)
 		return buf.Bytes()
 }

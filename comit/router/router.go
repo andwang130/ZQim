@@ -1,26 +1,32 @@
 package router
 
 import (
+	"comit/config"
+	"comit/manage"
 	"comit/fxsrv"
 	"comit/handles"
+	"comit/middlehandles"
 )
 
-const (
-	Auth=iota+1
-	OneMessage
-	GorupMessage
-	AckMesage
-
-
-)
-
-var server fxsrv.Server
+var Server fxsrv.Server
 func init()  {
-	server=fxsrv.NewServer("127.0.0.1",8089,"server")
+	Server=fxsrv.NewServer("127.0.0.1",8089,"server",
+	fxsrv.SetConnectCallback(coonectHandle),
+	fxsrv.SetCloseCallback(CloseHandle),
+	)
+	Server.AddRouter(config.OneMessage,handles.OneMessageHandle)
 
-	server.AddRouter(OneMessage,handles.OneMessageHandle)
+	Server.AddRouter(config.GorupMessage,handles.GorupMessageHandle)
 
-	server.AddRouter(GorupMessage,handles.GorupMessageHandle)
+	Server.AddRouter(config.AckMesage,handles.AckMesageHandle)
 
-	server.AddRouter(AckMesage,handles.AckMesageHandle)
+	Server.AddRouter(config.Auth,handles.AuthHandle)
+
+	Server.AddMiddleware(middlehandles.AuthMiddleHandle,config.OneMessage,config.GorupMessage,config.AckMesage,config.Ping)
+}
+func coonectHandle(con *fxsrv.Connect)  {
+
+}
+func CloseHandle(con *fxsrv.Connect)  {
+	manage.ConManage.DeleteConnect(con.GetId())
 }
