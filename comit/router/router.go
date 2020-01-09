@@ -8,21 +8,26 @@ import (
 	"comit/middlehandles"
 )
 
-var Server fxsrv.Server
-func init()  {
-	Server=fxsrv.NewServer("127.0.0.1",8089,"server",
-	fxsrv.SetConnectCallback(coonectHandle),
-	fxsrv.SetCloseCallback(CloseHandle),
-	)
-	Server.AddRouter(config.OneMessage,handles.OneMessageHandle)
+var server fxsrv.Server
+func setRouter()  {
 
-	Server.AddRouter(config.GorupMessage,handles.GorupMessageHandle)
+	server.AddRouter(config.OneMessage,handles.OneMessageHandle)
 
-	Server.AddRouter(config.AckMesage,handles.AckMesageHandle)
+	server.AddRouter(config.GorupMessage,handles.GorupMessageHandle)
 
-	Server.AddRouter(config.Auth,handles.AuthHandle)
+	server.AddRouter(config.AckMesage,handles.AckMesageHandle)
 
-	Server.AddMiddleware(middlehandles.AuthMiddleHandle,config.OneMessage,config.GorupMessage,config.AckMesage,config.Ping)
+	server.AddRouter(config.Auth,handles.AuthHandle)
+
+	server.AddMiddleware(middlehandles.AuthMiddleHandle,config.OneMessage,config.GorupMessage,config.AckMesage,config.Ping)
+}
+func Run(addr string,port uint32,name string)  {
+	server=fxsrv.NewServer(addr,port,name,
+		fxsrv.SetConnectCallback(coonectHandle),
+		fxsrv.SetCloseCallback(CloseHandle),)
+	setRouter()
+	server.Run()
+
 }
 func coonectHandle(con *fxsrv.Connect)  {
 

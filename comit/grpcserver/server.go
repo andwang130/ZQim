@@ -8,7 +8,7 @@ import (
 )
 
 type Server struct {
-	
+
 }
 
 func (this *Server)Transfer(ctx context.Context, message *intercom.OneMessage )(*intercom.AckMessage,error){
@@ -18,9 +18,8 @@ func (this *Server)Transfer(ctx context.Context, message *intercom.OneMessage )(
 	return &intercom.AckMessage{Status:0,Rek:1},nil
 }
 
-func GrpcServerInit()  {
-
-	lic,err:=net.Listen("tcp","127.0.0.1")
+func GrpcServerRun(addr string)  {
+	lic,err:=net.Listen("tcp",addr)
 	if err!=nil{
 		panic(err)
 	}
