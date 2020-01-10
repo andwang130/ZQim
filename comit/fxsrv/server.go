@@ -53,7 +53,7 @@ func (this *service)Run()error {
 				values: map[string]interface{}{},
 			},
 			exitChan:make(chan bool),
-			writeChan:make(chan *Request),
+			writeChan:make(chan *Request,10),
 			routes:this.routes,
 			tk:time.NewTicker(time.Duration(int64(this.opts.timeout))*time.Second),
 		}

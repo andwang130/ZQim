@@ -1,11 +1,13 @@
 package config
 
+import "time"
 
 const ServerName string="im2"
 const Addr="127.0.0.1"
-const Port=8555
-const Grpcaddr=Addr+":8666"
+const Port=8777
+const Grpcaddr=Addr+":8999"
 
+const GrpcTimeOut  =time.Second*5
 const (
 	Auth=iota+1
 	OneMessage
@@ -25,4 +27,8 @@ const(
 	AuthOthe
 	//protobuf解析错误
 	MessagError
+)
+const(
+	AckSuccess=iota
+	AckSaveFail
 )

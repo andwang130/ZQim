@@ -12,7 +12,7 @@ import (
 var ComitManage ComitManages
 type ComitGrpcServer struct {
 
-	client intercom.GreeterClient
+	Client intercom.GreeterClient
 }
 type ComitManages struct {
 	rwmutex sync.RWMutex
@@ -59,7 +59,7 @@ func NewComitServer(addr string)(*ComitGrpcServer,error)  {
 	}
 
 	client:=intercom.NewGreeterClient(con)
-	comitserver.client=client
+	comitserver.Client=client
 	return comitserver,nil
 
 }

@@ -17,8 +17,12 @@ func init()  {
 	var ops redis.Options
 	ops.Addr="127.0.0.1:6379"
 	rediscli=redis.NewClient(&ops)
+	if err:=rediscli.Ping().Err();err!=nil{
+		panic(err)
+	}
 }
 func SetUser(uid uint32,user User) error {
+
 	value,err:=json.Marshal(user)
 	if err!=nil{
 		return err
@@ -30,9 +34,9 @@ func GetUser(uid uint32)(User,error)  {
 	var user User
 	value,err:=rediscli.Get(strconv.Itoa(int(uid))).Bytes()
 	if err!=nil{
-	return user,err
+		return user,err
 	}
-	if err:=json.Unmarshal(value,user);err!=nil{
+	if err:=json.Unmarshal(value,&user);err!=nil{
 		return user,err
 	}
 	return user,nil

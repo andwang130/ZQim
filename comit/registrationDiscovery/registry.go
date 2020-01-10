@@ -23,8 +23,14 @@ func Init( endpoints []string,timeou time.Duration)error{
 
 
 	cli,err:=clientv3.New(
-		clientv3.Config{Endpoints:[]string{"127.0.0.1:2379"},DialTimeout:time.Second*5})
+		clientv3.Config{Endpoints:endpoints,DialTimeout:timeou})
 	if err!=nil{
+
+		return err
+	}
+	ctx,cancel:=context.WithTimeout(context.TODO(),timeou)
+	defer cancel()
+	if _,err:=cli.Status(ctx,endpoints[0]);err!=nil{
 		return err
 	}
 	rsp,err:=cli.Grant(context.TODO(),20)
@@ -44,6 +50,7 @@ func (this *RegistrationDiscovery)Registry(key string,val string)error  {
 
 
 	_, err := this.cli.Put(context.Background(), key, val,clientv3.WithLease(this.leaseID))
+
 
 	return err
 

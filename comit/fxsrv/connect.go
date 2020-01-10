@@ -11,7 +11,7 @@ import (
 	"time"
 )
 var ConnectIsCloseError=errors.New("ConnectIsClosed")
-
+var WriteblockError=errors.New("writeChanisblock")
 var requstPool=sync.Pool{
 	New: func() interface{} {
 		return new(Request)
@@ -93,6 +93,8 @@ func (this *Connect)Write(request *Request)error{
 		return ConnectIsCloseError
 	case this.writeChan<-request:
 		return nil
+	default:
+		return WriteblockError
 	}
 
 
@@ -150,13 +152,14 @@ func (this *Connect)routesRun(req *Request){
 						return
 					}
 				}
+
 				if route.handle!=nil{
 					route.handle(this,req)
 				}
 				//
 
 			}
-			requstPool.Put(req)
+			defer requstPool.Put(req)
 		})
 
 

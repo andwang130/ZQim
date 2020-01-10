@@ -9,31 +9,40 @@ import (
 )
 var AckMange=&AckMessageManage{
 	msgheap:make(MinHeap,0),
-	messages:make(map[uint32]*AckMessage),
+	messages:make(map[uint64]*AckMessage),
+
 }
 type AckMessage struct {
-	body []byte //消息体
-	msgid uint64
-	receiver uint32
-	timeout int64  //过期时间
+	Body []byte //消息体
+	Msgid uint64
+	Receiver uint32
+	Timeout int64  //过期时间
 	index    int
 	ntime   uint8    //发送的次数
+
 }
 type AckMessageManage struct {
 	messages map[uint64]*AckMessage
 	rwmutex sync.RWMutex
 	msgheap MinHeap
 
+
 }
 
 func (this *AckMessageManage)Push(message *AckMessage) {
 
+	this.rwmutex.Lock()
+	defer this.rwmutex.Unlock()
+	message.ntime=message.ntime+1
+	message.Timeout=time.Now().Unix()+5
 	heap.Push(&this.msgheap,message)
-	this.messages[message.msgid]=message
+	this.messages[message.Msgid]=message
 
 
 }
 func (this *AckMessageManage)Delete(msgid uint64) {
+	this.rwmutex.Lock()
+	defer this.rwmutex.Unlock()
 	item,ok:=this.messages[msgid]
 	if ok{
 
@@ -41,7 +50,8 @@ func (this *AckMessageManage)Delete(msgid uint64) {
 	}
 }
 func (this *AckMessageManage)Pop()*AckMessage  {
-
+	this.rwmutex.Lock()
+	defer this.rwmutex.Unlock()
 	return heap.Pop(&this.msgheap).(*AckMessage)
 }
 
@@ -54,7 +64,7 @@ func (m MinHeap)Len()int  {
 }
 func (m MinHeap)Less(i,j int)bool  {
 
-	return m[i].timeout<=m[j].timeout
+	return m[i].Timeout<=m[j].Timeout
 }
 func (m MinHeap)Swap(i,j int)  {
 
@@ -103,12 +113,13 @@ func TimeLoop()  {
 		case <-t.C:
 			n:=len(AckMange.msgheap)
 			var poplist []*AckMessage
+			AckMange.rwmutex.Lock()
 			for i:=0;i<n;i++{
-				if AckMange.msgheap[i].timeout<time.Now().Unix(){
+				if AckMange.msgheap[0].Timeout<time.Now().Unix(){
 					message:=AckMange.Pop()
-					con,ok:=ConManage.GetConnect(message.receiver)
+					con,ok:=ConManage.GetConnect(message.Receiver)
 					if !ok||message.ntime>3{
-						AckMange.Delete(message.msgid)
+						AckMange.Delete(message.Msgid)
 						//todo 连接不存在，或者重发3次都无响应，消息进入离线队列
 						continue
 					}
@@ -116,18 +127,24 @@ func TimeLoop()  {
 
 					var requests=&fxsrv.Request{
 						Type:config.OneMessage,
-						Body:message.body,
-						BodyLen:uint32(len(message.body)),
+						Body:message.Body,
+						BodyLen:uint32(len(message.Body)),
 					}
 					//消息重发
-					con.Write(requests)
-					message.ntime=message.ntime+1
+					if err:=con.Write(requests);err!=nil{
+						continue
+					}
+
+				}else {
+
+					break
 				}
 			}
 			//重新入堆，等待ACK
 			for _,v:=range poplist{
 				AckMange.Push(v)
 			}
+			AckMange.rwmutex.Unlock()
 		}
 	}
 }

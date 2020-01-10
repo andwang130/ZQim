@@ -11,28 +11,28 @@ func TestAckHeap(t *testing.T)  {
 	h:=make(MinHeap,0)
 	heap.Init(&h)
 	var ackmessage1=&AckMessage{
-		receiver:1,
-		timeout:time.Now().Unix(),
+		Receiver:1,
+		Timeout:time.Now().Unix(),
 	}
 	var ackmessage2=&AckMessage{
-		receiver:2,
-		timeout:time.Now().Unix(),
+		Receiver:2,
+		Timeout:time.Now().Unix(),
 	}
 	var ackmessage3=&AckMessage{
-		receiver:3,
-		timeout:time.Now().Unix(),
+		Receiver:3,
+		Timeout:time.Now().Unix(),
 	}
 	var ackmessage4=&AckMessage{
-		receiver:4,
-		timeout:time.Now().Unix(),
+		Receiver:4,
+		Timeout:time.Now().Unix(),
 	}
 	var ackmessage5=&AckMessage{
-		receiver:5,
-		timeout:time.Now().Unix(),
+		Receiver:5,
+		Timeout:time.Now().Unix(),
 	}
 	var ackmessage6=&AckMessage{
-		receiver:6,
-		timeout:time.Now().Unix(),
+		Receiver:6,
+		Timeout:time.Now().Unix(),
 	}
 	heap.Push(&h,ackmessage2)
 
