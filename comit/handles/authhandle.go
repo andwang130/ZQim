@@ -5,6 +5,7 @@ import (
 	"comit/manage"
 	"comit/fxsrv"
 	"comit/proto"
+	"comit/rediscache"
 	"errors"
 	"fmt"
 	"github.com/dgrijalva/jwt-go"
@@ -68,7 +69,13 @@ func AuthHandle(con *fxsrv.Connect,request *fxsrv.Request)error  {
 		Authreply(con,config.AuthOthe)
     	return  errors.New("token error")
 	}
+
+    //认证后把连接添加到连接管理器和redis中
 	manage.ConManage.AddConnect(uint32(uid),con)
+    rediscache.SetUser(uint32(uid),rediscache.User{
+    	Uid:uint32(uid),
+    	Srvname:config.ServerName,
+	})
     fmt.Println(uid,"，登录了")
     con.SetId(uint32(uid))
 	con.SetAuth(true)
