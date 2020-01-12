@@ -27,12 +27,12 @@ func SetUser(uid uint32,user User) error {
 	if err!=nil{
 		return err
 	}
-	return rediscli.Set(strconv.Itoa(int(uid)),value,0).Err()
+	return rediscli.Set("userid:"+strconv.Itoa(int(uid)),value,0).Err()
 }
 func GetUser(uid uint32)(User,error)  {
 
 	var user User
-	value,err:=rediscli.Get(strconv.Itoa(int(uid))).Bytes()
+	value,err:=rediscli.Get("userid:"+strconv.Itoa(int(uid))).Bytes()
 	if err!=nil{
 		return user,err
 	}

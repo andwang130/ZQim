@@ -67,9 +67,6 @@ func (this *RegistrationDiscovery)Less()  {
 			if keepResp==nil{
 				//todo log
 				return
-			}else{
-				fmt.Println(keepResp.TTL)
-
 			}
 		}
 	}

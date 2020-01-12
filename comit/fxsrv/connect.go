@@ -94,6 +94,7 @@ func (this *Connect)Write(request *Request)error{
 	case this.writeChan<-request:
 		return nil
 	default:
+		fmt.Println("阻塞了")
 		return WriteblockError
 	}
 
@@ -154,7 +155,10 @@ func (this *Connect)routesRun(req *Request){
 				}
 
 				if route.handle!=nil{
-					route.handle(this,req)
+					err:=route.handle(this,req)
+					if err!=nil{
+						fmt.Println(err.Error())
+					}
 				}
 				//
 

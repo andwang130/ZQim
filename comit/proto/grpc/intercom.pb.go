@@ -24,17 +24,73 @@ var _ = math.Inf
 // proto package needs to be updated.
 const _ = proto.ProtoPackageIsVersion3 // please upgrade the proto package
 
+type GreupTranferReq struct {
+	Receivers            []uint32      `protobuf:"varint,1,rep,packed,name=receivers,proto3" json:"receivers,omitempty"`
+	Message              *GroupMessage `protobuf:"bytes,2,opt,name=message,proto3" json:"message,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}      `json:"-"`
+	XXX_unrecognized     []byte        `json:"-"`
+	XXX_sizecache        int32         `json:"-"`
+}
+
+func (m *GreupTranferReq) Reset()         { *m = GreupTranferReq{} }
+func (m *GreupTranferReq) String() string { return proto.CompactTextString(m) }
+func (*GreupTranferReq) ProtoMessage()    {}
+func (*GreupTranferReq) Descriptor() ([]byte, []int) {
+	return fileDescriptor_4b7dc4dbe05ff714, []int{0}
+}
+
+func (m *GreupTranferReq) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_GreupTranferReq.Unmarshal(m, b)
+}
+func (m *GreupTranferReq) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_GreupTranferReq.Marshal(b, m, deterministic)
+}
+func (m *GreupTranferReq) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_GreupTranferReq.Merge(m, src)
+}
+func (m *GreupTranferReq) XXX_Size() int {
+	return xxx_messageInfo_GreupTranferReq.Size(m)
+}
+func (m *GreupTranferReq) XXX_DiscardUnknown() {
+	xxx_messageInfo_GreupTranferReq.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_GreupTranferReq proto.InternalMessageInfo
+
+func (m *GreupTranferReq) GetReceivers() []uint32 {
+	if m != nil {
+		return m.Receivers
+	}
+	return nil
+}
+
+func (m *GreupTranferReq) GetMessage() *GroupMessage {
+	if m != nil {
+		return m.Message
+	}
+	return nil
+}
+
+func init() {
+	proto.RegisterType((*GreupTranferReq)(nil), "intercom.GreupTranferReq")
+}
+
 func init() { proto.RegisterFile("intercom.proto", fileDescriptor_4b7dc4dbe05ff714) }
 
 var fileDescriptor_4b7dc4dbe05ff714 = []byte{
-	// 102 bytes of a gzipped FileDescriptorProto
+	// 189 bytes of a gzipped FileDescriptorProto
 	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xe2, 0xe2, 0xcb, 0xcc, 0x2b, 0x49,
 	0x2d, 0x4a, 0xce, 0xcf, 0xd5, 0x2b, 0x28, 0xca, 0x2f, 0xc9, 0x17, 0xe2, 0x80, 0xf1, 0xa5, 0x78,
-	0x73, 0x53, 0x8b, 0x8b, 0x13, 0xd3, 0x53, 0x21, 0x12, 0x46, 0x8e, 0x5c, 0xec, 0xee, 0x45, 0xa9,
-	0xa9, 0x25, 0xa9, 0x45, 0x42, 0x66, 0x5c, 0x1c, 0x25, 0x45, 0x89, 0x79, 0xc5, 0x69, 0xa9, 0x45,
-	0x42, 0x22, 0x7a, 0x70, 0x03, 0xfc, 0xf3, 0x52, 0x7d, 0x21, 0x5a, 0xa4, 0x90, 0x44, 0x1d, 0x93,
-	0xb3, 0xa1, 0xa2, 0x49, 0x6c, 0x60, 0x93, 0x8c, 0x01, 0x01, 0x00, 0x00, 0xff, 0xff, 0xb7, 0x32,
-	0xf2, 0x99, 0x74, 0x00, 0x00, 0x00,
+	0x73, 0x53, 0x8b, 0x8b, 0x13, 0xd3, 0x53, 0x21, 0x12, 0x4a, 0x89, 0x5c, 0xfc, 0xee, 0x45, 0xa9,
+	0xa5, 0x05, 0x21, 0x45, 0x89, 0x79, 0x69, 0xa9, 0x45, 0x41, 0xa9, 0x85, 0x42, 0x32, 0x5c, 0x9c,
+	0x45, 0xa9, 0xc9, 0xa9, 0x99, 0x65, 0xa9, 0x45, 0xc5, 0x12, 0x8c, 0x0a, 0xcc, 0x1a, 0xbc, 0x41,
+	0x08, 0x01, 0x21, 0x03, 0x2e, 0x76, 0xa8, 0x09, 0x12, 0x4c, 0x0a, 0x8c, 0x1a, 0xdc, 0x46, 0x62,
+	0x7a, 0x70, 0xbb, 0xdc, 0x8b, 0xf2, 0x4b, 0x0b, 0x7c, 0x21, 0xb2, 0x41, 0x30, 0x65, 0x46, 0x4d,
+	0x8c, 0x5c, 0xec, 0xee, 0x45, 0xa9, 0xa9, 0x25, 0xa9, 0x45, 0x42, 0x66, 0x5c, 0x1c, 0x25, 0x45,
+	0x89, 0x79, 0xc5, 0x69, 0xa9, 0x45, 0x42, 0x22, 0x08, 0x8d, 0xfe, 0x79, 0xa9, 0x50, 0x6d, 0x52,
+	0x48, 0xa2, 0x8e, 0xc9, 0xd9, 0x50, 0x51, 0x21, 0x7b, 0x2e, 0x9e, 0x74, 0x90, 0xe1, 0x25, 0x10,
+	0x67, 0x0a, 0x49, 0x22, 0x5b, 0x8a, 0xe2, 0x7c, 0xec, 0x06, 0x24, 0xb1, 0x81, 0xbd, 0x6b, 0x0c,
+	0x08, 0x00, 0x00, 0xff, 0xff, 0x47, 0xf4, 0xb8, 0x89, 0x19, 0x01, 0x00, 0x00,
 }
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -51,6 +107,7 @@ const _ = grpc.SupportPackageIsVersion4
 type GreeterClient interface {
 	//接收起来连接服务器发送过来的中转消息
 	Transfer(ctx context.Context, in *OneMessage, opts ...grpc.CallOption) (*AckMessage, error)
+	Grouptranfer(ctx context.Context, in *GreupTranferReq, opts ...grpc.CallOption) (*AckMessage, error)
 }
 
 type greeterClient struct {
@@ -70,10 +127,20 @@ func (c *greeterClient) Transfer(ctx context.Context, in *OneMessage, opts ...gr
 	return out, nil
 }
 
+func (c *greeterClient) Grouptranfer(ctx context.Context, in *GreupTranferReq, opts ...grpc.CallOption) (*AckMessage, error) {
+	out := new(AckMessage)
+	err := c.cc.Invoke(ctx, "/intercom.Greeter/grouptranfer", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // GreeterServer is the server API for Greeter service.
 type GreeterServer interface {
 	//接收起来连接服务器发送过来的中转消息
 	Transfer(context.Context, *OneMessage) (*AckMessage, error)
+	Grouptranfer(context.Context, *GreupTranferReq) (*AckMessage, error)
 }
 
 // UnimplementedGreeterServer can be embedded to have forward compatible implementations.
@@ -82,6 +149,9 @@ type UnimplementedGreeterServer struct {
 
 func (*UnimplementedGreeterServer) Transfer(ctx context.Context, req *OneMessage) (*AckMessage, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Transfer not implemented")
+}
+func (*UnimplementedGreeterServer) Grouptranfer(ctx context.Context, req *GreupTranferReq) (*AckMessage, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Grouptranfer not implemented")
 }
 
 func RegisterGreeterServer(s *grpc.Server, srv GreeterServer) {
@@ -106,6 +176,24 @@ func _Greeter_Transfer_Handler(srv interface{}, ctx context.Context, dec func(in
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Greeter_Grouptranfer_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GreupTranferReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(GreeterServer).Grouptranfer(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/intercom.Greeter/Grouptranfer",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(GreeterServer).Grouptranfer(ctx, req.(*GreupTranferReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 var _Greeter_serviceDesc = grpc.ServiceDesc{
 	ServiceName: "intercom.Greeter",
 	HandlerType: (*GreeterServer)(nil),
@@ -113,6 +201,10 @@ var _Greeter_serviceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "transfer",
 			Handler:    _Greeter_Transfer_Handler,
+		},
+		{
+			MethodName: "grouptranfer",
+			Handler:    _Greeter_Grouptranfer_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

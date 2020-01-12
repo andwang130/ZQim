@@ -7,7 +7,7 @@ type Onemessage struct {
 	Sender uint32
 	Receiver uint32
 	Msgtype  uint32
-	Body    string
+	Body    string  `gorm:"varchar(2000)"`
 }
 
 func AddOnemessage(one *Onemessage) error {

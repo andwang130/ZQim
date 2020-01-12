@@ -4,6 +4,7 @@ import (
 	"comit/config"
 	"comit/fxsrv"
 	"container/heap"
+	"fmt"
 	"sync"
 	"time"
 )
@@ -37,9 +38,8 @@ func (this *AckMessageManage)Push(message *AckMessage) {
 	message.Timeout=time.Now().Unix()+5
 	heap.Push(&this.msgheap,message)
 	this.messages[message.Msgid]=message
-
-
 }
+
 func (this *AckMessageManage)Delete(msgid uint64) {
 	this.rwmutex.Lock()
 	defer this.rwmutex.Unlock()
@@ -55,7 +55,16 @@ func (this *AckMessageManage)Pop()*AckMessage  {
 	return heap.Pop(&this.msgheap).(*AckMessage)
 }
 
-
+func (this *AckMessageManage)Get(index int)*AckMessage  {
+	this.rwmutex.RLock()
+	defer this.rwmutex.RUnlock()
+	return this.msgheap[index]
+}
+func (this *AckMessageManage)Len()int  {
+	this.rwmutex.RLock()
+	defer this.rwmutex.RUnlock()
+	return this.msgheap.Len()
+}
 type MinHeap []*AckMessage
 
 func (m MinHeap)Len()int  {
@@ -111,11 +120,14 @@ func TimeLoop()  {
 	for{
 		select {
 		case <-t.C:
-			n:=len(AckMange.msgheap)
+
 			var poplist []*AckMessage
-			AckMange.rwmutex.Lock()
+
+
+			n:=AckMange.Len()
+			fmt.Println(n)
 			for i:=0;i<n;i++{
-				if AckMange.msgheap[0].Timeout<time.Now().Unix(){
+				if AckMange.Get(0).Timeout<time.Now().Unix(){
 					message:=AckMange.Pop()
 					con,ok:=ConManage.GetConnect(message.Receiver)
 					if !ok||message.ntime>3{
@@ -123,7 +135,7 @@ func TimeLoop()  {
 						//todo 连接不存在，或者重发3次都无响应，消息进入离线队列
 						continue
 					}
-					poplist=append(poplist,message)
+
 
 					var requests=&fxsrv.Request{
 						Type:config.OneMessage,
@@ -134,17 +146,17 @@ func TimeLoop()  {
 					if err:=con.Write(requests);err!=nil{
 						continue
 					}
-
+					poplist=append(poplist,message)
 				}else {
-
 					break
 				}
 			}
+
 			//重新入堆，等待ACK
 			for _,v:=range poplist{
 				AckMange.Push(v)
 			}
-			AckMange.rwmutex.Unlock()
+
 		}
 	}
 }

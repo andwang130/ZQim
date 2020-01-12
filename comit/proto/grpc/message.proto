@@ -17,8 +17,9 @@ message OneMessage{
 }
 
 message GroupMessage{
-    uint32 sender=2;
+    uint64 rek=1;
 
+    uint32 sender=2;
     //群组Id
     uint32 groupid=3;
 

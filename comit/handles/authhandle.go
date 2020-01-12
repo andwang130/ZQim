@@ -94,4 +94,7 @@ func Authreply(con *fxsrv.Connect,code uint32)  {
 	req.Body=buf
 	req.BodyLen=uint32(len(buf))
 	con.Write(&req)
+	if  code!=0{
+		con.Close()
+	}
 }
