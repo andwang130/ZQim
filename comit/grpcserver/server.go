@@ -39,31 +39,35 @@ func (this *Server)Transfer(ctx context.Context, message *intercom.OneMessage )(
 	manage.AckMange.Push(&manage.AckMessage{
 		Body:buf,
 		Receiver:con.GetId(),
-		Msgid:message.Rek,})
+		Msgid:message.Rek,
+		GropOrOne:config.OneMessage,
+
+	})
 	//todo
 	return ack,nil
 }
 func (this *Server)Grouptranfer(ctx context.Context,message *intercom.GreupTranferReq)(*intercom.AckMessage,error)  {
 	fmt.Println("一条群聊消息转发")
 	var ack =&intercom.AckMessage{Status:0,Rek:message.Message.Rek}
+	buf, err := proto.Marshal(message.Message)
+	if err != nil {
+		return ack,nil
+	}
+	var reqest = &fxsrv.Request{
+		Type:    config.GorupMessage,
+		Body:    buf,
+		BodyLen: uint32(len(buf)),
+	}
+
 	for _,v:=range message.Receivers {
 		con, ok := manage.ConManage.GetConnect(v)
 		if !ok {
 			//该用户不在当前服务器，已经下线
 			return ack,nil
 		}
-		buf, err := proto.Marshal(message.Message)
-		if err != nil {
-			return ack,nil
-		}
-		var reqest = &fxsrv.Request{
-			Type:    config.GorupMessage,
-			Body:    buf,
-			BodyLen: uint32(len(buf)),
-		}
 		manage.AckMange.Push(&manage.AckMessage{
 			Body:buf,
-			Receiver:con.GetId(),
+			Receiver:v,
 			Msgid:message.Message.Rek,})
 		con.Write(reqest)
 	}

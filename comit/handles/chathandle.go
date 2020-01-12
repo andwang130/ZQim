@@ -67,6 +67,8 @@ func OneMessageHandle(con *fxsrv.Connect,request *fxsrv.Request)error  {
 			Body:request.Body,
 			Receiver:msg.Receiver,
 			Msgid:msg.Rek,
+			GropOrOne:config.OneMessage,
+
 
 		})
 
@@ -112,6 +114,19 @@ func GorupMessageHandle(con *fxsrv.Connect,request *fxsrv.Request)error  {
 		//todo
 		return errors.New("不存在的群组")
 	}
+	//验证该用户是否在该群组
+	var flag=false
+	for _,v:=range userlist{
+		if v==con.GetId(){
+			flag=true
+			break
+		}
+	}
+	//用户不在该群组
+	if !flag{
+		SendAck(con,groupmessage.Rek,config.AckSaveFail)
+		return errors.New("不在该群组")
+	}
 
 	fmt.Println("群聊消息id：",groupmessage.Rek)
 	err=modle.CreateGroupMessage(
@@ -124,30 +139,37 @@ func GorupMessageHandle(con *fxsrv.Connect,request *fxsrv.Request)error  {
 		})
 	if err!=nil{
 		SendAck(con,groupmessage.Rek,config.AckSaveFail)
-		//return errors.New("写入数据库失败")
+		return errors.New("写入数据库失败")
 	}
-	var usermessages=make([]*modle.GroupUserMessage,len(userlist))
-	var locclient []*fxsrv.Connect
+
+
+	var usermessages=make([]*modle.GroupUserMessage,0,len(userlist)-1)
+	var locclient =make([]*fxsrv.Connect,0,len(userlist)-1)
 	var remoteclient=make(map[string][]uint32)
-	for index,v:=range userlist{
-		receiver,ok:=manage.ConManage.GetConnect(v)
+	for i:=0;i<len(userlist);i++{
+		uid:=userlist[i]
+		if uid==con.GetId(){
+			continue
+		}
+		receiver,ok:=manage.ConManage.GetConnect(uid)
 		if ok{
 			locclient=append(locclient,receiver)
 		}else{
-			user,err:=rediscache.GetUser(v)
+			user,err:=rediscache.GetUser(uid)
 			if err==nil{
-				remoteclient[user.Srvname]=append(remoteclient[user.Srvname],v)
+				remoteclient[user.Srvname]=append(remoteclient[user.Srvname],uid)
 			}
 		}
 
-		usermessages[index]=&modle.GroupUserMessage{
+		usermessages=append(usermessages,&modle.GroupUserMessage{
 			Rek:groupmessage.Rek,
-			Receiver:v,
-		}
+			Receiver: uid,
+		})
 	}
+
  	if modle.CreateGroupUserMessage(usermessages)!=nil{
 		SendAck(con,groupmessage.Rek,config.AckSaveFail)
-		//return errors.New("写入数据库失败")
+		return errors.New("写入数据库失败")
 	}
 
 	fmt.Println("发送人id：",groupmessage.Sender)
@@ -155,13 +177,15 @@ func GorupMessageHandle(con *fxsrv.Connect,request *fxsrv.Request)error  {
 
 
 	for _,v:=range locclient{
-		manage.AckMange.Push(&manage.AckMessage{
-			Body:request.Body,
-			Receiver:v.GetId(),
-			Msgid:groupmessage.Rek,
 
-		})
-		v.Write(request)
+			manage.AckMange.Push(&manage.AckMessage{
+				Body:     request.Body,
+				Receiver: v.GetId(),
+				Msgid:    groupmessage.Rek,
+				GropOrOne:config.GorupMessage,
+			})
+			v.Write(request)
+
 	}
 	for key,v:=range remoteclient{
 
@@ -187,6 +211,7 @@ func AckMesageHandle(con *fxsrv.Connect,request *fxsrv.Request) error {
 		return nil
 	}
 	//删除ack消息
+	fmt.Println(con.GetId(),"的ack消息",ackmeesage.Rek)
 	manage.AckMange.Delete(ackmeesage.Rek)
 	if ackmeesage.Msgtype==1 {
 		//单聊消息

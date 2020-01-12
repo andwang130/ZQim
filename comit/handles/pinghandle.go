@@ -5,8 +5,8 @@ import (
 	"time"
 )
 
-func PingHandle(con *fxsrv.Connect,request fxsrv.Request)error  {
+func PingHandle(con *fxsrv.Connect,request *fxsrv.Request)error  {
 
-	con.SetheartTime(time.Now().Unix())
+	con.SetheartTime(time.Now().Unix()+100)
 	return nil
 }

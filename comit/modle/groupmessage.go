@@ -21,26 +21,25 @@ type Message struct {
 
 func CreateGroupMessage(message *Message)error  {
 
-	return nil
-	//return db.Create(message).Error
+	return db.Create(message).Error
 }
 
 func CreateGroupUserMessage(usermessages []*GroupUserMessage )error  {
 
-	var sql="NSERT INTO group_user_message ('rek','receiver') VALUES "
+	var sql="INSERT INTO group_user_messages (rek,receiver) VALUES "
 
 	for index,v:=range usermessages{
 		if index<len(usermessages)-1 {
-			sql += fmt.Sprintf("(%d,%d)",v.Rek,v.Receiver)
+			sql += fmt.Sprintf("(%d,%d),",v.Rek,v.Receiver)
 		}else{
 			sql+=fmt.Sprintf("(%d,%d);",v.Rek,v.Receiver)
 		}
 		}
-	return nil
-	//return 	db.Exec(sql).Error
+
+	return 	db.Exec(sql).Error
 }
 func DeleteGroupUserMessage(rek uint64,receiver uint32)error  {
 
-	//return db.Where("receiver=?",receiver).Where("rek=?",rek).Delete(&GroupUserMessage{}).Error
-	return nil
+	return db.Where("receiver=?",receiver).Where("rek=?",rek).Delete(&GroupUserMessage{}).Error
+
 }

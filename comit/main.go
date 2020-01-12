@@ -16,7 +16,7 @@ func main()  {
 
 	go router.Run(config.Addr,config.Port,config.ServerName)
 	go grpcserver.GrpcServerRun(config.Grpcaddr)
-	go manage.TimeLoop()
+	go manage.AckMange.TimeLoop()
 	if err:=registrationDiscovery.Init([]string{"127.0.0.1:2379"},time.Second*2);err!=nil{
 		panic(err)
 	}
