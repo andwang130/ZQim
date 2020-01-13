@@ -10,7 +10,7 @@ func init()  {
 	if err!=nil{
 		panic(err)
 	}
-	//db.LogMode(true)
+	db.LogMode(true)
 	db.AutoMigrate(&Onemessage{},&GroupUserMessage{},&Message{})
 
 }

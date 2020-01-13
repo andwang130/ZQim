@@ -41,5 +41,22 @@ func CreateGroupUserMessage(usermessages []*GroupUserMessage )error  {
 func DeleteGroupUserMessage(rek uint64,receiver uint32)error  {
 
 	return db.Where("receiver=?",receiver).Where("rek=?",rek).Delete(&GroupUserMessage{}).Error
+}
+
+type CompleteMessage struct {
+	GroupUserMessage
+	Message
+
+}
+
+
+func GetGroupMessages(receiver uint32,page,size uint32)[]CompleteMessage  {
+
+	var completes []CompleteMessage
+	db.Model(&GroupUserMessage{}).Select("*").Where("receiver=?", receiver).Joins(
+		"left join messages on messages.rek=group_user_messages.rek").Limit(size).Offset((page-1)*size).Scan(&completes)
+
+	return completes
+
 
 }

@@ -39,6 +39,7 @@ func (this *ConnectManage)CleanConnect()  {
 }
 
 var ConManage ConnectManage
+
 func init()  {
 	ConManage.cons=make(map[uint32]*fxsrv.Connect)
 }

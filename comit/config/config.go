@@ -9,11 +9,15 @@ const Grpcaddr=Addr+":8999"
 
 const GrpcTimeOut  =time.Second*5
 const (
-	Auth=iota+1
-	OneMessage
-	GorupMessage
-	AckMesage
-	Ping
+
+	Auth=iota+1  //认证
+	OneMessage    //单聊消息
+	GorupMessage  //群聊消息
+	AckMesage     //Ack
+	Ping          //心跳
+	PullOneMessage   //拉取单聊消息
+	PullGorupMessage  //拉取群聊消息
+	AckMesageMany     //Ack多个
 )
 
 //auth状态码
