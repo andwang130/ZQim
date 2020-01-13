@@ -9,8 +9,7 @@ import (
 )
 var AckMange=&AckMessageManage{
 	msgheap:make(MinHeap,0),
-	messages:make(map[uint64]*AckMessage),
-	delCh:make(chan uint64,100),
+	delCh:make(chan delStruct,100),
 	pushCh:make(chan *AckMessage,100),
 }
 type AckMessage struct {
@@ -24,22 +23,28 @@ type AckMessage struct {
 
 }
 type AckMessageManage struct {
-	messages map[uint64]*AckMessage
 	rwmutex sync.RWMutex
 	msgheap MinHeap
-	delCh chan uint64
+	delCh chan delStruct
 	pushCh chan *AckMessage
 
-
+}
+type delStruct struct {
+	msgid uint64
+	receiver uint32
 }
 
-func (this *AckMessageManage)push(message *AckMessage) {
 
+func (this *AckMessageManage)push(message *AckMessage) {
 
 	message.ntime=message.ntime+1
 	message.Timeout=time.Now().Unix()+5
 	message.index=0
-	this.messages[message.Msgid]=message
+	con,ok:=ConManage.GetConnect(message.Receiver)
+	if !ok{
+		return
+	}
+	con.Ctx.Set(message.Msgid,message)
 	heap.Push(&this.msgheap,message)
 
 }
@@ -47,16 +52,26 @@ func (this *AckMessageManage)Push(message *AckMessage) {
 
 	this.pushCh<-message
 }
-func (this *AckMessageManage)Delete(msgid uint64) {
-	this.delCh<-msgid
+func (this *AckMessageManage)Delete(msgid uint64,receiver uint32) {
+	this.delCh<-delStruct{
+		msgid:msgid,
+		receiver:receiver,
+	}
 }
-func (this *AckMessageManage)delete(msgid uint64) {
+func (this *AckMessageManage)delete(msgid uint64,receiver uint32) {
+	con,ok:=ConManage.GetConnect(receiver)
+	if !ok{
+		return
+	}
+	value,ok:=con.Ctx.Get(msgid)
 
-	item,ok:=this.messages[msgid]
 	if ok {
-
-		delete(this.messages, msgid)
-		this.msgheap.Delete(item)
+		con.Ctx.Delete(msgid)
+		v,ok:=value.(*AckMessage)
+		if !ok{
+			return
+		}
+		this.msgheap.Delete(v)
 	}
 }
 func (this *AckMessageManage)Pop()*AckMessage  {
@@ -136,7 +151,7 @@ func (this *AckMessageManage)TimeLoop()  {
 					message:=AckMange.Pop()
 					con,ok:=ConManage.GetConnect(message.Receiver)
 					if !ok||message.ntime>3{
-						AckMange.delete(message.Msgid)
+						AckMange.delete(message.Msgid,message.Receiver)
 						//todo 连接不存在，或者重发3次都无响应，消息进入离线队列
 						continue
 					}
@@ -159,8 +174,8 @@ func (this *AckMessageManage)TimeLoop()  {
 
 			//重新入堆，等待ACK
 
-		case msgid:=<-this.delCh:
-			this.delete(msgid)
+		case delmsg:=<-this.delCh:
+			this.delete(delmsg.msgid,delmsg.receiver)
 		case ackmsg:=<-this.pushCh:
 			this.push(ackmsg)
 

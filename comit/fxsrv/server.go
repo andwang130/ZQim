@@ -50,7 +50,7 @@ func (this *service)Run()error {
 		con:=&Connect{
 			conn:conn,
 			Ctx:&Contex{
-				values: map[string]interface{}{},
+				values: map[interface{}]interface{}{},
 			},
 			exitChan:make(chan bool),
 			writeChan:make(chan *Request,10),

@@ -212,7 +212,7 @@ func AckMesageHandle(con *fxsrv.Connect,request *fxsrv.Request) error {
 	}
 	//删除ack消息
 	fmt.Println(con.GetId(),"的ack消息",ackmeesage.Rek)
-	manage.AckMange.Delete(ackmeesage.Rek)
+	manage.AckMange.Delete(ackmeesage.Rek,con.GetId())
 	if ackmeesage.Msgtype==1 {
 		//单聊消息
 		modle.DeleteOnemessage(ackmeesage.Rek, con.GetId())

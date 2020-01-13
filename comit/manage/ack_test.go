@@ -50,9 +50,9 @@ func TestAckHeap(t *testing.T)  {
 	mange.Push(ackmessage6)
 	mange.Push(ackmessage5)
 
-	mange.Delete(1)
-
-	mange.Delete(2)
+	//mange.Delete(1)
+	//
+	//mange.Delete(2)
 	n:=mange.Len()
 	//ackmessage2.timeout=125
 	//h.Update(ackmessage2)

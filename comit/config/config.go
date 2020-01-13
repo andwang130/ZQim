@@ -2,10 +2,10 @@ package config
 
 import "time"
 
-const ServerName string="im1"
+const ServerName string="im2"
 const Addr="127.0.0.1"
-const Port=8555
-const Grpcaddr=Addr+":8666"
+const Port=8777
+const Grpcaddr=Addr+":8999"
 
 const GrpcTimeOut  =time.Second*5
 const (
