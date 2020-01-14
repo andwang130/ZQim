@@ -6,9 +6,26 @@ service Greeter{
     //接收起来连接服务器发送过来的中转消息
     rpc transfer(OneMessage) returns(AckMessage);
     rpc grouptranfer(GreupTranferReq)returns(AckMessage);
+    rpc friendNotify(Notify)returns(AckMessage);
+    //同意好友邀请的通知
+    rpc friendAgree(Agree)returns(AckMessage);
 }
 
 message GreupTranferReq{
     repeated uint32 receivers=1;
     GroupMessage message=2;
+}
+message Notify{
+    //通知id
+    uint32 nid=1;
+    //接收人id
+    uint32 receiver=2;
+}
+//同意好友请求的通知
+message Agree{
+    //招呼内容
+    string greet=1;
+    uint32 uid=2;
+    uint32 receiver=3;
+    uint32 nid=4;
 }

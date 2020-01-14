@@ -19,7 +19,8 @@ const (
 	PullOneMessage   //拉取单聊消息
 	PullGorupMessage  //拉取群聊消息
 	DeleteManyMesage    //离线消息删除多个
-
+	FriendNotice   //添加好友通知消息
+	FriendAgree //同意通知。发起方收到
 )
 
 //auth状态码

@@ -1,11 +1,18 @@
 package handles
+
 import (
+	"context"
 	"github.com/gin-gonic/gin"
+	"logic/cache"
+	"logic/config"
+	"logic/manage"
 	"logic/models"
+	"logic/proto"
 )
 
 type AddFriendParm struct {
 	FriendID uint32 `json:"friendid" form:"friendid" binding"required"`
+	Greet   string `json:"greet" form:"greet" binding:"required"`
 }
 //添加好友
 func AddFriend(c *gin.Context)  {
@@ -28,12 +35,28 @@ func AddFriend(c *gin.Context)  {
 		ParmError(c,"repeat")
 		return
 	}
-	if models.NotifyCreate(uid,parm.FriendID)!=nil{
+	var nid uint32
+	var err error
+	if nid,err=models.NotifyCreate(uid,parm.FriendID,parm.Greet);err!=nil{
 		//todo 数据库失败，写入日志
 		DBerror(c)
 		return
 	}
 	//todo 向链接服务器发送一个推送，让用户有拉取好友添加请求
+	user,err:=rediscache.GetUser(parm.FriendID)
+	if err==nil{
+		gcleint,ok:=manage.ComitManage.GetComitServer(user.Srvname)
+		if ok{
+
+			ctx,cancle:=context.WithTimeout(context.TODO(),config.RgpcTimeOut)
+			defer cancle()
+			gcleint.Client.FriendNotify(ctx,&intercom.Notify{
+				Nid:nid,
+				Receiver:parm.FriendID,
+			})
+		}
+	}
+
 	Success(c,nil)
 }
 
@@ -58,6 +81,21 @@ func Agree(c *gin.Context)  {
 		return
 	}
  	//todo 添加好友成功，发送一条推送信息
+	user,err:=rediscache.GetUser(notify.Sender)
+	if err==nil{
+		gcleint,ok:=manage.ComitManage.GetComitServer(user.Srvname)
+		if ok{
+
+			ctx,cancle:=context.WithTimeout(context.TODO(),config.RgpcTimeOut)
+			defer cancle()
+			gcleint.Client.FriendAgree(ctx,&intercom.Agree{
+				Greet:notify.Greet,
+				Nid:notify.ID,
+				Uid:notify.Sender,
+				Receiver:notify.Receive,
+			})
+		}
+	}
  	Success(c,notify.ID)
 }
 //拒绝好友请求

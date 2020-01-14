@@ -4,14 +4,18 @@
     <list default="true" id="0b1ce452-59cb-40f6-9f73-250670b6e09a" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/config/config.go" beforeDir="false" afterPath="$PROJECT_DIR$/config/config.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/handles/chathandle.go" beforeDir="false" afterPath="$PROJECT_DIR$/handles/chathandle.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/handles/pullmessage.go" beforeDir="false" afterPath="$PROJECT_DIR$/handles/pullmessage.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/modle/groupmessage.go" beforeDir="false" afterPath="$PROJECT_DIR$/modle/groupmessage.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/modle/modle_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/modle/modle_test.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/modle/onemessage.go" beforeDir="false" afterPath="$PROJECT_DIR$/modle/onemessage.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/proto/grpc/message.pb.go" beforeDir="false" afterPath="$PROJECT_DIR$/proto/grpc/message.pb.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/proto/grpc/message.proto" beforeDir="false" afterPath="$PROJECT_DIR$/proto/grpc/message.proto" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/router/router.go" beforeDir="false" afterPath="$PROJECT_DIR$/router/router.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/grpcserver/server.go" beforeDir="false" afterPath="$PROJECT_DIR$/grpcserver/server.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/proto/grpc/intercom.pb.go" beforeDir="false" afterPath="$PROJECT_DIR$/proto/grpc/intercom.pb.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/proto/grpc/intercom.proto" beforeDir="false" afterPath="$PROJECT_DIR$/proto/grpc/intercom.proto" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../logic/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../logic/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../logic/config/config.go" beforeDir="false" afterPath="$PROJECT_DIR$/../logic/config/config.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../logic/ectdcofig/matrs.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../logic/ectdcofig/put.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../logic/go.mod" beforeDir="false" afterPath="$PROJECT_DIR$/../logic/go.mod" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../logic/go.sum" beforeDir="false" afterPath="$PROJECT_DIR$/../logic/go.sum" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../logic/handles/friend.go" beforeDir="false" afterPath="$PROJECT_DIR$/../logic/handles/friend.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../logic/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/../logic/main.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../logic/models/notify.go" beforeDir="false" afterPath="$PROJECT_DIR$/../logic/models/notify.go" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -21,6 +25,30 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/grpcserver/server.go">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="304">
+              <caret line="107" column="25" selection-start-line="107" selection-start-column="25" selection-end-line="107" selection-end-column="25" />
+              <folding>
+                <element signature="n#!!block;n#Transfer#0" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/proto/grpc/intercom.pb.go">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-6182">
+              <caret line="30" column="49" lean-forward="true" selection-start-line="30" selection-start-column="49" selection-end-line="30" selection-end-column="49" />
+              <folding>
+                <element signature="e#94#298#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/proto/grpc/message.pb.go">
           <provider selected="true" editor-type-id="text-editor">
@@ -34,91 +62,73 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/handles/authhandle.go">
+        <entry file="file://$PROJECT_DIR$/proto/grpc/intercom.proto">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="580">
-              <caret line="99" column="1" lean-forward="true" selection-start-line="99" selection-start-column="1" selection-end-line="99" selection-end-column="1" />
+            <state relative-caret-position="259">
+              <caret line="24" column="13" selection-start-line="24" selection-start-column="8" selection-end-line="24" selection-end-column="13" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/modle/groupmessage.go">
+        <entry file="file://$PROJECT_DIR$/handles/pinghandle.go">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="224">
-              <caret line="59" column="60" lean-forward="true" selection-start-line="59" selection-start-column="60" selection-end-line="59" selection-end-column="60" />
+            <state relative-caret-position="276">
+              <caret line="12" lean-forward="true" selection-start-line="12" selection-end-line="12" />
+              <folding>
+                <element signature="e#17#50#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/manage/ack_test.go">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="374">
+              <caret line="50" column="27" lean-forward="true" selection-start-line="50" selection-start-column="27" selection-end-line="50" selection-end-column="27" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/manage/ackmessage.go">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-1696">
+              <caret line="47" column="36" lean-forward="true" selection-start-line="47" selection-start-column="36" selection-end-line="47" selection-end-column="36" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/manage/comits.go">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-708">
+              <caret line="20" column="63" lean-forward="true" selection-start-line="20" selection-start-column="63" selection-end-line="20" selection-end-column="63" />
+              <folding>
+                <element signature="e#16#106#0" expanded="true" />
+                <element signature="e#158#200#0" />
+                <element signature="e#219#287#0" />
+                <element signature="n#!!block;n#GetComitServer#0" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/manage/connectmanage.go">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="213">
+              <caret line="41" selection-start-line="41" selection-end-line="41" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/handles/pullmessage.go">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="462">
-              <caret line="63" column="7" selection-start-line="63" selection-start-column="7" selection-end-line="63" selection-end-column="7" />
-              <folding>
-                <element signature="e#17#57#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/main.go">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="14">
-              <caret line="20" selection-start-line="20" selection-end-line="20" />
-              <folding>
-                <element signature="e#14#149#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/modle/modle_test.go">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="97">
-              <caret line="9" column="26" selection-start-line="9" selection-start-column="26" selection-end-line="9" selection-end-column="26" />
-              <folding>
-                <element signature="e#15#43#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/router/router.go">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="184">
-              <caret line="23" column="61" lean-forward="true" selection-start-line="23" selection-start-column="61" selection-end-line="23" selection-end-column="61" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/config/config.go">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="17">
-              <caret line="10" selection-start-line="10" selection-end-line="22" selection-end-column="1" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/handles/chathandle.go">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="77">
-              <caret line="232" column="37" selection-start-line="232" selection-start-column="37" selection-end-line="232" selection-end-column="37" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/modle/onemessage.go">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="132">
-              <caret line="23" column="6" selection-start-line="23" selection-start-column="6" selection-end-line="23" selection-end-column="6" />
+            <state relative-caret-position="253">
+              <caret line="23" column="1" lean-forward="true" selection-start-line="10" selection-end-line="23" selection-end-column="1" />
             </state>
           </provider>
         </entry>
@@ -180,8 +190,6 @@
         <option value="$PROJECT_DIR$/rediscache/usercache.go" />
         <option value="$PROJECT_DIR$/rediscache/groupcache.go" />
         <option value="$PROJECT_DIR$/proto/grpc/message.pb.go" />
-        <option value="$PROJECT_DIR$/proto/grpc/intercom.proto" />
-        <option value="$PROJECT_DIR$/grpcserver/server.go" />
         <option value="$PROJECT_DIR$/main.go" />
         <option value="$PROJECT_DIR$/fxsrv/connect.go" />
         <option value="$PROJECT_DIR$/handles/pinghandle.go" />
@@ -193,12 +201,14 @@
         <option value="$PROJECT_DIR$/modle/init.go" />
         <option value="$PROJECT_DIR$/proto/grpc/message.proto" />
         <option value="$PROJECT_DIR$/router/router.go" />
-        <option value="$PROJECT_DIR$/config/config.go" />
         <option value="$PROJECT_DIR$/modle/onemessage.go" />
-        <option value="$PROJECT_DIR$/modle/groupmessage.go" />
         <option value="$PROJECT_DIR$/handles/chathandle.go" />
         <option value="$PROJECT_DIR$/modle/modle_test.go" />
         <option value="$PROJECT_DIR$/handles/pullmessage.go" />
+        <option value="$PROJECT_DIR$/modle/groupmessage.go" />
+        <option value="$PROJECT_DIR$/proto/grpc/intercom.proto" />
+        <option value="$PROJECT_DIR$/config/config.go" />
+        <option value="$PROJECT_DIR$/grpcserver/server.go" />
       </list>
     </option>
   </component>
@@ -225,11 +235,6 @@
             <path>
               <item name="comit" type="b2602c69:ProjectViewProjectNode" />
               <item name="comit" type="462c0819:PsiDirectoryNode" />
-              <item name="config" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="comit" type="b2602c69:ProjectViewProjectNode" />
-              <item name="comit" type="462c0819:PsiDirectoryNode" />
               <item name="handles" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -240,12 +245,18 @@
             <path>
               <item name="comit" type="b2602c69:ProjectViewProjectNode" />
               <item name="comit" type="462c0819:PsiDirectoryNode" />
-              <item name="modle" type="462c0819:PsiDirectoryNode" />
+              <item name="proto" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="comit" type="b2602c69:ProjectViewProjectNode" />
               <item name="comit" type="462c0819:PsiDirectoryNode" />
-              <item name="router" type="462c0819:PsiDirectoryNode" />
+              <item name="proto" type="462c0819:PsiDirectoryNode" />
+              <item name="grpc" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="comit" type="b2602c69:ProjectViewProjectNode" />
+              <item name="comit" type="462c0819:PsiDirectoryNode" />
+              <item name="rediscache" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -397,14 +408,13 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
-    <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.84210527" visible="true" weight="0.2774799" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.84210527" visible="true" weight="0.2774799" />
       <window_info id="Structure" order="1" sideWeight="0.15789473" side_tool="true" weight="0.25670242" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info active="true" anchor="bottom" x="22" y="296" width="1492" height="231" id="Run" order="2" sideWeight="0.49731904" visible="true" weight="0.36402267" />
+      <window_info anchor="bottom" x="22" y="296" width="1492" height="231" id="Run" order="2" sideWeight="0.49731904" visible="true" weight="0.36402267" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -535,13 +545,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/grpcserver/server.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1357">
-          <caret line="69" column="23" selection-start-line="69" selection-start-column="23" selection-end-line="69" selection-end-column="23" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://D:/Go/src/container/heap/heap.go">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1794">
@@ -604,30 +607,6 @@
     <entry file="file://$PROJECT_DIR$/proto/message.proto">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/registrationDiscovery/registry.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1656">
-          <caret line="80" selection-start-line="80" selection-end-line="80" />
-          <folding>
-            <element signature="e#31#145#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/rediscache/usercache.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="759">
-          <caret line="37" column="5" selection-start-line="37" selection-start-column="5" selection-end-line="37" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/rediscache/groupcache.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="253">
-          <caret line="11" column="29" selection-start-line="11" selection-start-column="29" selection-end-line="11" selection-end-column="29" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/modle/init.go">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="276">
@@ -645,68 +624,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/proto/grpc/intercom.proto">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="236">
-          <caret line="11" column="12" selection-start-line="11" selection-start-column="4" selection-end-line="11" selection-end-column="12" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/manage/connectmanage.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="213">
-          <caret line="41" selection-start-line="41" selection-end-line="41" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/manage/comits.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="374">
-          <caret line="40" column="25" selection-start-line="40" selection-start-column="25" selection-end-line="40" selection-end-column="25" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/manage/ack_test.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="374">
-          <caret line="50" column="27" lean-forward="true" selection-start-line="50" selection-start-column="27" selection-end-line="50" selection-end-column="27" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/manage/ackmessage.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="23">
-          <caret line="47" column="36" lean-forward="true" selection-start-line="47" selection-start-column="36" selection-end-line="47" selection-end-column="36" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/proto/grpc/intercom.pb.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="153">
-          <caret line="27" column="13" selection-start-line="27" selection-start-column="4" selection-end-line="27" selection-end-column="13" />
-          <folding>
-            <element signature="e#94#298#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/proto/grpc/message.proto">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="213">
-          <caret line="54" selection-start-line="54" selection-end-line="54" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/handles/pinghandle.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="276">
-          <caret line="12" lean-forward="true" selection-start-line="12" selection-end-line="12" />
-          <folding>
-            <element signature="e#17#50#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/fxsrv/connect.go">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="132">
@@ -714,51 +631,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/main.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="14">
-          <caret line="20" selection-start-line="20" selection-end-line="20" />
-          <folding>
-            <element signature="e#14#149#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/router/router.go">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="184">
           <caret line="23" column="61" lean-forward="true" selection-start-line="23" selection-start-column="61" selection-end-line="23" selection-end-column="61" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/handles/chathandle.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="77">
-          <caret line="232" column="37" selection-start-line="232" selection-start-column="37" selection-end-line="232" selection-end-column="37" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/proto/grpc/message.pb.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="132">
-          <caret line="453" column="5" selection-start-line="453" selection-start-column="5" selection-end-line="453" selection-end-column="5" />
-          <folding>
-            <element signature="e#93#169#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/handles/authhandle.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="580">
-          <caret line="99" column="1" lean-forward="true" selection-start-line="99" selection-start-column="1" selection-end-line="99" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/config/config.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
-          <caret line="10" selection-start-line="10" selection-end-line="22" selection-end-column="1" />
         </state>
       </provider>
     </entry>
@@ -781,18 +657,158 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/modle/groupmessage.go">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="224">
-          <caret line="59" column="60" lean-forward="true" selection-start-line="59" selection-start-column="60" selection-end-line="59" selection-end-column="60" />
+        <state relative-caret-position="155">
+          <caret line="46" column="30" selection-start-line="46" selection-start-column="30" selection-end-line="46" selection-end-column="30" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/main.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="198">
+          <caret line="28" column="40" selection-start-line="28" selection-start-column="40" selection-end-line="28" selection-end-column="40" />
+          <folding>
+            <element signature="e#14#149#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/registrationDiscovery/registry.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2">
+          <caret line="57" column="34" selection-start-line="57" selection-start-column="34" selection-end-line="57" selection-end-column="34" />
+          <folding>
+            <element signature="e#31#145#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/rediscache/groupcache.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="253">
+          <caret line="11" column="29" selection-start-line="11" selection-start-column="29" selection-end-line="11" selection-end-column="29" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/rediscache/usercache.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="483">
+          <caret line="37" column="5" selection-start-line="37" selection-start-column="5" selection-end-line="37" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/handles/chathandle.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="282">
+          <caret line="270" lean-forward="true" selection-start-line="270" selection-end-line="270" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/handles/authhandle.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="374">
+          <caret line="99" column="1" lean-forward="true" selection-start-line="99" selection-start-column="1" selection-end-line="99" selection-end-column="1" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/handles/pullmessage.go">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="462">
+        <state relative-caret-position="374">
           <caret line="63" column="7" selection-start-line="63" selection-start-column="7" selection-end-line="63" selection-end-column="7" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/proto/grpc/message.proto">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="184">
+          <caret line="8" column="19" selection-start-line="8" selection-start-column="11" selection-end-line="8" selection-end-column="19" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/handles/pinghandle.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="276">
+          <caret line="12" lean-forward="true" selection-start-line="12" selection-end-line="12" />
           <folding>
-            <element signature="e#17#57#0" expanded="true" />
+            <element signature="e#17#50#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/proto/grpc/message.pb.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="132">
+          <caret line="453" column="5" selection-start-line="453" selection-start-column="5" selection-end-line="453" selection-end-column="5" />
+          <folding>
+            <element signature="e#93#169#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/proto/grpc/intercom.pb.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-6182">
+          <caret line="30" column="49" lean-forward="true" selection-start-line="30" selection-start-column="49" selection-end-line="30" selection-end-column="49" />
+          <folding>
+            <element signature="e#94#298#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/proto/grpc/intercom.proto">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="259">
+          <caret line="24" column="13" selection-start-line="24" selection-start-column="8" selection-end-line="24" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/grpcserver/server.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="304">
+          <caret line="107" column="25" selection-start-line="107" selection-start-column="25" selection-end-line="107" selection-end-column="25" />
+          <folding>
+            <element signature="n#!!block;n#Transfer#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/manage/ack_test.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="374">
+          <caret line="50" column="27" lean-forward="true" selection-start-line="50" selection-start-column="27" selection-end-line="50" selection-end-column="27" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/manage/ackmessage.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1696">
+          <caret line="47" column="36" lean-forward="true" selection-start-line="47" selection-start-column="36" selection-end-line="47" selection-end-column="36" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/manage/comits.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-708">
+          <caret line="20" column="63" lean-forward="true" selection-start-line="20" selection-start-column="63" selection-end-line="20" selection-end-column="63" />
+          <folding>
+            <element signature="e#16#106#0" expanded="true" />
+            <element signature="e#158#200#0" />
+            <element signature="e#219#287#0" />
+            <element signature="n#!!block;n#GetComitServer#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/manage/connectmanage.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="213">
+          <caret line="41" selection-start-line="41" selection-end-line="41" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/config/config.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="253">
+          <caret line="23" column="1" lean-forward="true" selection-start-line="10" selection-end-line="23" selection-end-column="1" />
         </state>
       </provider>
     </entry>

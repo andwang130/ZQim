@@ -73,6 +73,43 @@ func (this *Server)Grouptranfer(ctx context.Context,message *intercom.GreupTranf
 	}
 	return ack,nil
 }
+
+func (this *Server)FriendNotify(ctx context.Context,message *intercom.Notify)(*intercom.AckMessage,error)  {
+
+	var ackmessage=&intercom.AckMessage{}
+	con,ok:=manage.ConManage.GetConnect(message.Receiver)
+	if ok{
+		var request=&fxsrv.Request{}
+		request.Type=config.FriendNotice
+		buf,err:=proto.Marshal(message)
+		if err!=nil{
+			return ackmessage,nil
+		}
+		request.Body=buf
+		request.BodyLen=uint32(len(buf))
+		con.Write(request)
+	}
+
+	return ackmessage,nil
+}
+func (this *Server)FriendAgree(ctx context.Context,mesasge *intercom.Agree)(*intercom.AckMessage,error)  {
+	var ackmesasge=&intercom.AckMessage{}
+	con,ok:=manage.ConManage.GetConnect(mesasge.Uid)
+	if ok{
+		buf,err:=proto.Marshal(mesasge)
+		if err!=nil{
+			return ackmesasge,nil
+		}
+		var request =&fxsrv.Request{
+			Type:config.FriendAgree,
+			Body:buf,
+			BodyLen:uint32(len(buf)),
+		}
+		con.Write(request)
+
+	}
+	return ackmesasge,nil
+}
 func GrpcServerRun(addr string)  {
 	lic,err:=net.Listen("tcp",addr)
 	if err!=nil{
