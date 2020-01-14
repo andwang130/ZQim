@@ -14,10 +14,12 @@ const (
 	OneMessage    //单聊消息
 	GorupMessage  //群聊消息
 	AckMesage     //Ack
+	AckManyMessage //多Ack
 	Ping          //心跳
 	PullOneMessage   //拉取单聊消息
 	PullGorupMessage  //拉取群聊消息
-	AckMesageMany     //Ack多个
+	DeleteManyMesage    //离线消息删除多个
+
 )
 
 //auth状态码

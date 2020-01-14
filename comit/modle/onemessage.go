@@ -18,8 +18,11 @@ func DeleteOnemessage(rek uint64,receiver uint32) error {
 
 	return db.Where("rek=?",rek).Where("receiver=?",receiver).Delete(&Onemessage{}).Error
 }
-func GetOneMessageList(receiver uint32,page,size uint32)[]Onemessage  {
-	var onemessages []Onemessage
+func DeleteOnemessageMany(reks []uint64,receiver uint32)error  {
+	return db.Where("rek in (?)",reks).Where("receiver=?",receiver).Delete(&Onemessage{}).Error
+}
+func GetOneMessageList(receiver uint32,page,size uint32)[]*Onemessage  {
+	var onemessages []*Onemessage
 	db.Model(&Onemessage{}).Where("receiver=?",receiver).Limit(size).Offset((page-1)*size).Scan(&onemessages)
 	return onemessages
 

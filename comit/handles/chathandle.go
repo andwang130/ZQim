@@ -100,13 +100,14 @@ func GorupMessageHandle(con *fxsrv.Connect,request *fxsrv.Request)error  {
 	if err:=proto.Unmarshal(request.Body,&groupmessage);err!=nil{
 		return  errors.New("消息解析失败")
 	}
-	fmt.Println(groupmessage.Msgbody)
+
 	if groupmessage.Sender!=con.GetId(){
 
 		return errors.New("发送人id不一致")
 	}
 
-	fmt.Println("群组id：",groupmessage.Groupid)
+	//群聊消息以服务器时间为准
+	groupmessage.Time=uint32(time.Now().Unix())
 	//获取该群聊的所有用户id
 	userlist,err:=rediscache.GetGroupUsers(groupmessage.Groupid)
 	if err!=nil{
@@ -128,14 +129,14 @@ func GorupMessageHandle(con *fxsrv.Connect,request *fxsrv.Request)error  {
 		return errors.New("不在该群组")
 	}
 
-	fmt.Println("群聊消息id：",groupmessage.Rek)
 	err=modle.CreateGroupMessage(
 		&modle.Message{
 			Rek:groupmessage.Rek,
 			Body:groupmessage.Msgbody,
-			Time:uint32(time.Now().Unix()),
+			Time:groupmessage.Time,
 			Msgtype:groupmessage.Msgtype,
 			Sender:groupmessage.Sender,
+			Groupid:groupmessage.Groupid,
 		})
 	if err!=nil{
 		SendAck(con,groupmessage.Rek,config.AckSaveFail)
@@ -172,18 +173,22 @@ func GorupMessageHandle(con *fxsrv.Connect,request *fxsrv.Request)error  {
 		return errors.New("写入数据库失败")
 	}
 
-	fmt.Println("发送人id：",groupmessage.Sender)
-	fmt.Println("消息内容：",groupmessage.Msgbody)
 
 
+	//修改了时间，重新生成buf,进入Ack队列
+	 buf,err:=proto.Marshal(&groupmessage)
+	 if err!=nil{
+	 	//todo log
+	 }
 	for _,v:=range locclient{
-
 			manage.AckMange.Push(&manage.AckMessage{
-				Body:     request.Body,
+				Body:    buf,
 				Receiver: v.GetId(),
 				Msgid:    groupmessage.Rek,
 				GropOrOne:config.GorupMessage,
 			})
+			request.Body=buf
+			request.BodyLen=uint32(len(buf))
 			v.Write(request)
 
 	}
@@ -224,3 +229,42 @@ func AckMesageHandle(con *fxsrv.Connect,request *fxsrv.Request) error {
 	return nil
 }
 
+func DeleteManyHandle(con *fxsrv.Connect,request *fxsrv.Request)error  {
+	var many intercom.DeleteManyMessages
+	if err:=proto.Unmarshal(request.Body,&many);err!=nil{
+		SendAckMany(con,many.Reks,1)
+		return nil
+	}
+	if many.Msgtype==1 {
+		//单聊消息
+		if modle.DeleteOnemessageMany(many.Reks,con.GetId())!=nil{
+
+			SendAckMany(con,many.Reks,0)
+			return nil
+		}
+	}else if many.Msgtype==2{
+		//群聊消息
+		if modle.DeleteGroupUserMessageMany(many.Reks,con.GetId())!=nil{
+			SendAckMany(con,many.Reks,0)
+			return nil
+		}
+	}
+
+	SendAckMany(con,many.Reks,1)
+	return nil
+}
+func SendAckMany(con *fxsrv.Connect,reks []uint64,status uint32)  {
+	var ackmessage intercom.AckManyMesasges
+	ackmessage.Reks=reks
+	ackmessage.Status=status
+	buf,err:=proto.Marshal(&ackmessage)
+	if err!=nil{
+		//todo log
+		return
+	}
+	var ackreq =&fxsrv.Request{}
+	ackreq.Type=config.AckManyMessage
+	ackreq.Body=buf
+	ackreq.BodyLen=uint32(len(buf))
+	con.Write(ackreq)
+}

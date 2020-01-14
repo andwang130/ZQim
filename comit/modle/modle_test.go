@@ -7,7 +7,7 @@ import (
 
 func TestGetGroupMessages(t *testing.T) {
 
-	fmt.Println(len(GetGroupMessages(2,1,10)))
+	fmt.Println(len(GetGroupMessageList(2,1,10)))
 
 }
 

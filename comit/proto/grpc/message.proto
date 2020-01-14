@@ -42,3 +42,19 @@ message AckMessage{
     uint32 msgtype=2;
     uint32 status=3;
 }
+message PullOneMessages{
+    repeated OneMessage messages=1;
+}
+message PullGroupMessages{
+    repeated GroupMessage messages=1;
+}
+message AckManyMesasges{
+    repeated uint64 reks=1;
+    uint32 msgtype=2;
+    uint32 status=3;
+
+}
+message DeleteManyMessages{
+    repeated uint64 reks=1;
+    uint32 msgtype=2;
+}

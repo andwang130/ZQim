@@ -19,7 +19,9 @@ func setRouter()  {
 
 	server.AddRouter(config.Auth,handles.AuthHandle)
 	server.AddRouter(config.Ping,handles.PingHandle)
-
+	server.AddRouter(config.PullOneMessage,handles.PullOneMessage)
+	server.AddRouter(config.PullGorupMessage,handles.PullGroupMessage)
+	server.AddRouter(config.DeleteManyMesage,handles.DeleteManyHandle)
 	server.AddMiddleware(middlehandles.AuthMiddleHandle,config.OneMessage,config.GorupMessage,config.AckMesage,config.Ping)
 }
 func Run(addr string,port uint32,name string)  {
