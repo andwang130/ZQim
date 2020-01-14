@@ -5,6 +5,7 @@ import (
 	"github.com/dgrijalva/jwt-go"
 	"github.com/gin-gonic/gin"
 	"logic/config"
+	"logic/manage"
 	"logic/models"
 	"strconv"
 	"time"
@@ -41,7 +42,12 @@ func Login(c *gin.Context)  {
 		LoginError(c)
 		return
 	}
-	Success(c,sign)
+	var result=make(map[string]string)
+	fmt.Println("123456789")
+	result["ip"]=manage.ComitManage.NextTcpServer()
+	result["token"]=sign
+
+	Success(c,result)
 
 
 }
