@@ -1,8 +1,6 @@
 package config
 
 import (
-	"github.com/fsnotify/fsnotify"
-	"github.com/prometheus/common/log"
 	"github.com/spf13/viper"
 	"os"
 	"time"

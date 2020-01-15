@@ -7,7 +7,7 @@ import (
 )
 
 var Route *gin.Engine
-func init()  {
+func InitRouter()  {
 	Route=gin.Default()
 	var authrization=Route.Group("/", middleware.AuthMiddle)
 
@@ -19,6 +19,4 @@ func init()  {
 	authrization.POST("/friend/refuse", controller.Refuse)
 	authrization.POST("/friend/delete", controller.DeleteFirend)
 	authrization.POST("/friend/list", controller.FirendList)
-
-
 }

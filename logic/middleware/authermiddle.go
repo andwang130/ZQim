@@ -32,20 +32,21 @@ func paresjwt(tokenstring string)(jwt.MapClaims,error)  {
 func AuthMiddle(c *gin.Context)  {
 	var tokenString=c.Request.Header.Get("token")
 	if tokenString==""{
-		utils.TokenError(c)
+		utils.ResponseError(c,500,errors.New("token error"))
 		c.Abort()
 		return
 	}
 	var claims,err=paresjwt(tokenString)
 	if err!=nil{
 
-		utils.TokenError(c)
+		utils.ResponseError(c,500,errors.New("token error"))
+
 		c.Abort()
 		return
 	}
 	 var checkerror=claims.Valid()
 	if checkerror!=nil{
-		utils.TokenError(c)
+		utils.ResponseError(c,500,errors.New("token error"))
 		c.Abort()
 		return
 	}
