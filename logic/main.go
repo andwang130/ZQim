@@ -1,17 +1,19 @@
 package main
 
 import (
-	"logic/registrationDiscovery"
+	"logic/config"
+	"logic/database"
 	"logic/router"
+	"logic/service"
 	"time"
-
-	//_ "logic/ectdcofig"
 )
-func main() {
 
-	if err:=registrationDiscovery.Init([]string{"127.0.0.1:2379"},time.Second*2);err!=nil{
+func main() {
+	config.InitConfig()
+	database.InitMysql()
+	if err := service.Init([]string{"127.0.0.1:2379"}, time.Second*2); err != nil {
 		panic(err)
 	}
-	go registrationDiscovery.Regdisry.Watch()
+	go service.Regdisry.Watch()
 	router.Route.Run(":8080")
 }

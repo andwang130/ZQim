@@ -1,4 +1,4 @@
-package rediscache
+package config
 
 import (
 	"encoding/json"
@@ -29,7 +29,7 @@ func SetUser(uid uint32,user User) error {
 	}
 	return rediscli.Set("userid:"+strconv.Itoa(int(uid)),value,0).Err()
 }
-func GetUser(uid uint32)(User,error)  {
+func GetUserFromRedis(uid uint32)(User,error)  {
 
 	var user User
 	value,err:=rediscli.Get("userid:"+strconv.Itoa(int(uid))).Bytes()

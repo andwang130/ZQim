@@ -1,5 +1,9 @@
 package models
 
+import (
+	"logic/database"
+)
+
 type Groupchat struct {
 	BaseModel
 	//群公告
@@ -17,7 +21,7 @@ type GroupchatUser struct {
 
 func GroupCreate(group Groupchat)error  {
 
-	tx:=db.Begin()
+	tx:= database.GormPool.Begin()
 	if err:=tx.Create(&group).Error;err!=nil{
 		tx.Callback()
 		return err

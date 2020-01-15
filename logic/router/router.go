@@ -2,23 +2,23 @@ package router
 
 import (
 	"github.com/gin-gonic/gin"
-	"logic/handles"
-	"logic/middle"
+	"logic/controller"
+	"logic/middleware"
 )
 
 var Route *gin.Engine
 func init()  {
 	Route=gin.Default()
-	var authrization=Route.Group("/",middle.AuthMiddle)
+	var authrization=Route.Group("/", middleware.AuthMiddle)
 
-	Route.POST("/login", handles.Login)
-	Route.POST("/register", handles.Register)
-	Route.POST("/logout", handles.Login)
-	authrization.POST("/friend/add",handles.AddFriend)
-	authrization.POST("/friend/agree",handles.Agree)
-	authrization.POST("/friend/refuse",handles.Refuse)
-	authrization.POST("/friend/delete", handles.DeleteFirend)
-	authrization.POST("/friend/list", handles.FirendList)
+	Route.POST("/login", controller.Login)
+	Route.POST("/register", controller.Register)
+	Route.POST("/logout", controller.Login)
+	authrization.POST("/friend/add", controller.AddFriend)
+	authrization.POST("/friend/agree", controller.Agree)
+	authrization.POST("/friend/refuse", controller.Refuse)
+	authrization.POST("/friend/delete", controller.DeleteFirend)
+	authrization.POST("/friend/list", controller.FirendList)
 
 
 }

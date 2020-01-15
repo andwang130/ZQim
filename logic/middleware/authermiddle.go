@@ -1,4 +1,4 @@
-package middle
+package middleware
 
 import (
 	"errors"
@@ -6,7 +6,7 @@ import (
 	"github.com/dgrijalva/jwt-go"
 	"github.com/gin-gonic/gin"
 	"logic/config"
-	"logic/handles"
+	"logic/utils"
 )
 
 //解析jwt的token
@@ -32,20 +32,20 @@ func paresjwt(tokenstring string)(jwt.MapClaims,error)  {
 func AuthMiddle(c *gin.Context)  {
 	var tokenString=c.Request.Header.Get("token")
 	if tokenString==""{
-		handles.TokenError(c)
+		utils.TokenError(c)
 		c.Abort()
 		return
 	}
 	var claims,err=paresjwt(tokenString)
 	if err!=nil{
 
-		handles.TokenError(c)
+		utils.TokenError(c)
 		c.Abort()
 		return
 	}
 	 var checkerror=claims.Valid()
 	if checkerror!=nil{
-		handles.TokenError(c)
+		utils.TokenError(c)
 		c.Abort()
 		return
 	}

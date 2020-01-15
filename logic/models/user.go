@@ -1,6 +1,10 @@
 package models
 
 import (
+	"fmt"
+	"github.com/gin-gonic/gin"
+	"logic/database"
+	"strconv"
 	"time"
 )
 
@@ -16,26 +20,34 @@ type  User struct {
 	Groupchats []Groupchat `gorm:"many2many:groupchat_users;ForeignKey:userid;AssociationForeignKey:id"`
 }
 
+//用户登陆
 func UserLogin(username,passwd string)(*User,bool)  {
-
 	var user =new(User)
-	if db.Where("Username=?",username).Where("Passwd=?",passwd).First(user).RecordNotFound()==true{
-
-
+	if database.GormPool.Where("Username=?",username).Where("Passwd=?",passwd).First(user).RecordNotFound()==true{
 		return user,false
 	}else{
 		return user,true
 	}
-
-
 }
+
+//用户添加
 func UserAdd(user *User)error  {
 	user.Last=time.Now()
-	return db.Create(user).Error
+	return database.GormPool.Create(user).Error
 }
-func UserToGrouplist(uid uint32)([]Groupchat,error)  {
 
+//用户群
+func UserToGrouplist(uid uint32)([]Groupchat,error)  {
 	var groups []Groupchat
-	err:=db.Model(&User{BaseModel:BaseModel{ID:uid}}).Related(&groups,"Groupchats").Error
+	err:= database.GormPool.Model(&User{BaseModel: BaseModel{ID: uid}}).Related(&groups,"Groupchats").Error
 	return groups,err
+}
+
+//获取用户名和UId
+func GetuidAndusername(c *gin.Context) (string,uint32) {
+	var username=c.GetString("username")
+	var uidstr=c.GetString("uid")
+	uid,_:=strconv.Atoi(uidstr)
+	fmt.Println(uid)
+	return username,uint32(uid)
 }

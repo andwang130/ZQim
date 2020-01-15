@@ -1,5 +1,9 @@
 package models
 
+import (
+	"logic/database"
+)
+
 type Notify struct {
 	BaseModel
 	Sender uint32 `gorm:"not null"`
@@ -15,19 +19,19 @@ func NotifyCreate(sender,receive uint32,greet string)(uint32,error)  {
 		Status:1,
 		Greet:greet,
 	}
-	err:=db.Create(notify).Error
+	err:= database.GormPool.Create(notify).Error
 	return notify.ID,err
 }
 func NotifyQuery(sender,receive uint32) bool  {
 
-	return !db.Model(&Notify{}).Where("sender=?",sender).Where("receive=?",receive).Where("status=?",1).First(&Notify{}).RecordNotFound()
+	return !database.GormPool.Model(&Notify{}).Where("sender=?",sender).Where("receive=?",receive).Where("status=?",1).First(&Notify{}).RecordNotFound()
 }
 func NotifyFirst(uid,nid,status uint32)(Notify,error)  {
 	var notify Notify
-	err:=db.Model(Notify{}).Where("receive=?",uid).Where("id=?",nid).Where("status=?",status).First(&notify).Error
+	err:= database.GormPool.Model(Notify{}).Where("receive=?",uid).Where("id=?",nid).Where("status=?",status).First(&notify).Error
 	return notify,err
 }
 func NotifyUpdateStatus(nid uint32,status uint32)error  {
 
-	return db.Model(&Notify{}).Where("id=?",nid).Update("status",status).Error
+	return database.GormPool.Model(&Notify{}).Where("id=?",nid).Update("status",status).Error
 }
