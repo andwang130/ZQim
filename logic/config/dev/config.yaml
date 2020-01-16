@@ -1,10 +1,11 @@
 database:
   driver: mysql
-  host: 127.0.0.1
+  host: 118.24.93.185
   port: 3306
-  username: root
+  username: blog
   dbname: im
   password: 123456
+
 
 redis:
   host: 127.0.0.1
