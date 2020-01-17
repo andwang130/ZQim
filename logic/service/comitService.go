@@ -1,10 +1,10 @@
-package manage
+package service
 
 import (
 	"context"
 	"fmt"
 	"google.golang.org/grpc"
-	"logic/proto"
+	"logic/pkg/proto"
 	"sync"
 	"sync/atomic"
 	"time"
@@ -60,7 +60,7 @@ func NewComitServer(addr string)(*ComitGrpcServer,error)  {
 		return comitserver,err
 	}
 
-	client:=intercom.NewGreeterClient(con)
+	client:= intercom.NewGreeterClient(con)
 	comitserver.Client=client
 	return comitserver,nil
 

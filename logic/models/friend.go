@@ -2,6 +2,7 @@ package models
 
 import (
 	"fmt"
+	"logic/database"
 	"time"
 )
 
@@ -13,8 +14,7 @@ type Friend struct {
 
 func FriendAdd( uid,friendid,nid uint32)error  {
 
-	tx:=db.Begin()
-
+	tx:= database.GormPool.Begin()
 	var friend1 Friend
 	friend1.Userid=uid
 	friend1.Friendid=friendid
@@ -40,8 +40,7 @@ func FriendAdd( uid,friendid,nid uint32)error  {
 	return nil
 }
 func FriendDelete(uid,friendid uint32 )error  {
-
-	return db.Where("Userid=?",uid).Where("Friendid=?",friendid).Delete(&Friend{}).Error
+	return database.GormPool.Where("Userid=?",uid).Where("Friendid=?",friendid).Delete(&Friend{}).Error
 }
 
 type FirendListResult struct {
@@ -57,12 +56,12 @@ func FirendList(uid uint32)[]FirendListResult  {
 	var user User
 	user.ID=uid
 	var users []User
-	db.Model(&user).Related(&users,"friends")
+	database.GormPool.Model(&user).Related(&users,"friends")
 	fmt.Println(users)
 	return Result
 }
-func FirendQuery(uid,firendid uint32,)bool  {
 
-	return !db.Model(&Friend{}).Where("userid=?",uid).Where("friendid=?",firendid).First(&Friend{}).RecordNotFound()
+func FirendQuery(uid,firendid uint32,)bool  {
+	return !database.GormPool.Model(&Friend{}).Where("userid=?",uid).Where("friendid=?",firendid).First(&Friend{}).RecordNotFound()
 
 }

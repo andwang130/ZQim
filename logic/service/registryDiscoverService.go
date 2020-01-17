@@ -1,16 +1,13 @@
-package registrationDiscovery
+package service
 
 import (
 	"logic/config"
-	"logic/manage"
 	"context"
 	"github.com/coreos/etcd/clientv3"
 	"strings"
 	"time"
 	"fmt"
 )
-
-
 
 
 var Regdisry RegistrationDiscovery
@@ -46,15 +43,11 @@ func Init( endpoints []string,timeou time.Duration)error{
 	return nil
 }
 func (this *RegistrationDiscovery)Registry(key string,val string)error  {
-
-
-
 	_, err := this.cli.Put(context.Background(), key, val,clientv3.WithLease(this.leaseID))
-
-
 	return err
 
 }
+
 func (this *RegistrationDiscovery)Less()  {
 	keepchan,err:=this.cli.KeepAlive(context.Background(),this.leaseID)
 	if err!=nil{
@@ -84,9 +77,9 @@ func (this *RegistrationDiscovery)Watch() {
 			for _, v := range req.Events {
 				value :=string(v.Kv.Value)
 				if v.Type.String()=="PUT"{
-					manage.ComitManage.AddTcpServer(value)
+					ComitManage.AddTcpServer(value)
 				}else if v.Type.String()=="DELETE"{
-					manage.ComitManage.DeleteTcpServer(value)
+					ComitManage.DeleteTcpServer(value)
 				}
 			}
 		case req := <-rpcwatch:
@@ -97,13 +90,13 @@ func (this *RegistrationDiscovery)Watch() {
 					continue
 				}
 				if v.Type.String()=="PUT"{
-					if manage.ComitManage.AddComitServer(key, value)!=nil{
+					if ComitManage.AddComitServer(key, value)!=nil{
 						//todo log
 					}
 				}
 				if v.Type.String()=="DELETE"{
 
-					manage.ComitManage.DeleteComitServer(key)
+					ComitManage.DeleteComitServer(key)
 				}
 			}
 
@@ -125,7 +118,7 @@ func (this *RegistrationDiscovery)GetConfig(){
 		key:=strings.TrimPrefix(string(v.Key),"/root/comit/grpcserver/")
 		value:=v.Value
 		if key!=config.ServerName {
-			err:=manage.ComitManage.AddComitServer(key, string(value))
+			err:= ComitManage.AddComitServer(key, string(value))
 			if err != nil {
 				fmt.Println(err)
 				//todo log
@@ -138,7 +131,7 @@ func (this *RegistrationDiscovery)GetConfig(){
 		key:=strings.TrimPrefix(string(v.Key),"/root/comit/imserver/")
 		value:=v.Value
 		if key!=config.ServerName {
-			manage.ComitManage.AddTcpServer(string(value))
+			ComitManage.AddTcpServer(string(value))
 		}
 	}
 

@@ -1,0 +1,15 @@
+database:
+  driver: mysql
+  host: 118.24.93.185
+  port: 3306
+  username: blog
+  dbname: im
+  password: 123456
+
+
+redis:
+  host: 127.0.0.1
+  port: 6379
+  password:
+  max_active: 100
+
