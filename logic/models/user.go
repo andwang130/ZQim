@@ -5,6 +5,7 @@ import (
 	"fmt"
 	jwtgo "github.com/dgrijalva/jwt-go" //需要安装 然后调用这个jwt-go包
 	"github.com/gin-gonic/gin"
+	log "github.com/sirupsen/logrus"
 	"logic/config"
 	"logic/database"
 	"logic/pkg/jwt"
@@ -34,11 +35,12 @@ func UserLogin(username, passwd string) (token LoginResult, err error) {
 	var user User
 	obj := database.GormPool.Where("username = ? and passwd=?", username, passwd).First(&user)
 	if err = obj.Error; err != nil {
+		log.Info(err)
 		return
 	}
 	generateToken := GenerateToken(user)
 	if err := SetUserRedis(user.ID, generateToken); err != nil {
-		fmt.Println(err)
+		log.Info(err)
 	}
 	return generateToken, nil
 }
