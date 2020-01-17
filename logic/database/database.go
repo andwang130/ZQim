@@ -44,7 +44,7 @@ func InitMysql() {
 	dbname := viper.GetString("database.dbname")
 	dsn := fmt.Sprintf("%s:%s@tcp(%s:%d)/%s?charset=utf8&parseTime=True&loc=Local", username, password, host, port, dbname)
 	GormPool, err = gorm.Open(driver, dsn)
-    fmt.Println(dsn)
+    //fmt.Println(dsn)
 	//链接池设置
 	GormPool.LogMode(true)
 
@@ -54,5 +54,4 @@ func InitMysql() {
 	if GormPool.Error != nil {
 		fmt.Printf("database error %v", GormPool.Error)
 	}
-	GormPool.AutoMigrate()
 }
