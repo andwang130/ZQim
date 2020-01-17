@@ -10,6 +10,6 @@ type BaseModel struct {
 	UpdatedAt time.Time
 }
 
-func Init()  {
+func InitMigrate()  {
 	database.GormPool.AutoMigrate(&User{},&Friend{},&Groupchat{},&Notify{},&GroupchatUser{})
 }
