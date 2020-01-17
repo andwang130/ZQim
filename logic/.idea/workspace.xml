@@ -108,8 +108,8 @@
     <list>
       <item itemvalue="Go Build.go build logic/" />
       <item itemvalue="Go Build.go build main.go" />
-      <item itemvalue="Go Build.go build router.go" />
       <item itemvalue="Go Build.go build registry.go" />
+      <item itemvalue="Go Build.go build router.go" />
       <item itemvalue="Go Build.go build usercache.go" />
     </list>
     <recent_temporary>
