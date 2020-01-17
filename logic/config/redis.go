@@ -2,7 +2,9 @@ package config
 
 import (
 	"encoding/json"
+	"fmt"
 	"github.com/go-redis/redis"
+	"github.com/spf13/viper"
 	"strconv"
 )
 
@@ -16,13 +18,14 @@ type User struct {
 
 func InitRedis() {
 	var ops redis.Options
-	ops.Addr = "127.0.0.1:6379"
+	host := viper.GetString("redis.host")
+	port := viper.GetInt("redis.port")
+	ops.Addr = fmt.Sprintf("%s:%d", host, port)
 	Rediscli = redis.NewClient(&ops)
 	if err := Rediscli.Ping().Err(); err != nil {
 		panic(err)
 	}
 }
-
 
 func GetUserFromRedis(uid uint32) (User, error) {
 	var user User
