@@ -1,6 +1,7 @@
 package models
 
 import (
+	"logic/database"
 	"time"
 )
 type BaseModel struct {
@@ -9,6 +10,6 @@ type BaseModel struct {
 	UpdatedAt time.Time
 }
 
-//func Init()  {
-//	database.GormPool.AutoMigrate(&User{},&Friend{},&Groupchat{},&Notify{},&GroupchatUser{})
-//}
+func Init()  {
+	database.GormPool.AutoMigrate(&User{},&Friend{},&Groupchat{},&Notify{},&GroupchatUser{})
+}
