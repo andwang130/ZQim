@@ -4,6 +4,7 @@ import (
 	"context"
 	"errors"
 	"github.com/gin-gonic/gin"
+	"github.com/sirupsen/logrus"
 	"logic/config"
 	"logic/models"
 	"logic/pkg/proto"
@@ -39,7 +40,7 @@ func AddFriend(c *gin.Context)  {
 	var nid uint32
 	var err error
 	if nid,err=models.NotifyCreate(uid,parm.FriendID,parm.Greet);err!=nil{
-		//todo 数据库失败，写入日志
+		logrus.Info(err)
 		utils.DBerror(c)
 		return
 	}
@@ -76,8 +77,8 @@ func Agree(c *gin.Context)  {
 		utils.ResponseError(c,20004,errors.New("Nonexistent notify_id"))
  		return
 	}
-	if models.FriendAdd(notify.Sender,notify.Receive,notify.ID)!=nil{
-		//todo 数据库失败，写入日志
+	if err:=models.FriendAdd(notify.Sender,notify.Receive,notify.ID);err!=nil{
+		logrus.Info(err)
 		utils.DBerror(c)
 		return
 	}
@@ -111,8 +112,8 @@ func Refuse(c *gin.Context)  {
 		utils.ResponseError(c,20004,errors.New("Nonexistent notify_id"))
 		return
 	}
-	if models.NotifyUpdateStatus(notify.ID,3)!=nil{
-		//todo 写日志
+	if err:=models.NotifyUpdateStatus(notify.ID,3);err!=nil{
+		logrus.Info(err)
 		utils.DBerror(c)
 		return
 	}

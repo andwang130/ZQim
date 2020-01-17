@@ -3,6 +3,7 @@ package controller
 import (
 	"errors"
 	"github.com/gin-gonic/gin"
+	"github.com/sirupsen/logrus"
 	"logic/models"
 	"logic/request"
 	"logic/utils"
@@ -42,6 +43,8 @@ func Register(c *gin.Context) {
 	user.Sex = parm.Sex
 	user.Passwd = parm.Passwd
 	if err := models.UserAdd(&user); err != nil {
+		//log.WithFields(log.Fields{}).Info(err)
+		logrus.Info(err)
 		utils.ResponseError(c, 2001, err)
 		return
 	}
