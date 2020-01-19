@@ -10,8 +10,9 @@ type Groupchat struct {
 	GroupName string `gorm:"varchar(20)"`
 	Notice    string `gorm:"varchar(500)"`
 	//群主id
-	Owner uint32 `gorm:"not null"`
-	Users []User `gorm:"many2many:groupchat_users;ForeignKey:groupid"`
+	Owner  uint32 `gorm:"not null"`
+	Status int    `gorm:"not null"`
+	Users  []User `gorm:"many2many:groupchat_users;ForeignKey:groupid"`
 }
 type GroupchatUser struct {
 	BaseModel

@@ -14,9 +14,12 @@ func InitRouter()  {
 	Route.POST("/login", controller.Login)
 	Route.POST("/register", controller.Register)
 	Route.POST("/logout", controller.Login)
+	//好友关系
 	authrization.POST("/friend/add", controller.AddFriend)
 	authrization.POST("/friend/agree", controller.Agree)
 	authrization.POST("/friend/refuse", controller.Refuse)
 	authrization.POST("/friend/delete", controller.DeleteFirend)
 	authrization.POST("/friend/list", controller.FirendList)
+	//群组
+	authrization.POST("/group/create", controller.CreateGroup)
 }
