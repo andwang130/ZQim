@@ -22,4 +22,6 @@ func InitRouter()  {
 	authrization.POST("/friend/list", controller.FirendList)
 	//群组
 	authrization.POST("/group/create", controller.CreateGroup)
+	authrization.POST("/group/quit", controller.QuitGroup)
+	authrization.POST("/group/delete", controller.DeleteGroup)
 }

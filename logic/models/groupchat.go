@@ -1,6 +1,7 @@
 package models
 
 import (
+	"errors"
 	"logic/database"
 )
 
@@ -11,6 +12,7 @@ type Groupchat struct {
 	Notice    string `gorm:"varchar(500)"`
 	//群主id
 	Owner  uint32 `gorm:"not null"`
+	Avatar string `gorm:"not null"`
 	Status int    `gorm:"not null"`
 	Users  []User `gorm:"many2many:groupchat_users;ForeignKey:groupid"`
 }
@@ -40,4 +42,17 @@ func GroupCreate(group Groupchat) error {
 		return err
 	}
 	return nil
+}
+
+//退出群
+func QuitGroup(groupID, userID uint32) error {
+	return database.GormPool.Where("group_id = ? amd user_id=?", groupID, userID).Delete(&GroupchatUser{}).Error
+}
+
+//解散群.,只有群主才能解散群
+func DeleteGroup(group Groupchat, uid uint32) error {
+	if group.Owner != uid {
+		return errors.New("只有群主才能解散群")
+	}
+	return database.GormPool.Where("group_id = ? amd user_id=?", group.Owner).Delete(&group).Error
 }
