@@ -3,6 +3,7 @@ package handles
 import (
 	"context"
 	"github.com/gin-gonic/gin"
+	"github.com/gogo/protobuf/proto"
 	"logic/cache"
 	"logic/config"
 	"logic/manage"
@@ -35,8 +36,8 @@ func AddFriend(c *gin.Context)  {
 		ParmError(c,"repeat")
 		return
 	}
-	var nid uint32
 	var err error
+	var nid uint32
 	if nid,err=models.NotifyCreate(uid,parm.FriendID,parm.Greet);err!=nil{
 		//todo 数据库失败，写入日志
 		DBerror(c)
@@ -47,13 +48,24 @@ func AddFriend(c *gin.Context)  {
 	if err==nil{
 		gcleint,ok:=manage.ComitManage.GetComitServer(user.Srvname)
 		if ok{
+		var notife =&intercom.FriendNotife{
+			Greet:parm.Greet,
+			Nid:nid,
+			Uid:uid,
+			Receiver:parm.FriendID,
+		}
+		buf,err:=proto.Marshal(notife)
+		if err==nil {
 
-			ctx,cancle:=context.WithTimeout(context.TODO(),config.RgpcTimeOut)
+
+
+			ctx, cancle := context.WithTimeout(context.TODO(), config.RgpcTimeOut)
 			defer cancle()
-			gcleint.Client.FriendNotify(ctx,&intercom.Notify{
-				Nid:nid,
-				Receiver:parm.FriendID,
+			gcleint.Client.FriendNotify(ctx, &intercom.Notify{
+				NotifieType: config.FriendNotife,
+				Body:buf,
 			})
+		}
 		}
 	}
 
@@ -81,21 +93,37 @@ func Agree(c *gin.Context)  {
 		return
 	}
  	//todo 添加好友成功，发送一条推送信息
-	user,err:=rediscache.GetUser(notify.Sender)
+	senderuser,err:=rediscache.GetUser(notify.Sender)
 	if err==nil{
-		gcleint,ok:=manage.ComitManage.GetComitServer(user.Srvname)
+		gcleint,ok:=manage.ComitManage.GetComitServer(senderuser.Srvname)
 		if ok{
 
 			ctx,cancle:=context.WithTimeout(context.TODO(),config.RgpcTimeOut)
 			defer cancle()
 			gcleint.Client.FriendAgree(ctx,&intercom.Agree{
+				Notife:&intercom.FriendNotife{
+					Greet:notify.Greet,
+					Nid:notify.ID,
+					Uid:notify.Sender,
+					Receiver:notify.Receive,
+				},
+			})
+		}
+	}else{
+		gcleint:=manage.ComitManage.RandComitServer()
+		ctx,cancle:=context.WithTimeout(context.TODO(),config.RgpcTimeOut)
+		defer cancle()
+		gcleint.Client.FriendAgree(ctx,&intercom.Agree{
+			Notife:&intercom.FriendNotife{
 				Greet:notify.Greet,
 				Nid:notify.ID,
 				Uid:notify.Sender,
 				Receiver:notify.Receive,
-			})
-		}
+			},
+		})
 	}
+
+
  	Success(c,notify.ID)
 }
 //拒绝好友请求
@@ -144,5 +172,48 @@ func FirendList(c *gin.Context)  {
 	var Relust=models.FirendList(uid)
 
 	Success(c,&Relust)
+
+}
+
+type  FirendSerachParm struct {
+	Page uint32 `json:"page" form:"page"`
+	Key string `json:"key" form:"key"`
+}
+func FirendSerach(c *gin.Context)  {
+
+	var parm FirendSerachParm
+
+	if err:=c.ShouldBind(&parm);err!=nil{
+		ParmError(c,err.Error())
+		return
+	}
+
+	var Relust=models.UserSearch(parm.Key,parm.Page,20)
+
+	Success(c,&Relust)
+
+}
+
+type NotifyListParm struct {
+	Page uint32 `json:"page" form:"page"`
+
+}
+func NotifyList(c *gin.Context)  {
+	var parm NotifyListParm
+	if err:=c.ShouldBind(&parm);err!=nil{
+		ParmError(c,err.Error())
+		return
+	}
+	var _,uid=getuidAndusername(c)
+	var results=models.NotifyList(uid,parm.Page)
+	Success(c,results)
+}
+func NotifyClear(c *gin.Context)  {
+	var _,uid=getuidAndusername(c)
+	if models.NotifyClear(uid)!=nil{
+		DBerror(c)
+		return
+	}
+	Success(c,nil)
 
 }

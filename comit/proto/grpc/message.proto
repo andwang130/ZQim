@@ -48,6 +48,9 @@ message PullOneMessages{
 message PullGroupMessages{
     repeated GroupMessage messages=1;
 }
+message PullNotifieMessage{
+    repeated Notify messages=1;
+}
 message AckManyMesasges{
     repeated uint64 reks=1;
     uint32 msgtype=2;
@@ -57,4 +60,21 @@ message AckManyMesasges{
 message DeleteManyMessages{
     repeated uint64 reks=1;
     uint32 msgtype=2;
+}
+message Notify{
+    //通知id
+    uint32 notifieType=1;
+    //接收人id
+    bytes body=2;
+}
+//同意好友请求的通知
+message Agree{
+    //招呼内容
+    FriendNotife notife=1;
+ }
+ message FriendNotife{
+    string greet=1;
+    uint32 uid=2;
+    uint32 receiver=3;
+    uint32 nid=4;
 }

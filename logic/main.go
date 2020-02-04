@@ -13,5 +13,5 @@ func main() {
 		panic(err)
 	}
 	go registrationDiscovery.Regdisry.Watch()
-	router.Route.Run(":8080")
+	router.Route.Run("0.0.0.0:8080")
 }

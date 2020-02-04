@@ -65,3 +65,31 @@ func PullGroupMessage(con *fxsrv.Connect,request *fxsrv.Request)error  {
 	con.Write(&req)
 	return nil
 }
+
+func PullNotifie(con *fxsrv.Connect,request *fxsrv.Request)error  {
+
+	var notifies=modle.NotifieList(con.GetId());
+	var notifiesmsg intercom.PullNotifieMessage
+	var ids=make([]uint32,len(notifies))
+	for i,v:=range notifies{
+		notifiesmsg.Messages=append(notifiesmsg.Messages,&intercom.Notify{
+			NotifieType:v.NotifieType,
+			Body:v.Body,
+		})
+		ids[i]=v.ID
+	}
+
+	buf,err:=proto.Marshal(&notifiesmsg)
+	if err!=nil{
+		return errors.New("proto fail")
+	}
+	var req fxsrv.Request
+	req.Type=config.PullNotifie
+	req.Body=buf
+	req.BodyLen=uint32(len(buf))
+	con.Write(&req)
+	if modle.DeleteNotifieList(ids)!=nil{
+		//todo log
+	}
+	return nil
+}
