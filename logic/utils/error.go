@@ -7,7 +7,7 @@ import (
 )
 
 const (
-	SuccessCode ResponseCode = 200
+	SuccessCode ResponseCode = 0
 )
 
 
@@ -24,8 +24,8 @@ func init()  {
 type ResponseCode int
 
 type Response struct {
-	ErrorCode ResponseCode `json:"errno"`
-	ErrorMsg  string       `json:"errmsg"`
+	ErrorCode ResponseCode `json:"code"`
+	ErrorMsg  string       `json:"msg"`
 	Data      interface{}  `json:"data"`
 }
 

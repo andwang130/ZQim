@@ -15,14 +15,16 @@ import (
 
 type User struct {
 	BaseModel
-	Nickname   string      `gorm:"type:varchar(10);not null"`          //昵称
-	Username   string      `gorm:"type:varchar(36);not null;unique"`   //登录用户名
-	Passwd     string      `gorm:"type:varchar(36);json:"-",not null"` //登录密码
-	Sex        string      `gorm:"type:enum('man','woman');not null"`
-	Last       time.Time   //上次登录时间
-	Lastip     string      `gorm:"type:varchar(16)"`
-	Friends    []User      `gorm:"many2many:friends;ForeignKey:userid;AssociationForeignKey:userid"`
-	Groupchats []Groupchat `gorm:"many2many:groupchat_users;ForeignKey:userid;AssociationForeignKey:id"`
+	Nickname string `gorm:"type:varchar(10);not null" json:"nickname"` //昵称
+	Username string `gorm:"type:varchar(36);not null;unique" json:"username"` //登录用户名
+	Passwd string `gorm:"type:varchar(36);not null" json:"_"` //登录密码
+	Sex string   `gorm:"type:enum('man','woman');not null" json:"sex"`
+	HeadImage string `gorm:"varchar(200)" json:"head_image"`
+	Expl string `gorm:"varcahr(200)" json:"expl"`
+	Last time.Time `json:"last"`    //上次登录时间
+	Lastip string `gorm:"type:varchar(16)" json:"lastip"`
+	Friends []User `gorm:"many2many:friends;ForeignKey:userid;AssociationForeignKey:userid" json:"friends"`
+	Groupchats []Groupchat `gorm:"many2many:groupchat_users;ForeignKey:userid;AssociationForeignKey:id" json:"groupchats"`
 }
 
 type LoginResult struct {
@@ -104,4 +106,11 @@ func SetUserRedis(uid uint32,user LoginResult) error {
 		return err
 	}
 	return config.Rediscli.Set("user:"+strconv.Itoa(int(uid)), value, 0).Err()
+}
+
+func UserSearch(key string,page,size uint32)[]User  {
+
+	var users []User
+	database.GormPool.Model(&User{}).Where("username like ?","%"+key+"%").Offset((page-1)*size).Limit(size).Scan(&users)
+	return users
 }

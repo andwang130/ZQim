@@ -11,6 +11,6 @@ func init()  {
 		panic(err)
 	}
 	db.LogMode(true)
-	db.AutoMigrate(&Onemessage{},&GroupUserMessage{},&Message{})
+	db.AutoMigrate(&Onemessage{},&GroupUserMessage{},&Message{},&Notifie{})
 
 }

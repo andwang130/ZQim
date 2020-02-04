@@ -20,5 +20,5 @@ func main() {
 		panic(err)
 	}
 	go service.Regdisry.Watch()
-	router.Route.Run(":8081")
+	router.Route.Run("0.0.0.0:8080")
 }

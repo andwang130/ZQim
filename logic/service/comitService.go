@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"google.golang.org/grpc"
 	"logic/pkg/proto"
+	"math/rand"
 	"sync"
 	"sync/atomic"
 	"time"
@@ -46,7 +47,26 @@ func (this *ComitManages)GetComitServer(key string)(*ComitGrpcServer,bool) {
 	v,ok:=this.comits[key]
 	return v,ok
 }
+func (this *ComitManages)RandComitServer()*ComitGrpcServer {
 
+
+	this.rwmutex.RLock()
+	defer this.rwmutex.RUnlock()
+	var srv *ComitGrpcServer
+	rand.Seed(time.Now().UnixNano())
+	var n=rand.Intn(len(this.comits))
+	var i=0;
+	for _,v:=range this.comits{
+		srv=v
+		if i==n{
+			break
+		}
+		i++
+	}
+	return srv
+
+
+}
 func NewComitServer(addr string)(*ComitGrpcServer,error)  {
 	var comitserver =&ComitGrpcServer{}
 	ctx, cancel:=context.WithTimeout(context.TODO(),time.Second*5)

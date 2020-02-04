@@ -6,6 +6,7 @@ import (
 	"comit/fxsrv"
 	"comit/handles"
 	"comit/middlehandles"
+	"fmt"
 )
 
 var server fxsrv.Server
@@ -37,6 +38,7 @@ func Run(addr string,port uint32,name string)  {
 }
 func coonectHandle(con *fxsrv.Connect)  {
 
+	fmt.Println(con.GetId())
 }
 func CloseHandle(con *fxsrv.Connect)  {
 	manage.ConManage.DeleteConnect(con.GetId())
