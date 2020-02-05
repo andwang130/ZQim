@@ -41,9 +41,9 @@ func UserLogin(username, passwd string) (token LoginResult, err error) {
 		return
 	}
 	generateToken := GenerateToken(user)
-	if err := SetUserRedis(user.ID, generateToken); err != nil {
-		log.Info(err)
-	}
+	//if err := SetUserRedis(user.ID, generateToken); err != nil {
+	//	log.Info(err)
+	//}
 	return generateToken, nil
 }
 
@@ -72,15 +72,14 @@ func GetuidAndusername(c *gin.Context) (string, uint32) {
 // 生成令牌  创建jwt风格的token
 func GenerateToken(user User) LoginResult {
 	j := &jwt.JWT{
-		[]byte("newtrekWang"),
+		SigningKey:config.SecretKey,
 	}
 	claims := jwt.CustomClaims{
-		int(user.ID),
+		strconv.Itoa(int(user.ID)),
 		user.Username,
-		user.Passwd,
 		jwtgo.StandardClaims{
 			NotBefore: int64(time.Now().Unix() - 1000), // 签名生效时间
-			ExpiresAt: int64(time.Now().Unix() + 3600), // 过期时间 一小时
+			ExpiresAt: time.Now().Add(time.Second*time.Duration(config.TokenOut)).Unix(),
 			Issuer:    "newtrekWang",                   //签名的发行者
 		},
 	}
@@ -113,4 +112,10 @@ func UserSearch(key string,page,size uint32)[]User  {
 	var users []User
 	database.GormPool.Model(&User{}).Where("username like ?","%"+key+"%").Offset((page-1)*size).Limit(size).Scan(&users)
 	return users
+}
+func GetUser(uid uint32)User {
+	var user User
+	database.GormPool.Model(&user).Where("id=?",uid).First(&user)
+
+	return user
 }

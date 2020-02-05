@@ -1,7 +1,6 @@
 package models
 
 import (
-	"fmt"
 	"logic/database"
 	"time"
 )
@@ -44,20 +43,21 @@ func FriendDelete(uid,friendid uint32 )error  {
 }
 
 type FirendListResult struct {
-	Id uint32
-	Nickname string
-	Username string
-	Sex string
-	Last time.Time    //上次登录时间
+	Id uint32 `json:"id"`
+	Nickname string `json:"nickname"`
+	Username string `json:"username"`
+	HeadImage string `gorm:"varchar(200)" json:"head_image"`
+	Sex string `json:"sex"`
+	Last time.Time `json:"last"`   //上次登录时间
 }
 func FirendList(uid uint32)[]FirendListResult  {
 	var Result []FirendListResult
-	//db.Model(&Friend{}).Select([]string{"users.id","nickname","sex","last","username"}).Where("Userid=?",uid).Joins("left join users on users.id=friends.friendid").Scan(&Result)
-	var user User
-	user.ID=uid
-	var users []User
-	database.GormPool.Model(&user).Related(&users,"friends")
-	fmt.Println(users)
+	database.GormPool.Model(&Friend{}).Select([]string{"users.id","nickname","sex","last","username","head_image"}).Where("Userid=?",uid).Joins("left join users on users.id=friends.friendid").Scan(&Result)
+	//var user User
+	//user.ID=uid
+	//var users []User
+	//database.GormPool.Model(&user).Related(&users,"friends")
+
 	return Result
 }
 

@@ -3,6 +3,7 @@ import 'package:flutter_im/src/pages/chat/component/bubble.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_im/src/pages/chatinfo/index.dart';
 import 'package:flutter_im/database/message.dart';
+import 'package:flutter_im/database/dialogue.dart';
 class Chat extends StatefulWidget{
   int uid;
   Chat(this.uid);
@@ -19,6 +20,8 @@ class _Chat extends State<Chat>{
   void initState() {
     // TODO: implement initState
     super.initState();
+    Dialogue.CreateDialogue(widget.uid, "",DateTime.now().toString());
+    Dialogue.dialoguesZeroing(widget.uid);
     this.getmessage();
   }
 

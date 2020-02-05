@@ -66,6 +66,13 @@ const PullGroupMessages$json = const {
   ],
 };
 
+const PullNotifieMessage$json = const {
+  '1': 'PullNotifieMessage',
+  '2': const [
+    const {'1': 'messages', '3': 1, '4': 3, '5': 11, '6': '.intercom.Notify', '10': 'messages'},
+  ],
+};
+
 const AckManyMesasges$json = const {
   '1': 'AckManyMesasges',
   '2': const [
@@ -80,6 +87,31 @@ const DeleteManyMessages$json = const {
   '2': const [
     const {'1': 'reks', '3': 1, '4': 3, '5': 4, '10': 'reks'},
     const {'1': 'msgtype', '3': 2, '4': 1, '5': 13, '10': 'msgtype'},
+  ],
+};
+
+const Notify$json = const {
+  '1': 'Notify',
+  '2': const [
+    const {'1': 'notifieType', '3': 1, '4': 1, '5': 13, '10': 'notifieType'},
+    const {'1': 'body', '3': 2, '4': 1, '5': 12, '10': 'body'},
+  ],
+};
+
+const Agree$json = const {
+  '1': 'Agree',
+  '2': const [
+    const {'1': 'notife', '3': 1, '4': 1, '5': 11, '6': '.intercom.FriendNotife', '10': 'notife'},
+  ],
+};
+
+const FriendNotife$json = const {
+  '1': 'FriendNotife',
+  '2': const [
+    const {'1': 'greet', '3': 1, '4': 1, '5': 9, '10': 'greet'},
+    const {'1': 'uid', '3': 2, '4': 1, '5': 13, '10': 'uid'},
+    const {'1': 'receiver', '3': 3, '4': 1, '5': 13, '10': 'receiver'},
+    const {'1': 'nid', '3': 4, '4': 1, '5': 13, '10': 'nid'},
   ],
 };
 

@@ -41,7 +41,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
 
 
-      home: Notify()
+      home: Login()
     );
   }
 }

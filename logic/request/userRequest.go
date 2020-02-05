@@ -1,8 +1,8 @@
 package request
 
 type LoginInput struct {
-	Username string `form:"username" validate:"required"`
-	Passwd string `form:"password" validate:"required"`
+	Username string `json:"username" form:"username" binding:"required"`
+	Passwd string `json:"passwd" form:"passwd" binding:"required"`
 }
 
 

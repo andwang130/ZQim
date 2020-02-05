@@ -50,6 +50,7 @@ func AuthMiddle(c *gin.Context)  {
 		c.Abort()
 		return
 	}
+
 	c.Set("username",claims["username"])
  	c.Set("uid",claims["uid"])
 	c.Next()

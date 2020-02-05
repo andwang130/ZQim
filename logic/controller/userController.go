@@ -6,6 +6,7 @@ import (
 	"github.com/sirupsen/logrus"
 	"logic/models"
 	"logic/request"
+	"logic/service"
 	"logic/utils"
 )
 
@@ -26,7 +27,10 @@ func Login(c *gin.Context) {
 			return
 		}
 	}
-	utils.ResponseSuccess(c,user)
+	var result=make(map[string]string)
+	result["ip"]=service.ComitManage.NextTcpServer()
+	result["token"]=user.Token
+	utils.ResponseSuccess(c,&result)
 	return
 
 }
@@ -50,3 +54,20 @@ func Register(c *gin.Context) {
 	}
 	utils.ResponseSuccess(c, "注册成功")
 }
+type GetUserParm struct {
+	Uid uint32 `json:"uid" form:"uid" binding:"required"`
+
+}
+func GetUser(c *gin.Context)  {
+	//_,id:=getuidAndusername(c)
+	var parm GetUserParm
+	if err:=c.ShouldBind(&parm);err!=nil{
+		utils.ResponseError(c, 2001, err)
+		return
+	}
+
+	user:=models.GetUser(parm.Uid)
+	utils.ResponseSuccess(c, &user)
+
+}
+

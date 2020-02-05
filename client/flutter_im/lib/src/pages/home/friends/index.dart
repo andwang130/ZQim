@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_im/src/pages/userinfo/index.dart';
 import 'package:flutter_im/src/pages/addfriend/index.dart';
 import 'package:flutter_im/database/user.dart';
+import 'package:flutter_im/src/pages/notify/notify.dart';
+import 'package:flutter_im/uitls/diouitls.dart';
 class Friends extends StatefulWidget{
 
   State<StatefulWidget> createState()=>_Friends();
@@ -13,12 +15,28 @@ class _Friends extends State<Friends>{
 
   List<User> users=List<User>();
   initState(){
+    friendsinit();
+  }
+  friendsinit(){
     User.GetUsers().then((values){
       setState(() {
         users=values;
       });
     });
   }
+  getfriends()async{
+    const String url="http://192.168.0.106:8080/friend/list";
+    var data=await DioUtls.get(url);
+    if (data.data["code"]==0){
+      for(var v in  data.data["data"]){
+        print(v);
+        User.inster(v["id"], v["nickname"], v["head_image"]);
+      }
+      friendsinit();
+    }
+
+  }
+
   Widget Title(){
     return Container(
       padding: EdgeInsets.only(top: 20,left: 20,right: 20,bottom: 0),
@@ -113,26 +131,75 @@ class _Friends extends State<Friends>{
       ) ,
     );
   }
+  Widget notifytiem(){
+    return  FlatButton(
+      onPressed: (){
+        Navigator.push(context,
+            MaterialPageRoute(builder: (_)=>Notify())
+        );
+      },
+      child:Container(
+        height: 52,
+        child: Row(
+          children: <Widget>[
+
+            Expanded(child: Container(
+              width: 25,
+              height: 42,
+              child:Image.network(testImage,fit:BoxFit.fill ,width:25 ,height: 42),
+
+            ), flex: 1,),
+            Expanded(
+              child:Container(
+                  padding: EdgeInsets.only(left: 10),
+                  child: Column(children: <Widget>[
+                    Expanded(child: Container(
+                      alignment:Alignment.centerLeft,
+                      child: Text("好友通知",style: TextStyle(
+                          fontSize: 16
+                      )),)
+                      ,flex: 3,),
+
+                    Expanded(child:
+                    Container(
+                      alignment: Alignment.bottomCenter,
+                      child:
+                      Divider(color: Colors.grey,),),flex: 1)
+
+                  ],)),
+              flex: 6,),
+
+
+          ],
+        ),
+      ) ,
+    );
+  }
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
     return Container(
+
       child: Column(
 
         children: <Widget>[
           Title(),
+          notifytiem(),
+          SizedBox(height: 10,child:
+          Container(color: Colors.grey[200],),),
           Container(
-            height:MediaQuery.of(context).size.height-120,
-            child:  ListView.builder(
-              itemCount: users.length,
-              padding: EdgeInsets.only(top: 0),
-              itemBuilder:(context,i){
+            height:MediaQuery.of(context).size.height-190,
+            child:
+            RefreshIndicator(child:    ListView.builder(
+                itemCount: users.length,
+                padding: EdgeInsets.only(top: 0),
+                itemBuilder:(context,i){
+                  var user=users[i];
+                  return this.friendItem(user.uid,user.nickname,user.headimage);
+                }
 
-                var user=users[i];
-                return this.friendItem(user.uid,user.nickname,user.headimage);
-              }
+            ) , onRefresh: _handleRefresh)
 
-            ) ,
           )
 
         ],
@@ -140,5 +207,9 @@ class _Friends extends State<Friends>{
 
 
     );
+  }
+  Future<Null> _handleRefresh() async {
+    // 模拟数据的延迟加载
+    await this.getfriends();
   }
 }

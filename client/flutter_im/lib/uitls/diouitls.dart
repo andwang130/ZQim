@@ -32,7 +32,6 @@ class DioUtls {
   })async{
     var dio=await GetDio();
     var req=await dio.get(path,queryParameters: queryParameters,options: options,cancelToken: cancelToken,onReceiveProgress: onReceiveProgress);
-    print(req);
     return req;
   }
 }

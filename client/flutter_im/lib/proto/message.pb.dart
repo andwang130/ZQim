@@ -335,6 +335,31 @@ class PullGroupMessages extends $pb.GeneratedMessage {
   $core.List<GroupMessage> get messages => $_getList(0);
 }
 
+class PullNotifieMessage extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo('PullNotifieMessage', package: const $pb.PackageName('intercom'), createEmptyInstance: create)
+    ..pc<Notify>(1, 'messages', $pb.PbFieldType.PM, subBuilder: Notify.create)
+    ..hasRequiredFields = false
+  ;
+
+  PullNotifieMessage._() : super();
+  factory PullNotifieMessage() => create();
+  factory PullNotifieMessage.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory PullNotifieMessage.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  PullNotifieMessage clone() => PullNotifieMessage()..mergeFromMessage(this);
+  PullNotifieMessage copyWith(void Function(PullNotifieMessage) updates) => super.copyWith((message) => updates(message as PullNotifieMessage));
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static PullNotifieMessage create() => PullNotifieMessage._();
+  PullNotifieMessage createEmptyInstance() => create();
+  static $pb.PbList<PullNotifieMessage> createRepeated() => $pb.PbList<PullNotifieMessage>();
+  @$core.pragma('dart2js:noInline')
+  static PullNotifieMessage getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<PullNotifieMessage>(create);
+  static PullNotifieMessage _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.List<Notify> get messages => $_getList(0);
+}
+
 class AckManyMesasges extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo('AckManyMesasges', package: const $pb.PackageName('intercom'), createEmptyInstance: create)
     ..p<$fixnum.Int64>(1, 'reks', $pb.PbFieldType.PU6)
@@ -413,5 +438,140 @@ class DeleteManyMessages extends $pb.GeneratedMessage {
   $core.bool hasMsgtype() => $_has(1);
   @$pb.TagNumber(2)
   void clearMsgtype() => clearField(2);
+}
+
+class Notify extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo('Notify', package: const $pb.PackageName('intercom'), createEmptyInstance: create)
+    ..a<$core.int>(1, 'notifieType', $pb.PbFieldType.OU3, protoName: 'notifieType')
+    ..a<$core.List<$core.int>>(2, 'body', $pb.PbFieldType.OY)
+    ..hasRequiredFields = false
+  ;
+
+  Notify._() : super();
+  factory Notify() => create();
+  factory Notify.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory Notify.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  Notify clone() => Notify()..mergeFromMessage(this);
+  Notify copyWith(void Function(Notify) updates) => super.copyWith((message) => updates(message as Notify));
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static Notify create() => Notify._();
+  Notify createEmptyInstance() => create();
+  static $pb.PbList<Notify> createRepeated() => $pb.PbList<Notify>();
+  @$core.pragma('dart2js:noInline')
+  static Notify getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<Notify>(create);
+  static Notify _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.int get notifieType => $_getIZ(0);
+  @$pb.TagNumber(1)
+  set notifieType($core.int v) { $_setUnsignedInt32(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasNotifieType() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearNotifieType() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.List<$core.int> get body => $_getN(1);
+  @$pb.TagNumber(2)
+  set body($core.List<$core.int> v) { $_setBytes(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasBody() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearBody() => clearField(2);
+}
+
+class Agree extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo('Agree', package: const $pb.PackageName('intercom'), createEmptyInstance: create)
+    ..aOM<FriendNotife>(1, 'notife', subBuilder: FriendNotife.create)
+    ..hasRequiredFields = false
+  ;
+
+  Agree._() : super();
+  factory Agree() => create();
+  factory Agree.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory Agree.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  Agree clone() => Agree()..mergeFromMessage(this);
+  Agree copyWith(void Function(Agree) updates) => super.copyWith((message) => updates(message as Agree));
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static Agree create() => Agree._();
+  Agree createEmptyInstance() => create();
+  static $pb.PbList<Agree> createRepeated() => $pb.PbList<Agree>();
+  @$core.pragma('dart2js:noInline')
+  static Agree getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<Agree>(create);
+  static Agree _defaultInstance;
+
+  @$pb.TagNumber(1)
+  FriendNotife get notife => $_getN(0);
+  @$pb.TagNumber(1)
+  set notife(FriendNotife v) { setField(1, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasNotife() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearNotife() => clearField(1);
+  @$pb.TagNumber(1)
+  FriendNotife ensureNotife() => $_ensure(0);
+}
+
+class FriendNotife extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo('FriendNotife', package: const $pb.PackageName('intercom'), createEmptyInstance: create)
+    ..aOS(1, 'greet')
+    ..a<$core.int>(2, 'uid', $pb.PbFieldType.OU3)
+    ..a<$core.int>(3, 'receiver', $pb.PbFieldType.OU3)
+    ..a<$core.int>(4, 'nid', $pb.PbFieldType.OU3)
+    ..hasRequiredFields = false
+  ;
+
+  FriendNotife._() : super();
+  factory FriendNotife() => create();
+  factory FriendNotife.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory FriendNotife.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  FriendNotife clone() => FriendNotife()..mergeFromMessage(this);
+  FriendNotife copyWith(void Function(FriendNotife) updates) => super.copyWith((message) => updates(message as FriendNotife));
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static FriendNotife create() => FriendNotife._();
+  FriendNotife createEmptyInstance() => create();
+  static $pb.PbList<FriendNotife> createRepeated() => $pb.PbList<FriendNotife>();
+  @$core.pragma('dart2js:noInline')
+  static FriendNotife getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<FriendNotife>(create);
+  static FriendNotife _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.String get greet => $_getSZ(0);
+  @$pb.TagNumber(1)
+  set greet($core.String v) { $_setString(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasGreet() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearGreet() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.int get uid => $_getIZ(1);
+  @$pb.TagNumber(2)
+  set uid($core.int v) { $_setUnsignedInt32(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasUid() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearUid() => clearField(2);
+
+  @$pb.TagNumber(3)
+  $core.int get receiver => $_getIZ(2);
+  @$pb.TagNumber(3)
+  set receiver($core.int v) { $_setUnsignedInt32(2, v); }
+  @$pb.TagNumber(3)
+  $core.bool hasReceiver() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearReceiver() => clearField(3);
+
+  @$pb.TagNumber(4)
+  $core.int get nid => $_getIZ(3);
+  @$pb.TagNumber(4)
+  set nid($core.int v) { $_setUnsignedInt32(3, v); }
+  @$pb.TagNumber(4)
+  $core.bool hasNid() => $_has(3);
+  @$pb.TagNumber(4)
+  void clearNid() => clearField(4);
 }
 

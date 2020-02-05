@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_im/src/pages/chat/index.dart';
 import 'package:flutter_im/net/networkmanage.dart';
 import 'package:flutter_im/database/dialogue.dart';
+import 'package:flutter_im/uitls/eventbus.dart';
+import 'package:flutter_im/proto/message.pb.dart';
 class Messages extends StatefulWidget{
   State<StatefulWidget> createState()=>_Messages();
 
@@ -13,6 +15,20 @@ class _Messages extends State<Messages>{
   List<Dialogue> dialogues=List<Dialogue>();
   @override
   initState(){
+    bus.on("message", (arg){
+
+      for(var i=0;i<dialogues.length;i++){
+        if(dialogues[i].uid==(arg as OneMessage).sender){
+          dialogues[i].unread=dialogues[i].unread+1;
+          setState(() {
+
+          });
+          break;
+        }
+      }
+
+
+    });
     Dialogue.GetDialogues(2).then((values){
       setState(() {
         dialogues=values;
@@ -32,7 +48,7 @@ class _Messages extends State<Messages>{
       ),
     );
   }
-  Widget meassgeItem(int uid,String nickname,String talk,String ctime,String headimage){
+  Widget meassgeItem(int uid,String nickname,String talk,String ctime,String headimage,int unread){
 
 
     return  FlatButton(
@@ -62,16 +78,16 @@ class _Messages extends State<Messages>{
                   child:Image.network(headimage!=null?headimage:testImage,fit:BoxFit.fill ,width:62 ,height: 62),
 
                 ),
-                  Positioned(
+                  unread!=0?Positioned(
                     child: Container(
                     width: 18,
                     height: 18,
                     alignment: Alignment.center,
                     decoration:BoxDecoration(borderRadius: BorderRadius.all(Radius.circular(360)),color: Colors.deepOrange),
-                    child: Text("99"),) ,
+                    child: Text(unread.toString()),) ,
                     top: -5,
                     right:-5 ,
-                  )
+                  ):Positioned(child: Container(width: 0,height: 0,),)
 
                 ],
               )
@@ -126,7 +142,7 @@ class _Messages extends State<Messages>{
               itemBuilder:(context,i){
                 var dia=dialogues[i];
                 print(dia.user.headimage);
-                return this.meassgeItem(dia.uid,dia.user.nickname,dia.talkcontent,dia.ctime,dia.user.headimage);
+                return this.meassgeItem(dia.uid,dia.user.nickname,dia.talkcontent,dia.ctime,dia.user.headimage,dia.unread);
               },
             ) ,
           )
