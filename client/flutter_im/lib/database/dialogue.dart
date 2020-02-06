@@ -20,12 +20,10 @@ class Dialogue{
    SqlManager.inster(tabname,data);
 
  }
- static  Future<List<Dialogue>> GetDialogues(int page)async{
+ static  Future<List<Dialogue>> GetDialogues()async{
    List<Dialogue>  list=List<Dialogue>();
    var db=await SqlManager.getCurrentDatabase();
-
-   var sql="select * from dialogue left join user on user.uid=dialogue.uid limit 100 offset 0";
-
+   var sql="select * from dialogue left join user on user.uid=dialogue.uid";
    var row =await db.rawQuery(sql);
    for (var r in row){
      Dialogue dia=Dialogue();
@@ -43,7 +41,7 @@ class Dialogue{
  }
  static dialoguesZeroing(int uid)async{
    var db=await SqlManager.getCurrentDatabase();
-   db.update(tabname,{"unread":0},where:"uid=?",whereArgs:List<dynamic>()[uid]);
+   db.update(tabname,{"unread":0},where:"uid="+uid.toString());
  }
 
  static Future<Dialogue> checkDialogues(int uid )async{

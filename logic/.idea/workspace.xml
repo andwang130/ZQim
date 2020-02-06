@@ -2,31 +2,20 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="65538046-9476-4831-8859-6aed20f35df5" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/../client/flutter_im/lib/net/handels.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../client/flutter_im/lib/uitls/eventbus.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../client/flutter_im/lib/uitls/uitls.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../client/flutter_im/.flutter-plugins-dependencies" beforeDir="false" afterPath="$PROJECT_DIR$/../client/flutter_im/.flutter-plugins-dependencies" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../client/flutter_im/lib/database/dbmange.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../client/flutter_im/lib/database/dbmange.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../client/flutter_im/lib/database/dialogue.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../client/flutter_im/lib/database/dialogue.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../client/flutter_im/lib/main.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../client/flutter_im/lib/main.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../client/flutter_im/lib/database/message.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../client/flutter_im/lib/database/message.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../client/flutter_im/lib/net/handels.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../client/flutter_im/lib/net/handels.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../client/flutter_im/lib/net/networkmanage.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../client/flutter_im/lib/net/networkmanage.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../client/flutter_im/lib/proto/message.pb.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../client/flutter_im/lib/proto/message.pb.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../client/flutter_im/lib/proto/message.pbenum.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../client/flutter_im/lib/proto/message.pbenum.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../client/flutter_im/lib/proto/message.pbjson.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../client/flutter_im/lib/proto/message.pbjson.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../client/flutter_im/lib/proto/message.pbserver.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../client/flutter_im/lib/proto/message.pbserver.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../client/flutter_im/lib/src/pages/chat/index.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../client/flutter_im/lib/src/pages/chat/index.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../client/flutter_im/lib/src/pages/home/friends/index.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../client/flutter_im/lib/src/pages/home/friends/index.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../client/flutter_im/lib/src/pages/home/messages/index.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../client/flutter_im/lib/src/pages/home/messages/index.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../client/flutter_im/lib/uitls/diouitls.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../client/flutter_im/lib/uitls/diouitls.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../client/flutter_im/pubspec.lock" beforeDir="false" afterPath="$PROJECT_DIR$/../client/flutter_im/pubspec.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../client/flutter_im/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/../client/flutter_im/pubspec.yaml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../comit/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../comit/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../comit/modle/notifie.go" beforeDir="false" afterPath="$PROJECT_DIR$/../comit/modle/notifie.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../comit/router/router.go" beforeDir="false" afterPath="$PROJECT_DIR$/../comit/router/router.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../comit/handles/chathandle.go" beforeDir="false" afterPath="$PROJECT_DIR$/../comit/handles/chathandle.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/controller/userController.go" beforeDir="false" afterPath="$PROJECT_DIR$/controller/userController.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/middleware/authermiddle.go" beforeDir="false" afterPath="$PROJECT_DIR$/middleware/authermiddle.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/friend.go" beforeDir="false" afterPath="$PROJECT_DIR$/models/friend.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/user.go" beforeDir="false" afterPath="$PROJECT_DIR$/models/user.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pkg/jwt/jwt.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/jwt/jwt.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/request/userRequest.go" beforeDir="false" afterPath="$PROJECT_DIR$/request/userRequest.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/router/router.go" beforeDir="false" afterPath="$PROJECT_DIR$/router/router.go" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -39,17 +28,17 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/controller/friendController.go">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="211">
+            <state relative-caret-position="3634">
               <caret line="169" column="27" selection-start-line="169" selection-start-column="27" selection-end-line="169" selection-end-column="27" />
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/router/router.go">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="276">
-              <caret line="16" column="45" lean-forward="true" selection-start-line="16" selection-start-column="45" selection-end-line="16" selection-end-column="45" />
+            <state relative-caret-position="309">
+              <caret line="22" column="58" selection-start-line="22" selection-start-column="58" selection-end-line="22" selection-end-column="58" />
             </state>
           </provider>
         </entry>
@@ -57,7 +46,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/models/user.go">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="265">
+            <state relative-caret-position="2392">
               <caret line="115" column="12" selection-start-line="115" selection-start-column="5" selection-end-line="115" selection-end-column="12" />
             </state>
           </provider>
@@ -66,7 +55,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/pkg/jwt/jwt.go">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="173">
+            <state relative-caret-position="1104">
               <caret line="55" column="19" selection-start-line="55" selection-start-column="19" selection-end-line="55" selection-end-column="19" />
             </state>
           </provider>
@@ -75,17 +64,17 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/controller/userController.go">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="288">
-              <caret line="68" column="34" lean-forward="true" selection-start-line="68" selection-start-column="34" selection-end-line="68" selection-end-column="34" />
+            <state relative-caret-position="1380">
+              <caret line="68" column="34" selection-start-line="68" selection-start-column="34" selection-end-line="68" selection-end-column="34" />
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/main.go">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="312">
-              <caret line="24" lean-forward="true" selection-start-line="24" selection-end-line="24" />
+            <state relative-caret-position="276">
+              <caret line="21" column="31" selection-start-line="21" selection-start-column="31" selection-end-line="21" selection-end-column="31" />
               <folding>
                 <element signature="e#14#99#0" expanded="true" />
               </folding>
@@ -101,8 +90,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/models/model_test.go">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="404">
-              <caret line="63" column="24" lean-forward="true" selection-start-line="63" selection-start-column="24" selection-end-line="63" selection-end-column="24" />
+            <state relative-caret-position="1265">
+              <caret line="63" column="24" selection-start-line="63" selection-start-column="24" selection-end-line="63" selection-end-column="24" />
             </state>
           </provider>
         </entry>
@@ -110,7 +99,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/models/friend.go">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="136">
+            <state relative-caret-position="1035">
               <caret line="48" column="58" selection-start-line="48" selection-start-column="48" selection-end-line="48" selection-end-column="58" />
             </state>
           </provider>
@@ -119,7 +108,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/models/notify.go">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="141">
+            <state relative-caret-position="207">
               <caret line="11" column="63" selection-start-line="11" selection-start-column="63" selection-end-line="11" selection-end-column="63" />
             </state>
           </provider>
@@ -376,13 +365,14 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
+    <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.2533512" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.25670242" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.32152975" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.32152975" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -581,17 +571,31 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/controller/friendController.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="3634">
+          <caret line="169" column="27" selection-start-line="169" selection-start-column="27" selection-end-line="169" selection-end-column="27" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/models/user.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2392">
+          <caret line="115" column="12" selection-start-line="115" selection-start-column="5" selection-end-line="115" selection-end-column="12" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/pkg/jwt/jwt.go">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="173">
+        <state relative-caret-position="1104">
           <caret line="55" column="19" selection-start-line="55" selection-start-column="19" selection-end-line="55" selection-end-column="19" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/controller/friendController.go">
+    <entry file="file://$PROJECT_DIR$/controller/userController.go">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="211">
-          <caret line="169" column="27" selection-start-line="169" selection-start-column="27" selection-end-line="169" selection-end-column="27" />
+        <state relative-caret-position="1380">
+          <caret line="68" column="34" selection-start-line="68" selection-start-column="34" selection-end-line="68" selection-end-column="34" />
         </state>
       </provider>
     </entry>
@@ -600,53 +604,39 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/models/model_test.go">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="404">
-          <caret line="63" column="24" lean-forward="true" selection-start-line="63" selection-start-column="24" selection-end-line="63" selection-end-column="24" />
+        <state relative-caret-position="1265">
+          <caret line="63" column="24" selection-start-line="63" selection-start-column="24" selection-end-line="63" selection-end-column="24" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/models/friend.go">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="136">
+        <state relative-caret-position="1035">
           <caret line="48" column="58" selection-start-line="48" selection-start-column="48" selection-end-line="48" selection-end-column="58" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/models/notify.go">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="141">
+        <state relative-caret-position="207">
           <caret line="11" column="63" selection-start-line="11" selection-start-column="63" selection-end-line="11" selection-end-column="63" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/models/user.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="265">
-          <caret line="115" column="12" selection-start-line="115" selection-start-column="5" selection-end-line="115" selection-end-column="12" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/controller/userController.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="288">
-          <caret line="68" column="34" lean-forward="true" selection-start-line="68" selection-start-column="34" selection-end-line="68" selection-end-column="34" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/main.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="312">
-          <caret line="24" lean-forward="true" selection-start-line="24" selection-end-line="24" />
-          <folding>
-            <element signature="e#14#99#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/router/router.go">
       <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="309">
+          <caret line="22" column="58" selection-start-line="22" selection-start-column="58" selection-end-line="22" selection-end-column="58" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/main.go">
+      <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="276">
-          <caret line="16" column="45" lean-forward="true" selection-start-line="16" selection-start-column="45" selection-end-line="16" selection-end-column="45" />
+          <caret line="21" column="31" selection-start-line="21" selection-start-column="31" selection-end-line="21" selection-end-column="31" />
+          <folding>
+            <element signature="e#14#99#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

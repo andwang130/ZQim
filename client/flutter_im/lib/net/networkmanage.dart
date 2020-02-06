@@ -40,7 +40,9 @@ class NetWorkManage{
     }
     return _instance;
   }
-
+  static NetWorkManage Instance(){
+    return _instance;
+  }
   //重连
   void reload(String ip,int prot){
     this.ip=ip;
@@ -139,11 +141,13 @@ class NetWorkManage{
     pullOneMessage();
     pullNotifies();
   }
-  void pushOneMessage(String msg,int sender,receiver){
+  void pushOneMessage(String msg,int sender,receiver,Int64 rek,int time){
     var one=OneMessage();
+    one.rek=rek;
     one.sender=sender;
     one.receiver=receiver;
     one.msgbody=msg;
+    one.time=time;
     one.msgtype=TypeMessage;
     var message=Message();
     message.ty=Type.OneMessage.index+1;

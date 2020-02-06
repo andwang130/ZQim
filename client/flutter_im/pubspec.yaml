@@ -31,6 +31,9 @@ dependencies:
   shared_preferences: ^0.5.6
   protobuf: ^1.0.1
   sqflite: ^1.2.0
+  audioplayers: ^0.14.0
+  date_format: ^1.0.8
+
 
 dev_dependencies:
   flutter_test:
@@ -49,8 +52,8 @@ flutter:
   uses-material-design: true
 
   # To add assets to your application, add an assets section, like this:
-  # assets:
-  #  - images/a_dot_burr.jpeg
+  assets:
+     - assets/mp3/4082.mp3
   #  - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

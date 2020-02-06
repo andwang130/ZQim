@@ -3,6 +3,8 @@ import 'package:flutter_im/proto/message.pb.dart';
 import 'package:flutter_im/uitls/eventbus.dart';
 import 'package:flutter_im/database/message.dart' as dbmessage;
 import 'package:flutter_im/database/dialogue.dart';
+import 'package:audioplayers/audio_cache.dart';
+import 'package:fixnum/fixnum.dart';
 enum Type {
   Auth, //认证
   OneMessage,    //单聊消息
@@ -18,7 +20,7 @@ enum Type {
   FriendAgree, //同意通知。发起方收到
 }
 class Handles {
-
+  static AudioCache player = AudioCache();
   void route(Message message){
 
 
@@ -50,6 +52,9 @@ class Handles {
       pullNotifies(message);
 
     }
+    if(message.ty==Type.AckMesage.index+1){
+    ack(message);
+    }
 
 
   }
@@ -57,19 +62,32 @@ class Handles {
   void auth(Message message){
 
   }
+  void ack(Message message){
+    var ackmessage=AckMessage.fromBuffer(message.body);
+
+    if(ackmessage.status==0){
+      dbmessage.OneMessage.updateStauts(ackmessage.rek.toInt(),1);
+    }else{
+      dbmessage.OneMessage.updateStauts(ackmessage.rek.toInt(),2);
+    }
+    bus.emit("ack",ackmessage);
+  }
   void oneMessages(Message message)async{
 
   var one =OneMessage.fromBuffer(message.body);
-  print("收到一条单聊信息");
-  bus.emit("message",one);
+
+  dbmessage.OneMessage.inster(one.rek.toInt(), one.sender, one.receiver, one.msgtype, one.msgbody, one.time,1);
+
   var  dia =await Dialogue.checkDialogues(one.sender);
-  dbmessage.OneMessage.inster(one.rek.toInt(), one.sender, one.receiver, one.msgtype, one.msgbody, one.time);
   if (dia!=null){
     Dialogue.updateDialogues(one.sender,one.msgbody, one.time.toString(),dia.unread+1);
   }else {
     Dialogue.CreateDialogue(one.sender, one.msgbody, one.time.toString());
   }
- NetWorkManage.getInstance("127.0.0.1", 8080).ack(one.rek);
+  player.play("mp3/4082.mp3");
+  bus.emit("message",one);
+ NetWorkManage.Instance().ack(one.rek);
+
 }
   void gorupMessage(Message message){
 
@@ -86,7 +104,9 @@ class Handles {
     for (var v in pullnotfie.messages){
       if (v.notifieType==Type.FriendAgree.index+1){
         var agree=Agree.fromBuffer(v.body);
-        NetWorkManage.getInstance("127.0.0.1", 8080).pushOneMessage(agree.notife.greet, agree.notife.uid, agree.notife.receiver);
+        var rek=Int64(int.parse(3.toString()+DateTime.now().toLocal().millisecondsSinceEpoch.toString()));
+        var time=(DateTime.now().toLocal().millisecondsSinceEpoch/1000).toInt();
+        NetWorkManage.getInstance("127.0.0.1", 8080).pushOneMessage(agree.notife.greet, agree.notife.uid, agree.notife.receiver,rek,time);
       }
 
     }

@@ -21,7 +21,7 @@ class SqlManager{
      await db.execute(dialoguesql);
      var usersql="create table user(uid integer primary key,nickname text not null,headimage text not null)";
     await db.execute(usersql);
-    var onemessagesql="create table onemessages(rek integer primary key,sender integer,receiver integer,msgtype integer,body text,time integer)";
+    var onemessagesql="create table onemessages(rek integer primary key,sender integer,receiver integer,msgtype integer,body text,time integer,status integer not null)";
     await db.execute(onemessagesql);
     });
 
@@ -48,7 +48,7 @@ class SqlManager{
   }
   static inster(String table , Map<String, dynamic> values)async{
     var db=await getCurrentDatabase();
-    db.insert(table,values);
+   var data= await db.insert(table,values);
 
   }
 

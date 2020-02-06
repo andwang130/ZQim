@@ -15,27 +15,53 @@ class _Messages extends State<Messages>{
   List<Dialogue> dialogues=List<Dialogue>();
   @override
   initState(){
-    bus.on("message", (arg){
-
+    bus.on("message", messagecallback);
+    bus.on("zeroing", (arg){
       for(var i=0;i<dialogues.length;i++){
-        if(dialogues[i].uid==(arg as OneMessage).sender){
-          dialogues[i].unread=dialogues[i].unread+1;
-          setState(() {
-
-          });
+        if(dialogues[i].uid==(arg as int)){
+          dialogues[i].unread=0;
+          if (mounted) {
+            setState(() {
+            });
+          }
           break;
         }
       }
-
-
     });
-    Dialogue.GetDialogues(2).then((values){
+    Dialogue.GetDialogues().then((values){
       setState(() {
         dialogues=values;
       });
     });
   }
 
+  messagecallback(arg){
+    var message=(arg as OneMessage);
+    for(var i=0;i<dialogues.length;i++){
+      if(dialogues[i].uid==message.sender){
+        dialogues[i].unread=dialogues[i].unread+1;
+        if (mounted) {
+          setState(() {
+        });
+      }
+        break;
+      }
+    }
+    Dialogue.GetDialogues().then((values){
+      setState(() {
+        dialogues=values;
+      });
+    });
+
+  }
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    //取消监听
+    bus.off("message",messagecallback);
+    bus.off("zeroing");
+  }
   Widget Title(){
     return Container(
       padding: EdgeInsets.only(top: 30,left: 20,right: 20,bottom: 0),
@@ -141,7 +167,6 @@ class _Messages extends State<Messages>{
               padding: EdgeInsets.only(top: 0),
               itemBuilder:(context,i){
                 var dia=dialogues[i];
-                print(dia.user.headimage);
                 return this.meassgeItem(dia.uid,dia.user.nickname,dia.talkcontent,dia.ctime,dia.user.headimage,dia.unread);
               },
             ) ,

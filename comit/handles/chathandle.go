@@ -40,7 +40,9 @@ func OneMessageHandle(con *fxsrv.Connect,request *fxsrv.Request)error  {
 		SendAck(con,msg.Rek,config.AckSaveFail)
 		return errors.New("存入离线消息失败")
 	}
+	//返回ack
 	SendAck(con,msg.Rek,config.AckSuccess)
+
 	receiver,ok:= manage.ConManage.GetConnect(msg.Receiver)
 	if !ok{
 		//该用户未连接到本地，获取该用户连接的服务器
