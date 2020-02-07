@@ -3,8 +3,10 @@ import 'package:flutter_im/proto/message.pb.dart';
 import 'package:flutter_im/uitls/eventbus.dart';
 import 'package:flutter_im/database/message.dart' as dbmessage;
 import 'package:flutter_im/database/dialogue.dart';
+import 'package:flutter_im/database/user.dart';
 import 'package:audioplayers/audio_cache.dart';
 import 'package:fixnum/fixnum.dart';
+import 'package:flutter_im/uitls/notifietion.dart';
 enum Type {
   Auth, //认证
   OneMessage,    //单聊消息
@@ -21,6 +23,7 @@ enum Type {
 }
 class Handles {
   static AudioCache player = AudioCache();
+
   void route(Message message){
 
 
@@ -75,10 +78,12 @@ class Handles {
   void oneMessages(Message message)async{
 
   var one =OneMessage.fromBuffer(message.body);
-
   dbmessage.OneMessage.inster(one.rek.toInt(), one.sender, one.receiver, one.msgtype, one.msgbody, one.time,1);
-
   var  dia =await Dialogue.checkDialogues(one.sender);
+  var user=await User.Get(one.sender);
+
+  Notifications.oneMessageNotification(one.sender, user.nickname,"[${dia==null?1:dia.unread+1}]条 "+ one.msgbody, user.headimage);
+
   if (dia!=null){
     Dialogue.updateDialogues(one.sender,one.msgbody, one.time.toString(),dia.unread+1);
   }else {
@@ -119,3 +124,5 @@ class Handles {
   }
 
 }
+
+

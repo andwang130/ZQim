@@ -33,6 +33,8 @@ dependencies:
   sqflite: ^1.2.0
   audioplayers: ^0.14.0
   date_format: ^1.0.8
+  #通知栏插件
+  flutter_local_notifications: ^1.1.5+1
 
 
 dev_dependencies:

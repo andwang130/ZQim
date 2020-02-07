@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_im/component/menuitme.dart';
+import 'package:flutter_im/net/handels.dart';
 class My extends  StatefulWidget{
   State<StatefulWidget> createState()=>_My();
 }
@@ -58,7 +59,9 @@ class _My extends State<My>{
           MenuAare("加密兔",Icons.ring_volume,(){}),
           SizedBox(height: 20,child:
           Container(color: Colors.grey[200],),),
-          MenuAare("设置",Icons.settings,(){}),
+          MenuAare("设置",Icons.settings,(){
+
+          }),
         ],
       ),
     );

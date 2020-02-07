@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_im/src/pages/login/index.dart';
 import 'package:flutter_im/src/pages/register/index.dart';
 import 'package:flutter_im/src/pages/home/index.dart';
@@ -12,14 +13,47 @@ import 'package:flutter_im/database/dialogue.dart';
 import 'package:flutter_im/database/user.dart';
 import 'package:flutter_im/database/message.dart';
 import 'package:flutter_im/src/pages/notify/notify.dart';
+import 'package:flutter_im/net/handels.dart';
+import 'package:flutter_im/uitls/notifietion.dart';
 
-void main() {
+void main()async {
+   WidgetsFlutterBinding.ensureInitialized();
 
+   await notifietioninit();
   runApp(MyApp());
 
 }
+class MyApp extends StatefulWidget{
+  State<MyApp> createState()=>_MyApp();
+}
+class _MyApp extends State<MyApp> with WidgetsBindingObserver {
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    WidgetsBinding.instance.addObserver(this);
 
-class MyApp extends StatelessWidget {
+  }
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    switch (state) {
+      case AppLifecycleState.inactive: // 处于这种状态的应用程序应该假设它们可能在任何时候暂停。
+        break;
+      case AppLifecycleState.resumed:// 应用程序可见，前台
+        IsBack=false;
+        break;
+      case AppLifecycleState.paused: // 应用程序不可见，后台
+        IsBack=true;
+        break;
+      case AppLifecycleState.detached:
+        break;
+    }
+
+    setState(() {
+
+    });
+  }
+
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
@@ -38,9 +72,10 @@ class MyApp extends StatelessWidget {
 //      OneMessage.inster(i, 2, 1, 1, "你好李四",DateTime.now().millisecondsSinceEpoch );
 //
 //    }
+
     return MaterialApp(
 
-
+        navigatorKey:navigatorKey,
       home: Login()
     );
   }
@@ -130,3 +165,4 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 }
+

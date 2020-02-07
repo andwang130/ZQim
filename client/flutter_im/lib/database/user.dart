@@ -23,7 +23,6 @@ class User {
     var list=List<User>();
     for(var d in data){
       var user=User();
-      print(d);
       user.headimage=d["headimage"];
       user.nickname=d["nickname"];
       user.uid=d["uid"];
@@ -31,7 +30,15 @@ class User {
 
     }
     return list;
-
+  }
+  static Future<User> Get(int uid)async{
+    var db= await SqlManager.getCurrentDatabase();
+    var data=await db.query(tabname,where: "uid="+uid.toString());
+    var user=User();
+    user.headimage=data.first["headimage"];
+    user.nickname=data.first["nickname"];
+    user.uid=data.first["uid"];
+    return user;
   }
   static Future<bool> isfriend(int uid)async{
     var db= await SqlManager.getCurrentDatabase();
