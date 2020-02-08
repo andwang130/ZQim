@@ -1,7 +1,7 @@
 package models
 
 import (
-	"errors"
+	"logic/config"
 	"logic/database"
 )
 
@@ -12,9 +12,9 @@ type Groupchat struct {
 	Notice    string `gorm:"varchar(500)"`
 	//群主id
 	Owner  uint32 `gorm:"not null"`
-	Avatar string `gorm:"not null"`
-	Status int    `gorm:"not null"`
-	Users  []User `gorm:"many2many:groupchat_users;ForeignKey:groupid"`
+	Avatar string `gorm:"not null;default:''" `
+	Status int    `gorm:"not null;default:1"`
+	//Users  []User `gorm:"many2many:groupchat_users;ForeignKey:groupid"`
 }
 type GroupchatUser struct {
 	BaseModel
@@ -22,20 +22,23 @@ type GroupchatUser struct {
 	Userid  uint32 `gorm:"not null"`
 }
 
-func GroupCreate(group Groupchat) error {
+func GroupCreate(group Groupchat,members []uint32) error {
 
 	tx := database.GormPool.Begin()
 	if err := tx.Create(&group).Error; err != nil {
 		tx.Callback()
 		return err
 	}
-	var groupUser = GroupchatUser{
-		Groupid: group.ID,
-		Userid:  group.Owner,
-	}
-	if err := tx.Create(&groupUser).Error; err != nil {
-		tx.Callback()
-		return err
+	members=append(members,group.Owner)
+	for _,v:=range members{
+		var groupUser = GroupchatUser{
+			Groupid: group.ID,
+			Userid:  v,
+		}
+		if err := tx.Create(&groupUser).Error; err != nil {
+			tx.Callback()
+			return err
+		}
 	}
 	if err := tx.Commit().Error; err != nil {
 		tx.Callback()
@@ -45,14 +48,38 @@ func GroupCreate(group Groupchat) error {
 }
 
 //退出群
-func QuitGroup(groupID, userID uint32) error {
-	return database.GormPool.Where("group_id = ? amd user_id=?", groupID, userID).Delete(&GroupchatUser{}).Error
+func QuitGroup(gid, uid uint32) error {
+	tx:=database.GormPool.Begin()
+	if err:=config.GrouperDelete(gid);err!=nil{
+		return err
+	}
+	if err:=tx.Where("groupid = ? amd userid=?", gid, uid).Delete(&GroupchatUser{}).Error;err!=nil{
+		tx.Callback()
+		return err
+	}
+	if err:=tx.Commit().Error;err!=nil{
+		tx.Callback()
+		return err
+	}
+
+	return nil
 }
 
 //解散群.,只有群主才能解散群
-func DeleteGroup(group Groupchat, uid uint32) error {
-	if group.Owner != uid {
-		return errors.New("只有群主才能解散群")
+func DeleteGroup(gid uint32, uid uint32) error {
+	tx:=database.GormPool.Begin()
+	if err:=config.GrouperDelete(gid);err!=nil{
+		tx.Callback()
+		return err
 	}
-	return database.GormPool.Where("group_id = ? amd user_id=?", group.Owner).Delete(&group).Error
+	if err:=tx.Where("groupid=? and owner=?",gid,uid).Delete(&Groupchat{}).Error;err!=nil{
+		tx.Callback()
+		return err
+	}
+
+	if err:=tx.Commit().Error;err!=nil{
+		tx.Callback()
+		return err
+	}
+	return nil
 }

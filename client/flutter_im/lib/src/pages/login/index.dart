@@ -37,7 +37,6 @@ class _Login extends State<Login>{
       margin: EdgeInsets.only(left: 20,right: 20),
       child: Form(
         key: loginKey,
-      autovalidate: true,
       child:
       Column(
         mainAxisSize: MainAxisSize.min,

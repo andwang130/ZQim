@@ -1,0 +1,3 @@
+time="2020-02-08T21:51:55+08:00" level=info msg="record not found" traceId="6054875a-4a71-11ea-ac3e-704d7b3d821c "
+b439c2aa-4a6f-11ea-8c94-704d7b3d821c "
+time="2020-02-08T20:33:18+08:00" level=info msg="Error 1054: Unknown column 'created_at' in 'field list'" traceId="e8267ffb-4a6e-11ea-a4ed-704d7b3d821c "

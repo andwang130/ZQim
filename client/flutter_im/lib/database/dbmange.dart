@@ -17,12 +17,14 @@ class SqlManager{
     String path = join(databasesPath, _NAME);
 
     _database=await openDatabase(path,version: _VERSION,onCreate: (Database db,int version) async{
-    var dialoguesql="create table dialogue(uid integer primary key,talkcontent text not null,ctime text not null,unread integer not null)";
+    var dialoguesql="create table dialogue(id text primary key,uid integer,talkcontent text not null,ctime text not null,unread integer not null,dtype integer not null)";
      await db.execute(dialoguesql);
-     var usersql="create table user(uid integer primary key,nickname text not null,headimage text not null)";
+     var usersql="create table user(id text primary key,uid integer,nickname text not null,headimage text not null,utype integer not null)";
     await db.execute(usersql);
     var onemessagesql="create table onemessages(rek integer primary key,sender integer,receiver integer,msgtype integer,body text,time integer,status integer not null)";
     await db.execute(onemessagesql);
+    var friendsSql="create table friends(id text primary key,uid integer)";
+    await db.execute(friendsSql);
     });
 
   }

@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_im/uitls/diouitls.dart';
 import 'package:flutter_im/database/user.dart';
-import 'package:flutter_im/src/pages/chat/index.dart';
+import 'package:flutter_im/database/friends.dart';
+import 'package:flutter_im/src/pages/chat/onechat.dart';
 import 'package:flutter_im/component/toast.dart';
 class UserInfo extends StatefulWidget{
   int uid;
@@ -34,7 +35,7 @@ class _UserInfo extends State<UserInfo>{
       nickanme=d["nickname"];
       headimage=d["head_image"];
       explain=d["expl"];
-      isfirend= await User.isfriend(widget.uid);
+      isfirend= await Friend.isfriend(widget.uid);
       setState(() {
 
       });
@@ -85,7 +86,7 @@ class _UserInfo extends State<UserInfo>{
                 child: Text("聊天",style: TextStyle(fontSize: 14,color: Colors.blue),),
               ),onPressed: (){
 
-              Navigator.push(context, MaterialPageRoute(builder: (_)=>Chat(widget.uid)));
+              Navigator.push(context, MaterialPageRoute(builder: (_)=>OneChat(widget.uid)));
 
             },)
             :RaisedButton(

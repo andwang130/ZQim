@@ -38,3 +38,22 @@ func GetUserFromRedis(uid uint32) (User, error) {
 	}
 	return user, nil
 }
+func GroupAddMembers(gid uint32,members ... uint32) error {
+	cmd:=Rediscli.SAdd("groupid:"+strconv.Itoa(int(gid)),members)
+	if cmd.Err()!=nil{
+		return cmd.Err()
+	}
+	return nil
+	
+
+}
+func GroupreduceMembers(gid uint32,member uint32)error  {
+	cmd:=Rediscli.SRem("groupid:"+strconv.Itoa(int(gid)),member)
+	if cmd.Err()!=nil{
+		return cmd.Err()
+	}
+	return nil
+}
+func GrouperDelete(gid uint32) error {
+	return Rediscli.Del("groupid:"+strconv.Itoa(int(gid))).Err()
+}

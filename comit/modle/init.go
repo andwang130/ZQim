@@ -3,6 +3,16 @@ package modle
 import "github.com/jinzhu/gorm"
 
 var db *gorm.DB
+var imdb *gorm.DB
+
+func imdbInit()  {
+	var err error
+	imdb,err=gorm.Open("mysql","root:ANDWANG130.@(127.0.0.1)/im?charset=utf8&parseTime=True&loc=Local")
+	if err!=nil{
+		panic(err)
+	}
+	imdb.LogMode(true)
+}
 func init()  {
 
 	var err error
@@ -12,5 +22,7 @@ func init()  {
 	}
 	db.LogMode(true)
 	db.AutoMigrate(&Onemessage{},&GroupUserMessage{},&Message{},&Notifie{})
+	imdbInit()
+
 
 }

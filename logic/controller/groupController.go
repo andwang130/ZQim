@@ -20,7 +20,7 @@ func CreateGroup(c *gin.Context) {
 	groupChat.GroupName = parm.GroupName
 	groupChat.Avatar = parm.Avatar
 	groupChat.Owner = uid
-	if err := models.GroupCreate(groupChat); err != nil {
+	if err := models.GroupCreate(groupChat,parm.Members); err != nil {
 		//log.WithFields(log.Fields{}).Info(err)
 		logrus.Info(err)
 		utils.ResponseError(c, 2001, err)
@@ -52,8 +52,7 @@ func DeleteGroup(c *gin.Context) {
 		utils.ResponseError(c, 500, err)
 		return
 	}
-	var groupChat models.Groupchat
-	if err:=models.DeleteGroup(groupChat,uid); err!=nil{
+	if err:=models.DeleteGroup(parm.GroupId,uid); err!=nil{
 		utils.ResponseError(c, 500, err)
 		return
 	}

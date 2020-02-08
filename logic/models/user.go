@@ -24,7 +24,7 @@ type User struct {
 	Last time.Time `json:"last"`    //上次登录时间
 	Lastip string `gorm:"type:varchar(16)" json:"lastip"`
 	Friends []User `gorm:"many2many:friends;ForeignKey:userid;AssociationForeignKey:userid" json:"friends"`
-	Groupchats []Groupchat `gorm:"many2many:groupchat_users;ForeignKey:userid;AssociationForeignKey:id" json:"groupchats"`
+	//Groupchats []Groupchat `gorm:"many2many:groupchat_users;ForeignKey:userid;AssociationForeignKey:id" json:"groupchats"`
 }
 
 type LoginResult struct {

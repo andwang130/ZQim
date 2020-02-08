@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_im/src/pages/chat/index.dart';
+import 'package:flutter_im/src/pages/chat/onechat.dart';
 import 'package:flutter_im/net/networkmanage.dart';
 import 'package:flutter_im/database/dialogue.dart';
 import 'package:flutter_im/uitls/eventbus.dart';
@@ -86,7 +86,7 @@ class _Messages extends State<Messages>{
 //        message.len=message.body.length;
 //
 //        message.ty=1;
-        Navigator.push(context,MaterialPageRoute(builder:(_)=> Chat(uid)));
+        Navigator.push(context,MaterialPageRoute(builder:(_)=> OneChat(uid)));
       },
       child:Container(
         height: 76,

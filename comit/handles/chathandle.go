@@ -112,10 +112,16 @@ func GorupMessageHandle(con *fxsrv.Connect,request *fxsrv.Request)error  {
 	groupmessage.Time=uint32(time.Now().Unix())
 	//获取该群聊的所有用户id
 	userlist,err:=rediscache.GetGroupUsers(groupmessage.Groupid)
+
 	if err!=nil{
-		//不存在的群组
-		//todo
-		return errors.New("不存在的群组")
+		userlist=modle.GetGroupchatUser(groupmessage.Groupid)
+		//该群小于2个人
+		if len(userlist)<2 {
+			//todo
+			return errors.New("不存在的群组")
+		}
+		rediscache.GroupAddMembers(groupmessage.Groupid,userlist...)
+
 	}
 	//验证该用户是否在该群组
 	var flag=false

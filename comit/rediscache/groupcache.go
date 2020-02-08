@@ -18,3 +18,13 @@ func GetGroupUsers(key uint32)([]uint32,error)  {
 	}
 	return userlist,nil
 }
+
+func GroupAddMembers(gid uint32,members ... uint32) error {
+	cmd:=rediscli.SAdd("groupid:"+strconv.Itoa(int(gid)),members)
+	if cmd.Err()!=nil{
+		return cmd.Err()
+	}
+	return nil
+
+
+}

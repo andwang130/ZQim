@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_im/src/pages/userinfo/index.dart';
 import 'package:flutter_im/src/pages/addfriend/index.dart';
+import 'package:flutter_im/database/friends.dart';
 import 'package:flutter_im/database/user.dart';
 import 'package:flutter_im/src/pages/notify/notify.dart';
 import 'package:flutter_im/uitls/diouitls.dart';
@@ -18,7 +19,7 @@ class _Friends extends State<Friends>{
     friendsinit();
   }
   friendsinit(){
-    User.GetUsers().then((values){
+    Friend.GetFriends().then((values){
       setState(() {
         users=values;
       });
@@ -30,7 +31,7 @@ class _Friends extends State<Friends>{
     if (data.data["code"]==0){
       for(var v in  data.data["data"]){
         print(v);
-        User.inster(v["id"], v["nickname"], v["head_image"]);
+        Friend.createFriends(v["id"], v["nickname"], v["head_image"]);
       }
       friendsinit();
     }

@@ -79,8 +79,8 @@ class Handles {
 
   var one =OneMessage.fromBuffer(message.body);
   dbmessage.OneMessage.inster(one.rek.toInt(), one.sender, one.receiver, one.msgtype, one.msgbody, one.time,1);
-  var  dia =await Dialogue.checkDialogues(one.sender);
-  var user=await User.Get(one.sender);
+  var  dia =await Dialogue.checkUserDialogues(one.sender);
+  var user=await User.GetUser(one.sender);
 
   Notifications.oneMessageNotification(one.sender, user.nickname,"[${dia==null?1:dia.unread+1}]条 "+ one.msgbody, user.headimage);
 

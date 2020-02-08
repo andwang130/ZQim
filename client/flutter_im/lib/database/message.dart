@@ -29,10 +29,7 @@ class OneMessage{
     var db= await SqlManager.getCurrentDatabase();
 
     var sql="select * from ${table}  left join user on user.uid=${table}.sender where(sender=${sender} and receiver=${receiver}) OR (sender=${receiver} and receiver=${sender})  ORDER BY time DESC   limit ${size} offset ${(page-1)*size}";
-
     var data=await db.rawQuery(sql);
-
-
     for(var d in data){
       print(d);
       var one=OneMessage();
@@ -43,7 +40,6 @@ class OneMessage{
       one.msgtype=d["msgtype"];
       one.rek=d["rek"];
       one.body=d["body"];
-
       list.add(one);
     }
     list=list.reversed.toList();
@@ -62,4 +58,30 @@ class OneMessage{
     db.update(table, {"status":status},where: "rek="+rek.toString());
 
   }
+}
+
+
+class GroupMessage{
+  int gid;
+  int rek;
+  int sender;
+  int receiver;
+  int time;
+  int status;
+  String body;
+  static String table="groupmessage";
+  static createGroupMessage(int gid,int rek,int sender,int msgtype,String body,int time,int status)async{
+    var db=await SqlManager.getCurrentDatabase();
+    var data= Map<String, dynamic>();
+    data["gid"]=rek;
+    data["rek"]=rek;
+    data["sender"]=sender;
+    data["msgtype"]=msgtype;
+    data["time"]=time;
+    data["body"]=body;
+    data["status"]=status;
+    SqlManager.inster(table,data);
+
+  }
+
 }
