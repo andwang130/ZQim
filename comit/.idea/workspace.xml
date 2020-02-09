@@ -2,34 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="0b1ce452-59cb-40f6-9f73-250670b6e09a" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/../client/flutter_im/lib/config/config.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../client/flutter_im/lib/config/config.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../client/flutter_im/lib/database/dbmange.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../client/flutter_im/lib/database/dbmange.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../client/flutter_im/lib/database/dialogue.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../client/flutter_im/lib/database/dialogue.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../client/flutter_im/lib/database/message.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../client/flutter_im/lib/database/message.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../client/flutter_im/lib/database/user.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../client/flutter_im/lib/database/user.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../client/flutter_im/lib/main.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../client/flutter_im/lib/main.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../client/flutter_im/lib/net/handels.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../client/flutter_im/lib/net/handels.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../client/flutter_im/lib/net/networkmanage.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../client/flutter_im/lib/net/networkmanage.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../client/flutter_im/lib/src/pages/addGroup/createGroup.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../client/flutter_im/lib/src/pages/addGroup/createGroup.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../client/flutter_im/lib/src/pages/chat/grouochat.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../client/flutter_im/lib/src/pages/chat/grouochat.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../client/flutter_im/lib/src/pages/chat/onechat.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../client/flutter_im/lib/src/pages/chat/onechat.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../client/flutter_im/lib/src/pages/home/friends/index.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../client/flutter_im/lib/src/pages/home/friends/index.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../client/flutter_im/lib/src/pages/home/messages/index.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../client/flutter_im/lib/src/pages/home/messages/index.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../client/flutter_im/lib/src/pages/login/index.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../client/flutter_im/lib/src/pages/login/index.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../client/flutter_im/lib/uitls/notifietion.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../client/flutter_im/lib/uitls/notifietion.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../client/flutter_im/lib/uitls/uitls.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../client/flutter_im/lib/uitls/uitls.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/handles/chathandle.go" beforeDir="false" afterPath="$PROJECT_DIR$/handles/chathandle.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../logic/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../logic/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../logic/config/config.go" beforeDir="false" afterPath="$PROJECT_DIR$/../logic/config/config.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../logic/controller/groupController.go" beforeDir="false" afterPath="$PROJECT_DIR$/../logic/controller/groupController.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../logic/controller/userController.go" beforeDir="false" afterPath="$PROJECT_DIR$/../logic/controller/userController.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../logic/middleware/authermiddle.go" beforeDir="false" afterPath="$PROJECT_DIR$/../logic/middleware/authermiddle.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../logic/models/groupchat.go" beforeDir="false" afterPath="$PROJECT_DIR$/../logic/models/groupchat.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../logic/models/user.go" beforeDir="false" afterPath="$PROJECT_DIR$/../logic/models/user.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../logic/pkg/jwt/jwt.go" beforeDir="false" afterPath="$PROJECT_DIR$/../logic/pkg/jwt/jwt.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../logic/request/groupRequest.go" beforeDir="false" afterPath="$PROJECT_DIR$/../logic/request/groupRequest.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../logic/router/router.go" beforeDir="false" afterPath="$PROJECT_DIR$/../logic/router/router.go" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -443,7 +417,6 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" sideWeight="0.84210527" visible="true" weight="0.2774799" />
       <window_info id="Structure" order="1" sideWeight="0.15789473" side_tool="true" weight="0.25670242" />

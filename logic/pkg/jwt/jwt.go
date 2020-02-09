@@ -115,16 +115,13 @@ func (j *JWT) ParseToken(tokenString string) (*CustomClaims, error) {
 
 // 更新token
 func (j *JWT) RefreshToken(tokenString string) (string, error) {
-	jwt.TimeFunc = func() time.Time {
-		return time.Unix(0, 0)
-	}
+
 	var claims,err=j.ParseToken(tokenString)
 
 	if err != nil {
 		fmt.Println("RefreshToken",err)
 		return "", err
 	}
-		jwt.TimeFunc = time.Now
 		claims.StandardClaims.ExpiresAt = time.Now().Add(time.Second*time.Duration(config.TokenOut)).Unix()
 		return j.CreateToken(*claims)
 
