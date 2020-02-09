@@ -37,11 +37,11 @@ func OneMessageHandle(con *fxsrv.Connect,request *fxsrv.Request)error  {
 	});err!=nil{
 		//存入离线i消息失败
 		fmt.Println(err)
-		SendAck(con,msg.Rek,config.AckSaveFail)
+		SendAck(con,msg.Rek,config.AckSaveFail,config.OneMessage)
 		return errors.New("存入离线消息失败")
 	}
 	//返回ack
-	SendAck(con,msg.Rek,config.AckSuccess)
+	SendAck(con,msg.Rek,config.AckSuccess,config.OneMessage)
 
 	receiver,ok:= manage.ConManage.GetConnect(msg.Receiver)
 	if !ok{
@@ -80,10 +80,11 @@ func OneMessageHandle(con *fxsrv.Connect,request *fxsrv.Request)error  {
 
 	return nil
 }
-func SendAck(con *fxsrv.Connect,rek uint64,status uint32)  {
+func SendAck(con *fxsrv.Connect,rek uint64,status uint32,msgtype uint32)  {
 	var ackmessage intercom.AckMessage
 	ackmessage.Rek=rek
 	ackmessage.Status=status
+	ackmessage.Msgtype=msgtype
 	buf,err:=proto.Marshal(&ackmessage)
 	if err!=nil{
 		//todo log
@@ -112,8 +113,8 @@ func GorupMessageHandle(con *fxsrv.Connect,request *fxsrv.Request)error  {
 	groupmessage.Time=uint32(time.Now().Unix())
 	//获取该群聊的所有用户id
 	userlist,err:=rediscache.GetGroupUsers(groupmessage.Groupid)
-
-	if err!=nil{
+	fmt.Println(userlist)
+	if err!=nil||len(userlist)<1{
 		userlist=modle.GetGroupchatUser(groupmessage.Groupid)
 		//该群小于2个人
 		if len(userlist)<2 {
@@ -133,10 +134,9 @@ func GorupMessageHandle(con *fxsrv.Connect,request *fxsrv.Request)error  {
 	}
 	//用户不在该群组
 	if !flag{
-		SendAck(con,groupmessage.Rek,config.AckSaveFail)
+		SendAck(con,groupmessage.Rek,config.AckSaveFail,config.GorupMessage)
 		return errors.New("不在该群组")
 	}
-
 	err=modle.CreateGroupMessage(
 		&modle.Message{
 			Rek:groupmessage.Rek,
@@ -147,10 +147,9 @@ func GorupMessageHandle(con *fxsrv.Connect,request *fxsrv.Request)error  {
 			Groupid:groupmessage.Groupid,
 		})
 	if err!=nil{
-		SendAck(con,groupmessage.Rek,config.AckSaveFail)
+		SendAck(con,groupmessage.Rek,config.AckSaveFail,config.GorupMessage)
 		return errors.New("写入数据库失败")
 	}
-
 
 	var usermessages=make([]*modle.GroupUserMessage,0,len(userlist)-1)
 	var locclient =make([]*fxsrv.Connect,0,len(userlist)-1)
@@ -175,14 +174,12 @@ func GorupMessageHandle(con *fxsrv.Connect,request *fxsrv.Request)error  {
 			Receiver: uid,
 		})
 	}
-
  	if modle.CreateGroupUserMessage(usermessages)!=nil{
-		SendAck(con,groupmessage.Rek,config.AckSaveFail)
+		SendAck(con,groupmessage.Rek,config.AckSaveFail,config.GorupMessage)
 		return errors.New("写入数据库失败")
 	}
 
-
-
+	SendAck(con,groupmessage.Rek,config.AckSuccess,config.GorupMessage)
 	//修改了时间，重新生成buf,进入Ack队列
 	 buf,err:=proto.Marshal(&groupmessage)
 	 if err!=nil{

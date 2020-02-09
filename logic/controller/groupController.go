@@ -20,13 +20,13 @@ func CreateGroup(c *gin.Context) {
 	groupChat.GroupName = parm.GroupName
 	groupChat.Avatar = parm.Avatar
 	groupChat.Owner = uid
-	if err := models.GroupCreate(groupChat,parm.Members); err != nil {
+	if err := models.GroupCreate(&groupChat,parm.Members); err != nil {
 		//log.WithFields(log.Fields{}).Info(err)
 		logrus.Info(err)
 		utils.ResponseError(c, 2001, err)
 		return
 	}
-	utils.ResponseSuccess(c, "注册成功")
+	utils.ResponseSuccess(c, &groupChat)
 }
 
 //退出群
@@ -57,4 +57,20 @@ func DeleteGroup(c *gin.Context) {
 		return
 	}
 	utils.ResponseSuccess(c, "解散群成功")
+}
+//获取群数据
+func GetGroup(c *gin.Context)  {
+	var parm request.GetGroupParm
+	var _, uid = models.GetuidAndusername(c)
+	if err:=c.ShouldBind(&parm);err!=nil{
+		utils.ResponseError(c, 500, err)
+		return
+	}
+	if groupchat,err:=models.GetGroup(parm.GroupId,uid);err!=nil{
+		utils.ResponseError(c, 500, err)
+		return
+	}else {
+		utils.ResponseSuccess(c,&groupchat)
+
+	}
 }

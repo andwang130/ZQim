@@ -25,6 +25,8 @@ class SqlManager{
     await db.execute(onemessagesql);
     var friendsSql="create table friends(id text primary key,uid integer)";
     await db.execute(friendsSql);
+    var groupmessagsql="create table groupmessage(rek integer primary key,sender integer,gid integer,msgtype integer,body text,time integer,status integer not null)";
+    await db.execute(groupmessagsql);
     });
 
   }

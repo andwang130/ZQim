@@ -13,3 +13,7 @@ type QuitGroupParam struct {
 type DeleteGroupParam struct {
 	GroupId  uint32 `form:"id" binding:"required"`
 }
+
+type GetGroupParm struct {
+	GroupId  uint32 `form:"id" binding:"required"`
+}

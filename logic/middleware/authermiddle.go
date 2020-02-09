@@ -6,6 +6,7 @@ import (
 	"github.com/dgrijalva/jwt-go"
 	"github.com/gin-gonic/gin"
 	"logic/config"
+	jwt2 "logic/pkg/jwt"
 	"logic/utils"
 )
 
@@ -36,11 +37,10 @@ func AuthMiddle(c *gin.Context)  {
 		c.Abort()
 		return
 	}
-	var claims,err=paresjwt(tokenString)
+	var j=&jwt2.JWT{SigningKey:config.SecretKey}
+	var claims,err=j.ParseToken(tokenString)
 	if err!=nil{
-
 		utils.ResponseError(c,500,errors.New("token error"))
-
 		c.Abort()
 		return
 	}
@@ -51,7 +51,7 @@ func AuthMiddle(c *gin.Context)  {
 		return
 	}
 
-	c.Set("username",claims["username"])
- 	c.Set("uid",claims["uid"])
+	c.Set("username",claims.Name)
+ 	c.Set("uid",claims.ID)
 	c.Next()
 }

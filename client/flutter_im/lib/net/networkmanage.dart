@@ -155,5 +155,19 @@ class NetWorkManage{
     message.len=one.writeToBuffer().length;
     send(message);
   }
+  void pushGroupMessage(String msg,int sender,gid,Int64 rek){
+
+    var group=GroupMessage();
+    group.rek=rek;
+    group.sender=sender;
+    group.msgbody=msg;
+    group.msgtype=TypeMessage;
+    group.groupid=gid;
+    var message=Message();
+    message.ty=Type.GorupMessage.index+1;
+    message.body=group.writeToBuffer();
+    message.len=group.writeToBuffer().length;
+    send(message);
+  }
 }
 //NetWorkManage netWorkManage=NetWorkManage.getInstance("192.168.0.106", 8080);

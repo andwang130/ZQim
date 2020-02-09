@@ -4,6 +4,7 @@ import 'package:dio/dio.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_im/src/pages/home/index.dart';
 import 'package:flutter_im/net/networkmanage.dart';
+import 'package:flutter_im/config/config.dart';
 class Login extends StatefulWidget{
   State<StatefulWidget> createState()=>_Login();
 }
@@ -167,18 +168,9 @@ class _Login extends State<Login>{
         print(res);
         print(res.data);
         if (res.data["code"] == 0) {
-         var  token = res.data["data"]["token"];
-         var  ip = res.data["data"]["ip"];
-           SharedPreferences prefs = await  SharedPreferences.getInstance();
-           prefs.setString("token", token);
-           prefs.setString("ip", ip);
-           var workmange=NetWorkManage.getInstance("192.168.0.106", 8777);
-            await workmange.init();
-            workmange.auth(token);
+           Init(res.data);
            Navigator.push(context,MaterialPageRoute(builder:(_)=> Home()));
-
         }
-
 
       }catch(e){
         print(e.toString());

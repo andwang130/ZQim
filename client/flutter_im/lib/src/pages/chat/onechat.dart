@@ -11,6 +11,7 @@ import 'package:fixnum/fixnum.dart';
 import 'dart:async';
 import 'package:flutter_im/uitls/uitls.dart';
 import 'package:flutter_im/src/pages/chat/component/loding.dart';
+import 'package:flutter_im/config/config.dart';
 import 'chat.dart';
 class OneChat extends StatefulWidget{
   int uid;
@@ -93,19 +94,18 @@ class _OneChat extends State<OneChat> {
   }
   _handleSubmitted(String valeu){
     if(valeu!=""){
-      var rek=Int64(int.parse(3.toString()+(DateTime.now().toLocal().millisecondsSinceEpoch/10).toInt().toString()));
+      var rek=Int64(int.parse(me.toString()+(DateTime.now().toLocal().millisecondsSinceEpoch/10).toInt().toString()));
       var time=(DateTime.now().toLocal().millisecondsSinceEpoch/1000).toInt();
       OneMessage.inster(rek.toInt(), 3, widget.uid, 1, valeu, time,0);
       NetWorkManage.Instance().pushOneMessage(valeu, 3, widget.uid,rek,time);
       var one=OneMessage();
       print(rek.toString());
-      one.sender=3;
+      one.sender=me;
       one.body=valeu;
       one.rek=rek.toInt();
       one.time=time;
       one.receiver=widget.uid;
       one.msgtype=1;
-
       list.add(one);
       setState(() {
 

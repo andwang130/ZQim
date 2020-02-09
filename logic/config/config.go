@@ -13,7 +13,7 @@ const FriendNotife=11
 const ServerName = ""
 const RgpcTimeOut = time.Second * 2
 
-var TokenOut = 3600000
+const TokenOut = 3600000
 
 func InitConfig() {
 	path, err := os.Getwd()

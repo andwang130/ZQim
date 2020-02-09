@@ -1,6 +1,7 @@
 package models
 
 import (
+	"errors"
 	"logic/config"
 	"logic/database"
 )
@@ -8,12 +9,12 @@ import (
 type Groupchat struct {
 	BaseModel
 	//群公告
-	GroupName string `gorm:"varchar(20)"`
-	Notice    string `gorm:"varchar(500)"`
+	GroupName string `gorm:"varchar(20)" json:"group_name"`
+	Notice    string `gorm:"varchar(500)" json:"notice"`
 	//群主id
-	Owner  uint32 `gorm:"not null"`
-	Avatar string `gorm:"not null;default:''" `
-	Status int    `gorm:"not null;default:1"`
+	Owner  uint32 `gorm:"not null" json:"owner"`
+	Avatar string `gorm:"not null;default:''" json:"avatar" `
+	Status int    `gorm:"not null;default:1" json:"status"`
 	//Users  []User `gorm:"many2many:groupchat_users;ForeignKey:groupid"`
 }
 type GroupchatUser struct {
@@ -22,10 +23,10 @@ type GroupchatUser struct {
 	Userid  uint32 `gorm:"not null"`
 }
 
-func GroupCreate(group Groupchat,members []uint32) error {
+func GroupCreate(group *Groupchat,members []uint32) error {
 
 	tx := database.GormPool.Begin()
-	if err := tx.Create(&group).Error; err != nil {
+	if err := tx.Create(group).Error; err != nil {
 		tx.Callback()
 		return err
 	}
@@ -82,4 +83,12 @@ func DeleteGroup(gid uint32, uid uint32) error {
 		return err
 	}
 	return nil
+}
+func GetGroup(gid uint32,uid uint32)(Groupchat,error)  {
+	var groupchat Groupchat
+	if database.GormPool.Model(&GroupchatUser{}).Where("groupid=? and userid=?",gid,uid).RecordNotFound(){
+		return groupchat,errors.New("不属于该群组")
+	}
+	database.GormPool.Model(&Groupchat{}).Where("id=?",gid).First(&groupchat)
+	return groupchat,nil
 }

@@ -54,7 +54,10 @@ class User {
     var db= await SqlManager.getCurrentDatabase();
     var content = new Utf8Encoder().convert("user:"+uid.toString());
     var digest = md5.convert(content);
-    var data=await db.query(tabname,where: "id="+digest.toString());
+    var data=await db.query(tabname,where: "id='${digest.toString()}'");
+    if(data.length<1){
+      return null;
+    }
     var user=User();
     user.headimage=data.first["headimage"];
     user.nickname=data.first["nickname"];
@@ -66,6 +69,9 @@ class User {
     var content = new Utf8Encoder().convert("group:"+gid.toString());
     var digest = md5.convert(content);
     var data= await db.query(tabname,where:"id='${digest.toString()}'");
+    if(data.length<1){
+      return null;
+    }
     var user=User();
     user.headimage=data.first["headimage"];
     user.nickname=data.first["nickname"];

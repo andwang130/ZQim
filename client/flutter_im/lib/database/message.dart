@@ -1,5 +1,7 @@
 import 'package:flutter_im/database/dbmange.dart';
 
+
+
 class OneMessage{
   int rek;
   int sender;
@@ -73,7 +75,7 @@ class GroupMessage{
   static createGroupMessage(int gid,int rek,int sender,int msgtype,String body,int time,int status)async{
     var db=await SqlManager.getCurrentDatabase();
     var data= Map<String, dynamic>();
-    data["gid"]=rek;
+    data["gid"]=gid;
     data["rek"]=rek;
     data["sender"]=sender;
     data["msgtype"]=msgtype;
@@ -81,7 +83,35 @@ class GroupMessage{
     data["body"]=body;
     data["status"]=status;
     SqlManager.inster(table,data);
+  }
+  static Future<List<OneMessage>> GetGroupMessage(int gid,page)async {
+    var db =await SqlManager.getCurrentDatabase();
+    var data= await db.query(table,where: "gid="+gid.toString(),limit:20,offset: (page-1)*20,orderBy: "time DESC");
+    print(data.length);
+    var list=List<OneMessage>();
+    for(var d in data){
+      var one=OneMessage();
+      one.sender=d["sender"];
+      one.receiver=d["gid"];
+      one.time=d["time"];
+      one.status=d["status"];
+      one.msgtype=d["msgtype"];
+      one.rek=d["rek"];
+      one.body=d["body"];
+      list.add(one);
+    }
+    list=list.reversed.toList();
+    return list;
+  }
+  static void deleteGroupMessage(int gid)async{
+    var db= await SqlManager.getCurrentDatabase();
+
+    var count=await db.delete(table,where:"gid="+gid.toString());
+    print(count);
+  }
+  static void updateStauts(int rek,int status)async{
+    var db= await SqlManager.getCurrentDatabase();
+    db.update(table, {"status":status},where: "rek="+rek.toString());
 
   }
-
 }

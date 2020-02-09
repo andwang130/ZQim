@@ -35,12 +35,13 @@ class Dialogue{
    data["talkcontent"]=talk;
    data["ctime"]=ctime;
    data["unread"]=0;
-   data["status"]=2;
+   data["dtype"]=2;
    SqlManager.inster(tabname,data);
  }
  static  Future<List<Dialogue>> GetDialogues()async{
    List<Dialogue>  list=List<Dialogue>();
    var db=await SqlManager.getCurrentDatabase();
+
    var sql="select * from dialogue left join user on user.id=dialogue.id";
    var row =await db.rawQuery(sql);
    for (var r in row){
@@ -64,14 +65,14 @@ class Dialogue{
    var content = new Utf8Encoder().convert("user:"+uid.toString());
    var digest = md5.convert(content);
 
-   db.update(tabname,{"unread":0},where:"id="+digest.toString());
+   db.update(tabname,{"unread":0},where:"id='${digest.toString()}'");
  }
  static diagroupZeroing(int gid)async{
    var db=await SqlManager.getCurrentDatabase();
    var content = new Utf8Encoder().convert("group:"+gid.toString());
    var digest = md5.convert(content);
 
-   db.update(tabname,{"unread":0},where:"id="+digest.toString());
+   db.update(tabname,{"unread":0},where:"id='${digest.toString()}'");
  }
 
  static Future<Dialogue> checkUserDialogues(int uid)async{
@@ -79,7 +80,7 @@ class Dialogue{
    var db=await SqlManager.getCurrentDatabase();
    var content = new Utf8Encoder().convert("user:"+uid.toString());
    var digest = md5.convert(content);
-  var data=await db.query(tabname,where:"id="+digest.toString());
+  var data=await db.query(tabname,where:"id='${digest.toString()}'");
   if (data.length>0){
     var r=data.first;
     Dialogue dia=Dialogue();
@@ -97,7 +98,7 @@ class Dialogue{
    var db=await SqlManager.getCurrentDatabase();
    var content = new Utf8Encoder().convert("group:"+gid.toString());
    var digest = md5.convert(content);
-   var data=await db.query(tabname,where:"id="+digest.toString());
+   var data=await db.query(tabname,where:"id='${digest.toString()}'");
    if (data.length>0){
      var r=data.first;
      Dialogue dia=Dialogue();
@@ -112,11 +113,17 @@ class Dialogue{
    }
 
  }
- static updateDialogues(int uid,String talk,String ctime,int unread )async{
+ static updateUserDialogues(int uid,String talk,String ctime,int unread )async{
    var db=await SqlManager.getCurrentDatabase();
-
-   db.update(tabname, {"talkcontent":talk,"ctime":ctime,"unread":unread},where:"uid="+uid.toString());
+   var content = new Utf8Encoder().convert("group:" + uid.toString());
+   var digest = md5.convert(content);
+   db.update(tabname, {"talkcontent":talk,"ctime":ctime,"unread":unread},where:"id='${digest.toString()}'");
 
  }
-
+static updateGrouoDialogues(int gid,String talk,String ctime,int unread) async{
+  var content = new Utf8Encoder().convert("group:" + gid.toString());
+  var digest = md5.convert(content);
+  var db=await SqlManager.getCurrentDatabase();
+  db.update(tabname, {"talkcontent": talk, "ctime": ctime, "unread": unread}, where:"id='${digest.toString()}'");
+}
 }

@@ -4,7 +4,9 @@ import (
 	"errors"
 	"github.com/gin-gonic/gin"
 	"github.com/sirupsen/logrus"
+	"logic/config"
 	"logic/models"
+	"logic/pkg/jwt"
 	"logic/request"
 	"logic/service"
 	"logic/utils"
@@ -27,9 +29,10 @@ func Login(c *gin.Context) {
 			return
 		}
 	}
-	var result=make(map[string]string)
+	var result=make(map[string]interface{})
 	result["ip"]=service.ComitManage.NextTcpServer()
 	result["token"]=user.Token
+	result["user"]=user.User
 	utils.ResponseSuccess(c,&result)
 	return
 
@@ -70,4 +73,23 @@ func GetUser(c *gin.Context)  {
 	utils.ResponseSuccess(c, &user)
 
 }
+func Checklogin(c *gin.Context)  {
+	var newjwt =&jwt.JWT{
+		SigningKey:config.SecretKey,
+	}
 
+	var _,uid=models.GetuidAndusername(c)
+	var tokenString=c.Request.Header.Get("token")
+	var newtoken,err=newjwt.RefreshToken(tokenString)
+	if err!=nil{
+		print(err.Error())
+		utils.ResponseError(c,500,err)
+		return
+	}
+	var user=models.GetUser(uid)
+	var result=make(map[string]interface{})
+	result["ip"]=service.ComitManage.NextTcpServer()
+	result["token"]=newtoken
+	result["user"]=user
+	utils.ResponseSuccess(c,&result)
+}

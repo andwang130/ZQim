@@ -2,11 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_im/config/config.dart';
 import 'package:flutter_im/database/user.dart';
 import 'package:flutter_im/uitls/diouitls.dart';
+import 'package:flutter_im/component/toast.dart';
+import 'package:flutter_im/database/dialogue.dart';
+import 'package:flutter_im/src/pages/chat/grouochat.dart';
+import 'package:flutter_im/database/user.dart';
 class CreateGroup extends StatefulWidget {
   State<CreateGroup> createState() => _CreateGroup();
 }
-
-
 
 class _CreateGroup extends State<CreateGroup> {
 
@@ -115,12 +117,15 @@ class _CreateGroup extends State<CreateGroup> {
         print(groupname);
         var data= await DioUtls.post(url,data:{"group_name":groupname,"members":checklist});
         if(data.data["code"]==0){
-
+          var groupchat=data.data["data"];
+          await User.insterGroup(groupchat["ID"], groupchat["group_name"], groupchat["avatar"]);
+          await Dialogue.CreateGroupDialogue(groupchat["ID"], "", DateTime.now().toString());
+          Navigator.push(context, MaterialPageRoute(builder: (_)=>GroupChat(groupchat["ID"])));
         }else{
-          print(data.data);
+          Toast.toast(context, data.data["msg"]);
         }
       }catch(e){
-
+        Toast.toast(context, "网络错误");
       }
 
 

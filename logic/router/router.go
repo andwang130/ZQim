@@ -15,6 +15,7 @@ func InitRouter()  {
 	Route.POST("/register", controller.Register)
 	Route.POST("/logout", controller.Login)
 	Route.GET("/user/get",controller.GetUser)
+	authrization.GET("/checklogin",controller.Checklogin)
 	authrization.GET("/notify/list",controller.NotifyList)
 	authrization.POST("/notify/clear",controller.NotifyClear)
 	//好友关系
@@ -28,4 +29,5 @@ func InitRouter()  {
 	authrization.POST("/group/create", controller.CreateGroup)
 	authrization.POST("/group/quit", controller.QuitGroup)
 	authrization.POST("/group/delete", controller.DeleteGroup)
+	authrization.GET("/group/get",controller.GetGroup)
 }

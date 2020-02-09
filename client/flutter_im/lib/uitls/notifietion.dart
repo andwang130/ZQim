@@ -77,14 +77,14 @@ class Notifications {
   }
   static groupMessageNotification(int gid,String name,msg,String head){
     var pyload=jsonEncode({"id":gid,"msgtype":2});
-    _show(gid, name, msg, head,pyload);
+    _show(gid, name, msg, head,pyload,channelId: "group",channelName:"group message",channelDescription:"群聊推送");
   }
-  static _show(int id,String  title,msg,String head,pyload)async{
+  static _show(int id,String  title,msg,String head,pyload,{String channelId="one",channelName="one message",channelDescription="单聊推送"})async{
     if(!IsBack){
       return;
     }
     var androidPlatformChannelSpecifics = new $notifications.AndroidNotificationDetails(
-        'chat', 'channel message', '聊天消息推送',visibility:$notifications.NotificationVisibility.Public,
+        channelId, channelName,channelDescription,visibility:$notifications.NotificationVisibility.Public,
         icon:head,
         enableLights:true,
         importance: $notifications.Importance.Max, priority: $notifications.Priority.Max);

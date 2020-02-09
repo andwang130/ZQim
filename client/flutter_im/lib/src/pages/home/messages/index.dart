@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_im/src/pages/chat/onechat.dart';
+import 'package:flutter_im/src/pages/chat/grouochat.dart';
 import 'package:flutter_im/net/networkmanage.dart';
 import 'package:flutter_im/database/dialogue.dart';
 import 'package:flutter_im/uitls/eventbus.dart';
@@ -16,6 +17,7 @@ class _Messages extends State<Messages>{
   @override
   initState(){
     bus.on("message", messagecallback);
+    bus.on("group message",groupmessagecallback);
     bus.on("zeroing", (arg){
       for(var i=0;i<dialogues.length;i++){
         if(dialogues[i].uid==(arg as int)){
@@ -35,6 +37,24 @@ class _Messages extends State<Messages>{
     });
   }
 
+  groupmessagecallback(arg){
+    var message=(arg as GroupMessage);
+    for(var i=0;i<dialogues.length;i++){
+      if(dialogues[i].uid==message.sender&&dialogues[i].dtype==2){
+        dialogues[i].unread=dialogues[i].unread+1;
+        if (mounted) {
+          setState(() {
+          });
+        }
+        break;
+      }
+    }
+    Dialogue.GetDialogues().then((values){
+      setState(() {
+        dialogues=values;
+      });
+    });
+  }
   messagecallback(arg){
     var message=(arg as OneMessage);
     for(var i=0;i<dialogues.length;i++){
@@ -60,6 +80,7 @@ class _Messages extends State<Messages>{
     super.dispose();
     //取消监听
     bus.off("message",messagecallback);
+    bus.off("group message",groupmessagecallback);
     bus.off("zeroing");
   }
   Widget Title(){
@@ -74,7 +95,7 @@ class _Messages extends State<Messages>{
       ),
     );
   }
-  Widget meassgeItem(int uid,String nickname,String talk,String ctime,String headimage,int unread){
+  Widget meassgeItem(int uid,String nickname,String talk,String ctime,String headimage,int unread,int dtype){
 
 
     return  FlatButton(
@@ -86,7 +107,13 @@ class _Messages extends State<Messages>{
 //        message.len=message.body.length;
 //
 //        message.ty=1;
-        Navigator.push(context,MaterialPageRoute(builder:(_)=> OneChat(uid)));
+        if(dtype==1){
+          Navigator.push(context,MaterialPageRoute(builder:(_)=> OneChat(uid)));
+        }else{
+          Navigator.push(context,MaterialPageRoute(builder:(_)=> GroupChat(uid)));
+
+        }
+
       },
       child:Container(
         height: 76,
@@ -167,7 +194,7 @@ class _Messages extends State<Messages>{
               padding: EdgeInsets.only(top: 0),
               itemBuilder:(context,i){
                 var dia=dialogues[i];
-                return this.meassgeItem(dia.uid,dia.user.nickname,dia.talkcontent,dia.ctime,dia.user.headimage,dia.unread);
+                return this.meassgeItem(dia.uid,dia.user.nickname,dia.talkcontent,dia.ctime,dia.user.headimage,dia.unread,dia.dtype);
               },
             ) ,
           )

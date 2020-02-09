@@ -5,6 +5,7 @@ import 'package:flutter_im/database/friends.dart';
 import 'package:flutter_im/database/user.dart';
 import 'package:flutter_im/src/pages/notify/notify.dart';
 import 'package:flutter_im/uitls/diouitls.dart';
+import 'package:flutter_im/src/pages/addGroup/createGroup.dart';
 class Friends extends StatefulWidget{
 
   State<StatefulWidget> createState()=>_Friends();
@@ -54,8 +55,8 @@ class _Friends extends State<Friends>{
                 if(value=="add"){
 
                   Navigator.push(context, MaterialPageRoute(builder: (_)=>Addfriend()));
-                }else{
-
+                }else if(value=="create"){
+                  Navigator.push(context, MaterialPageRoute(builder: (_)=>CreateGroup()));
                 }
               },
                 icon: Icon(Icons.add_circle_outline,),

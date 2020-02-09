@@ -17,7 +17,7 @@ type User struct {
 	BaseModel
 	Nickname string `gorm:"type:varchar(10);not null" json:"nickname"` //昵称
 	Username string `gorm:"type:varchar(36);not null;unique" json:"username"` //登录用户名
-	Passwd string `gorm:"type:varchar(36);not null" json:"_"` //登录密码
+	Passwd string `gorm:"type:varchar(36);not null" json:"-"` //登录密码
 	Sex string   `gorm:"type:enum('man','woman');not null" json:"sex"`
 	HeadImage string `gorm:"varchar(200)" json:"head_image"`
 	Expl string `gorm:"varcahr(200)" json:"expl"`
@@ -83,7 +83,6 @@ func GenerateToken(user User) LoginResult {
 			Issuer:    "newtrekWang",                   //签名的发行者
 		},
 	}
-
 	token, err := j.CreateToken(claims)
 	if err != nil {
 		return LoginResult{

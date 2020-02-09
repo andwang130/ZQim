@@ -5,8 +5,10 @@ import (
 	"github.com/dgrijalva/jwt-go"
 	"github.com/gin-gonic/gin"
 	"log"
+	"logic/config"
 	"logic/utils"
 	"time"
+	"fmt"
 )
 
 // JWTAuth 中间件，检查token
@@ -84,11 +86,14 @@ func (j *JWT) CreateToken(claims CustomClaims) (string, error) {
 
 // 解析Tokne
 func (j *JWT) ParseToken(tokenString string) (*CustomClaims, error) {
+
 	token, err := jwt.ParseWithClaims(tokenString, &CustomClaims{}, func(token *jwt.Token) (interface{}, error) {
 		return j.SigningKey, nil
 	})
 	if err != nil {
+
 		if ve, ok := err.(*jwt.ValidationError); ok {
+
 			if ve.Errors&jwt.ValidationErrorMalformed != 0 {
 				return nil, TokenMalformed
 			} else if ve.Errors&jwt.ValidationErrorExpired != 0 {
@@ -104,6 +109,7 @@ func (j *JWT) ParseToken(tokenString string) (*CustomClaims, error) {
 	if claims, ok := token.Claims.(*CustomClaims); ok && token.Valid {
 		return claims, nil
 	}
+
 	return nil, TokenInvalid
 }
 
@@ -112,16 +118,15 @@ func (j *JWT) RefreshToken(tokenString string) (string, error) {
 	jwt.TimeFunc = func() time.Time {
 		return time.Unix(0, 0)
 	}
-	token, err := jwt.ParseWithClaims(tokenString, &CustomClaims{}, func(token *jwt.Token) (interface{}, error) {
-		return j.SigningKey, nil
-	})
+	var claims,err=j.ParseToken(tokenString)
+
 	if err != nil {
+		fmt.Println("RefreshToken",err)
 		return "", err
 	}
-	if claims, ok := token.Claims.(*CustomClaims); ok && token.Valid {
 		jwt.TimeFunc = time.Now
-		claims.StandardClaims.ExpiresAt = time.Now().Add(1 * time.Hour).Unix()
+		claims.StandardClaims.ExpiresAt = time.Now().Add(time.Second*time.Duration(config.TokenOut)).Unix()
 		return j.CreateToken(*claims)
-	}
+
 	return "", TokenInvalid
 }
