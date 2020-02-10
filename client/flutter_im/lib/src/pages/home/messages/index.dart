@@ -23,7 +23,10 @@ class _Messages extends State<Messages>{
         if(dialogues[i].uid==(arg as int)){
           dialogues[i].unread=0;
           if (mounted) {
-            setState(() {
+            Dialogue.GetDialogues().then((values){
+              setState(() {
+                dialogues=values;
+              });
             });
           }
           break;
@@ -35,6 +38,7 @@ class _Messages extends State<Messages>{
         dialogues=values;
       });
     });
+
   }
 
   groupmessagecallback(arg){
@@ -43,17 +47,16 @@ class _Messages extends State<Messages>{
       if(dialogues[i].uid==message.sender&&dialogues[i].dtype==2){
         dialogues[i].unread=dialogues[i].unread+1;
         if (mounted) {
-          setState(() {
-          });
-        }
-        break;
-      }
-    }
-    Dialogue.GetDialogues().then((values){
+              Dialogue.GetDialogues().then((values){
       setState(() {
         dialogues=values;
       });
     });
+        }
+        break;
+      }
+    }
+
   }
   messagecallback(arg){
     var message=(arg as OneMessage);
@@ -61,17 +64,16 @@ class _Messages extends State<Messages>{
       if(dialogues[i].uid==message.sender){
         dialogues[i].unread=dialogues[i].unread+1;
         if (mounted) {
-          setState(() {
-        });
+          Dialogue.GetDialogues().then((values){
+            setState(() {
+              dialogues=values;
+            });
+          });
       }
         break;
       }
     }
-    Dialogue.GetDialogues().then((values){
-      setState(() {
-        dialogues=values;
-      });
-    });
+
 
   }
   @override
@@ -97,16 +99,8 @@ class _Messages extends State<Messages>{
   }
   Widget meassgeItem(int uid,String nickname,String talk,String ctime,String headimage,int unread,int dtype){
 
-
     return  FlatButton(
       onPressed: (){
-        Message message=Message();
-//        message.ty=2;
-//        message.flag=1;
-//        message.body=[1,2,3,4,5,6,7];
-//        message.len=message.body.length;
-//
-//        message.ty=1;
         if(dtype==1){
           Navigator.push(context,MaterialPageRoute(builder:(_)=> OneChat(uid)));
         }else{
@@ -128,7 +122,8 @@ class _Messages extends State<Messages>{
                   Container(
                     width: 62,
                     height: 62,
-                  child:Image.network(headimage!=null?headimage:testImage,fit:BoxFit.fill ,width:62 ,height: 62),
+                    child: Image.network(testImage,fit:BoxFit.fill ,width:62 ,height: 62),
+//                  child:Image.network(headimage!=null?headimage:testImage,fit:BoxFit.fill ,width:62 ,height: 62),
 
                 ),
                   unread!=0?Positioned(

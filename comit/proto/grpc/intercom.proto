@@ -6,7 +6,7 @@ service Greeter{
     //接收起来连接服务器发送过来的中转消息
     rpc transfer(OneMessage) returns(AckMessage);
     rpc grouptranfer(GreupTranferReq)returns(AckMessage);
-    rpc friendNotify(Notify)returns(AckMessage);
+    rpc friendNotify(FriendNotife)returns(AckMessage);
     //同意好友邀请的通知
     rpc friendAgree(Agree)returns(AckMessage);
 }

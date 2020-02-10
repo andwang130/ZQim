@@ -10,7 +10,6 @@ import (
 	"logic/pkg/proto"
 	"logic/service"
 	"logic/utils"
-	"github.com/gogo/protobuf/proto"
 )
 
 type AddFriendParm struct {
@@ -50,20 +49,17 @@ func AddFriend(c *gin.Context)  {
 	if err==nil{
 		gcleint,ok:=service.ComitManage.GetComitServer(user.Srvname)
 		if ok{
+			print("FriendNotify")
 			var notife =&intercom.FriendNotife{
 				Greet:parm.Greet,
 				Nid:nid,
 				Uid:uid,
 				Receiver:parm.FriendID,
 			}
-			buf,err:=proto.Marshal(notife)
 			if err==nil {
 				ctx, cancle := context.WithTimeout(context.TODO(), config.RgpcTimeOut)
 				defer cancle()
-				gcleint.Client.FriendNotify(ctx, &intercom.Notify{
-					NotifieType: config.FriendNotife,
-					Body:        buf,
-				})
+				gcleint.Client.FriendNotify(ctx, notife)
 			}
 		}
 	}

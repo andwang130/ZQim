@@ -75,21 +75,23 @@ func (this *Server)Grouptranfer(ctx context.Context,message *intercom.GreupTranf
 	return ack,nil
 }
 
-func (this *Server)FriendNotify(ctx context.Context,message *intercom.Notify)(*intercom.AckMessage,error)  {
+func (this *Server)FriendNotify(ctx context.Context,message *intercom.FriendNotife)(*intercom.AckMessage,error)  {
 
 	var ackmessage=&intercom.AckMessage{}
-	//con,ok:=manage.ConManage.GetConnect(message.Receiver)
-	//if ok{
-	//	var request=&fxsrv.Request{}
-	//	request.Type=config.FriendNotice
-	//	buf,err:=proto.Marshal(message)
-	//	if err!=nil{
-	//		return ackmessage,nil
-	//	}
-	//	request.Body=buf
-	//	request.BodyLen=uint32(len(buf))
-	//	con.Write(request)
-	//}
+	con,ok:=manage.ConManage.GetConnect(message.Receiver)
+	if ok{
+
+		var request=&fxsrv.Request{}
+		request.Type=config.FriendNotife
+		buf,err:=proto.Marshal(message)
+		if err!=nil{
+
+			return ackmessage,nil
+		}
+		request.Body=buf
+		request.BodyLen=uint32(len(buf))
+		con.Write(request)
+	}
 
 	return ackmessage,nil
 }

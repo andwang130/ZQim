@@ -4,8 +4,8 @@ import 'package:flutter_im/src/pages/addfriend/index.dart';
 import 'package:flutter_im/database/friends.dart';
 import 'package:flutter_im/database/user.dart';
 import 'package:flutter_im/src/pages/notify/notify.dart';
-import 'package:flutter_im/uitls/diouitls.dart';
 import 'package:flutter_im/src/pages/addGroup/createGroup.dart';
+import 'package:flutter_im/config/config.dart';
 class Friends extends StatefulWidget{
 
   State<StatefulWidget> createState()=>_Friends();
@@ -27,15 +27,9 @@ class _Friends extends State<Friends>{
     });
   }
   getfriends()async{
-    const String url="http://192.168.0.106:8080/friend/list";
-    var data=await DioUtls.get(url);
-    if (data.data["code"]==0){
-      for(var v in  data.data["data"]){
-        print(v);
-        Friend.createFriends(v["id"], v["nickname"], v["head_image"]);
-      }
+      friendInit();
       friendsinit();
-    }
+
 
   }
 
@@ -214,4 +208,5 @@ class _Friends extends State<Friends>{
     // 模拟数据的延迟加载
     await this.getfriends();
   }
+
 }

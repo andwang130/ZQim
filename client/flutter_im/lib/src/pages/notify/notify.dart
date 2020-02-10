@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_im/uitls/diouitls.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_im/database/notify.dart';
+import 'package:flutter_im/database/friends.dart';
 const String testImage="https://bkimg.cdn.bcebos.com/pic/4b90f603738da97784eaf36dba51f8198718e3ab@wm_1,g_7,k_d2F0ZXIvYmFpa2U4MA==,xp_5,yp_5";
 
 class Notify extends StatefulWidget{
@@ -38,13 +39,14 @@ class _Notify extends State<Notify>{
       "notify_id":nid
     });
     if (data.data["code"]==0) {
+
       for (var i = 0; i < notifymod.length; i++) {
         if (notifymod[i]["ID"] == nid) {
           notifymod[i]["status"] = 2;
+          await Friend.createFriends(notifymod[i]["sender"], notifymod[i]["nickname"],  notifymod[i]["head_image"]);
           break;
         }
       }
-
       setState(() {
 
       });

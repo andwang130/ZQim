@@ -27,9 +27,9 @@ class _OneChat extends State<OneChat> {
   void initState() {
     // TODO: implement initState
     super.initState();
+     Dialogueset();
     bus.on("message",chatcallback);
     bus.on("ack",ackevent);
-    Dialogueset();
     this.getmessage();
   }
   @override
@@ -41,13 +41,16 @@ class _OneChat extends State<OneChat> {
 
   }
   void Dialogueset()async{
+
     var  dia =await Dialogue.checkUserDialogues(widget.uid);
+
+    print(dia==null);
     if (dia!=null){
-      Dialogue.dialoguesZeroing(widget.uid);
+      await Dialogue.dialoguesZeroing(widget.uid);
       bus.emit("zeroing",widget.uid);
     }else{
-
-      Dialogue.CreateDialogue(widget.uid, "",DateTime.now().toString());
+      print("init");
+     await Dialogue.CreateDialogue(widget.uid, "",DateTime.now().toString());
     }
   }
   chatcallback(arg){
@@ -86,7 +89,7 @@ class _OneChat extends State<OneChat> {
     }
   }
   void getmessage()async{
-    var data=await OneMessage.GetOneMessage(widget.uid, 3, page);
+    var data=await OneMessage.GetOneMessage(widget.uid, me, page);
     list.insertAll(0,data);
     setState(() {
       page++;
@@ -96,8 +99,8 @@ class _OneChat extends State<OneChat> {
     if(valeu!=""){
       var rek=Int64(int.parse(me.toString()+(DateTime.now().toLocal().millisecondsSinceEpoch/10).toInt().toString()));
       var time=(DateTime.now().toLocal().millisecondsSinceEpoch/1000).toInt();
-      OneMessage.inster(rek.toInt(), 3, widget.uid, 1, valeu, time,0);
-      NetWorkManage.Instance().pushOneMessage(valeu, 3, widget.uid,rek,time);
+      OneMessage.inster(rek.toInt(), me, widget.uid, 1, valeu, time,0);
+      NetWorkManage.Instance().pushOneMessage(valeu, me, widget.uid,rek,time);
       var one=OneMessage();
       print(rek.toString());
       one.sender=me;
@@ -116,7 +119,7 @@ class _OneChat extends State<OneChat> {
   Widget build(BuildContext context) {
     // TODO: implement build
     return Chat(list,_handleSubmitted,this.getmessage,"单聊",(){
-      Navigator.push(context, MaterialPageRoute(builder: (_)=>Chatinfo(3,widget.uid)));
+      Navigator.push(context, MaterialPageRoute(builder: (_)=>Chatinfo(me,widget.uid)));
     });
   }
 

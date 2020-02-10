@@ -30,7 +30,7 @@ class Handles {
 
   void route(Message message){
 
-
+    print("type="+message.ty.toString());
     if (message.ty==Type.Auth.index+1){
 
       auth(message);
@@ -64,6 +64,9 @@ class Handles {
     }
     if(message.ty==Type.FriendAgree.index+1){
       friendAgree(message);
+    }
+    if(message.ty==Type.FriendNotife.index+1){
+      friendNotife(message);
     }
 
 
@@ -104,13 +107,13 @@ class Handles {
   Notifications.oneMessageNotification(one.sender, user.nickname,"[${dia==null?1:dia.unread+1}]条 "+ one.msgbody, user.headimage);
 
   if (dia!=null){
-    Dialogue.updateUserDialogues(one.sender,one.msgbody, one.time.toString(),dia.unread+1);
+   await  Dialogue.updateUserDialogues(one.sender,one.msgbody, one.time.toString(),dia.unread+1);
   }else {
-    Dialogue.CreateDialogue(one.sender, one.msgbody, one.time.toString());
+   await  Dialogue.CreateDialogue(one.sender, one.msgbody, one.time.toString());
   }
-  player.play("mp3/4082.mp3");
+   player.play("mp3/4082.mp3");
   bus.emit("message",one);
- NetWorkManage.Instance().ack(one.rek);
+ await NetWorkManage.Instance().ack(one.rek);
 
 }
   void gorupMessage(Message message)async{
@@ -158,27 +161,30 @@ class Handles {
     }
   }
   void friendAgree(Message message)async{
-    var agree=Agree.fromBuffer(message.body);
-    var user =await getuser(agree.notife.receiver);
+
+    print("friendAgree");
+    var agree=FriendNotife.fromBuffer(message.body);
+    var user =await getuser(agree.receiver);
     User.insterUser(user.uid, user.nickname, user.headimage);
     Friend.createFriends(user.uid, user.nickname, user.headimage);
     var time=(DateTime.now().toLocal().millisecondsSinceEpoch/1000).toInt();
     var rek=Int64(int.parse(me.toString()+(DateTime.now().toLocal().millisecondsSinceEpoch/10).toInt().toString()));
-
-    Dialogue.CreateDialogue(user.uid ,agree.notife.greet,time.toString());
-    dbmessage.OneMessage.inster(rek.toInt(), me, agree.notife.receiver, 1, agree.notife.greet, time, 1);
-    NetWorkManage.Instance().pushOneMessage(agree.notife.greet, agree.notife.uid, agree.notife.receiver,rek,time);
+    await Dialogue.CreateDialogue(user.uid ,agree.greet,time.toString());
+    await dbmessage.OneMessage.inster(rek.toInt(), me, agree.receiver, 1, agree.greet, time, 1);
+    NetWorkManage.Instance().pushOneMessage(agree.greet, agree.uid, agree.receiver,rek,time);
     var one=OneMessage();
     one.rek=rek;
     one.sender=me;
-    one.receiver=agree.notife.receiver;
-    one.msgbody=agree.notife.greet;
+    one.receiver=agree.receiver;
+    one.msgbody=agree.greet;
     one.time=time;
     one.msgtype=TypeMessage;
     bus.emit("message",one);
   }
   void friendNotife(Message message){
-
+    print("有人申请添加您为好友");
+    var friendNotife=FriendNotife.fromBuffer(message.body);
+    Notifications.otherNotification(1,"好友请求","有人申请添加您为好友");
   }
 
 }
@@ -210,5 +216,6 @@ Future<User> getGropChat(int gid)async{
     user.headimage=d["avatar"];
     return user;
   }
+
   return null;
 }

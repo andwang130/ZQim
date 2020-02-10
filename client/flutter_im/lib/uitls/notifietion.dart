@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart' as $notifications;
 import 'package:flutter_im/src/pages/chat/index.dart';
 import 'dart:convert';
+import 'package:flutter_im/src/pages/chat/onechat.dart';
+import 'package:flutter_im/src/pages/chat/grouochat.dart';
+import 'package:flutter_im/src/pages/notify/notify.dart';
 $notifications.FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin;
 GlobalKey<NavigatorState> navigatorKey=GlobalKey();
 bool IsBack=false;
@@ -26,10 +29,13 @@ Future onSelectNotification(String payload)async{
     var pjson = jsonDecode(payload);
     if(pjson["msgtype"]==1){
 
-     await navigatorKey.currentState.push(MaterialPageRoute(builder:(_)=> Chat(pjson["id"])));
+     await navigatorKey.currentState.push(MaterialPageRoute(builder:(_)=> OneChat(pjson["id"])));
     }
     if(pjson["msgtype"]==2){
-      
+      await navigatorKey.currentState.push(MaterialPageRoute(builder:(_)=> GroupChat(pjson["id"])));
+    }
+    if(pjson["msgtype"]==3){
+      await navigatorKey.currentState.push(MaterialPageRoute(builder:(_)=> Notify()));
     }
   }catch(e){
     
@@ -72,8 +78,6 @@ class Notifications {
     
     var pyload=jsonEncode({"id":uid,"msgtype":1});
     _show(uid, name, msg, head,pyload);
-   
-
   }
   static groupMessageNotification(int gid,String name,msg,String head){
     var pyload=jsonEncode({"id":gid,"msgtype":2});
@@ -97,8 +101,9 @@ class Notifications {
         id, title, msg, platformChannelSpecifics,
         payload: pyload);
   }
-  static otherNotification()async {
-
+  static otherNotification(int id,String title,msg,)async {
+    var pyload=jsonEncode({"id":id,"msgtype":3});
+    _show(id,title,msg,"",pyload,channelId:"other",channelName:"other notifie",channelDescription:"其他");
   }
 }
 

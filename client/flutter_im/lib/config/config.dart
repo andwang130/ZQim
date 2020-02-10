@@ -1,9 +1,11 @@
 import 'package:flutter_im/database/user.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_im/net/networkmanage.dart';
+import 'package:flutter_im/uitls/diouitls.dart';
+import 'package:flutter_im/database/friends.dart';
 const String testImage="https://bkimg.cdn.bcebos.com/pic/4b90f603738da97784eaf36dba51f8198718e3ab@wm_1,g_7,k_d2F0ZXIvYmFpa2U4MA==,xp_5,yp_5";
 const WWW="http://192.168.0.106:8080";
-var me=3;
+var me=0;
 var token;
 class UserCache{
   String nickname;
@@ -26,6 +28,20 @@ Future<UserCache> getUserCache(int uid)async{
   }
 }
 
+void friendInit()async{
+  const String url="http://192.168.0.106:8080/friend/list";
+  var data=await DioUtls.get(url);
+  if (data.data["code"]==0){
+    for(var v in  data.data["data"]){
+      try {
+        Friend.createFriends(v["id"], v["nickname"], v["head_image"]);
+      }catch(e){
+
+      }
+    }
+    }
+
+}
 void Init(data)async{
   var  token = data["data"]["token"];
   var  addr = data["data"]["ip"];

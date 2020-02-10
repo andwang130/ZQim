@@ -29,7 +29,7 @@ func InitRedis() {
 
 func GetUserFromRedis(uid uint32) (User, error) {
 	var user User
-	value, err := Rediscli.Get("user:" + strconv.Itoa(int(uid))).Bytes()
+	value, err := Rediscli.Get("userid:" + strconv.Itoa(int(uid))).Bytes()
 	if err != nil {
 		return user, err
 	}

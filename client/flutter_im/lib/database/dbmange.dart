@@ -1,6 +1,6 @@
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
-
+import 'package:flutter_im/config/config.dart';
 class SqlManager{
 
   static const _VERSION=1;
@@ -14,7 +14,7 @@ class SqlManager{
   static init() async {
     var databasesPath=await getDatabasesPath();
 
-    String path = join(databasesPath, _NAME);
+    String path = join(databasesPath, me.toString()+_NAME);
 
     _database=await openDatabase(path,version: _VERSION,onCreate: (Database db,int version) async{
     var dialoguesql="create table dialogue(id text primary key,uid integer,talkcontent text not null,ctime text not null,unread integer not null,dtype integer not null)";
@@ -53,7 +53,6 @@ class SqlManager{
   static inster(String table , Map<String, dynamic> values)async{
     var db=await getCurrentDatabase();
    var data= await db.insert(table,values);
-
   }
 
 

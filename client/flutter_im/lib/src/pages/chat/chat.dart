@@ -190,7 +190,6 @@ class _Chat extends State<Chat> with SingleTickerProviderStateMixin {
                 itemCount: widget.list.length,
                 itemBuilder: (context,i){
                   var message=widget.list[i];
-                  var me=3;
                   if (message.sender==me){
 
                     return this.RightMessageItem(message.body,message.time,message.status);

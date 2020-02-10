@@ -91,8 +91,8 @@ class _GroupChat extends State<GroupChat>{
     if(valeu!=""){
       var rek=Int64(int.parse(me.toString()+(DateTime.now().toLocal().millisecondsSinceEpoch/10).toInt().toString()));
       var time=(DateTime.now().toLocal().millisecondsSinceEpoch/1000).toInt();
-      GroupMessage.createGroupMessage(widget.gid,rek.toInt(),3, 1, valeu, time,0);
-      NetWorkManage.Instance().pushGroupMessage(valeu, 3, widget.gid,rek);
+      GroupMessage.createGroupMessage(widget.gid,rek.toInt(),me, 1, valeu, time,0);
+      NetWorkManage.Instance().pushGroupMessage(valeu, me, widget.gid,rek);
       var one=OneMessage();
       one.sender=me;
       one.body=valeu;
@@ -110,7 +110,7 @@ class _GroupChat extends State<GroupChat>{
     // TODO: implement build
     return  Chat(list,_handleSubmitted,getmessage,"群聊",
         (){
-          Navigator.push(context, MaterialPageRoute(builder: (_)=>Chatinfo(3,widget.gid)));
+          Navigator.push(context, MaterialPageRoute(builder: (_)=>Chatinfo(me,widget.gid)));
         });
   }
 }
