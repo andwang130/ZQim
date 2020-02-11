@@ -30,4 +30,8 @@ func InitRouter()  {
 	authrization.POST("/group/quit", controller.QuitGroup)
 	authrization.POST("/group/delete", controller.DeleteGroup)
 	authrization.GET("/group/get",controller.GetGroup)
+	authrization.GET("/group/members",controller.GetMembers)
+	authrization.GET("/group/allmembers",controller.GetAllMembers)
+	authrization.POST("/group/invitation",controller.Invitation)
+	authrization.POST("/group/remove",controller.Removemembers)
 }

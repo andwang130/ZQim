@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_im/src/pages/chatinfo/index.dart';
+import 'package:flutter_im/src/pages/chatinfo/one.dart';
 import 'package:flutter_im/database/message.dart';
 import 'package:flutter_im/database/dialogue.dart';
 import 'package:flutter_im/uitls/eventbus.dart';
@@ -119,7 +119,7 @@ class _OneChat extends State<OneChat> {
   Widget build(BuildContext context) {
     // TODO: implement build
     return Chat(list,_handleSubmitted,this.getmessage,"单聊",(){
-      Navigator.push(context, MaterialPageRoute(builder: (_)=>Chatinfo(me,widget.uid)));
+      Navigator.push(context, MaterialPageRoute(builder: (_)=>OneChatInfo(widget.uid)));
     });
   }
 

@@ -106,15 +106,26 @@ class NetWorkManage{
     data=Int8List.fromList(bytes.buffer.asInt8List()+message.body);
     socket.add(data.buffer.asInt8List());
   }
-  void ack(Int64 rek){
+  void ack(Int64 rek,int msgtype){
     var ackmesage=AckMessage();
     ackmesage.rek=rek;
     ackmesage.status=0;
-    ackmesage.msgtype=1;
+    ackmesage.msgtype=msgtype;
     var message=Message();
     message.ty=Type.AckMesage.index+1;
     message.body=ackmesage.writeToBuffer();
     message.len=ackmesage.writeToBuffer().length;
+    send(message);
+  }
+  void ackmany(List<Int64> reks, int msgtype){
+    var ackmanymesage=AckManyMesasges();
+    ackmanymesage.reks.addAll(reks);
+    ackmanymesage.status=0;
+    ackmanymesage.msgtype=msgtype;
+    var message=Message();
+    message.ty=Type.DeleteManyMesage.index+1;
+    message.body=ackmanymesage.writeToBuffer();
+    message.len=ackmanymesage.writeToBuffer().length;
     send(message);
   }
   void pullOneMessage(){

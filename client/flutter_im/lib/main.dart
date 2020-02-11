@@ -79,7 +79,7 @@ class _MyApp extends State<MyApp> with WidgetsBindingObserver {
     return MaterialApp(
 
         navigatorKey:navigatorKey,
-      home: SplashScreen()
+      home: Register()
     );
   }
 }

@@ -9,6 +9,7 @@ import 'package:flutter_im/database/dialogue.dart';
 import 'package:flutter_im/uitls/eventbus.dart';
 import 'package:flutter_im/proto/message.pb.dart' as proto;
 import 'package:flutter_im/config/config.dart';
+import 'package:flutter_im/src/pages/chatinfo/group.dart';
 class GroupChat extends StatefulWidget{
   int gid;
   GroupChat(this.gid);
@@ -110,7 +111,7 @@ class _GroupChat extends State<GroupChat>{
     // TODO: implement build
     return  Chat(list,_handleSubmitted,getmessage,"群聊",
         (){
-          Navigator.push(context, MaterialPageRoute(builder: (_)=>Chatinfo(me,widget.gid)));
+          Navigator.push(context, MaterialPageRoute(builder: (_)=>GroupChatInfo(widget.gid)));
         });
   }
 }

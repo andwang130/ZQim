@@ -4,7 +4,7 @@ import 'package:flutter_im/database/message.dart';
 class Chatinfo extends StatefulWidget{
   int  receiver,sender;
   Chatinfo(this.sender,this.receiver);
-  State<StatefulWidget> createState()=>_Chatinfo();
+  State<Chatinfo> createState()=>_Chatinfo();
 
 }
 const String testImage="https://bkimg.cdn.bcebos.com/pic/4b90f603738da97784eaf36dba51f8198718e3ab@wm_1,g_7,k_d2F0ZXIvYmFpa2U4MA==,xp_5,yp_5";
@@ -20,6 +20,7 @@ class _Chatinfo extends State<Chatinfo>{
 Widget userList(int count ){
     double hight=count/5*83;
     return    Container(
+
       height: hight,
       child: GridView.count(
         crossAxisCount: 5,

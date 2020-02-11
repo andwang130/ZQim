@@ -113,7 +113,7 @@ class Handles {
   }
    player.play("mp3/4082.mp3");
   bus.emit("message",one);
- await NetWorkManage.Instance().ack(one.rek);
+ await NetWorkManage.Instance().ack(one.rek,1);
 
 }
   void gorupMessage(Message message)async{
@@ -133,19 +133,94 @@ class Handles {
     Notifications.oneMessageNotification(group.sender, groupUser.nickname,"${user.nickname}"+ group.msgbody, groupUser.headimage);
 
     if (diagroup!=null){
-      Dialogue.updateGrouoDialogues(group.groupid,"${user.nickname}"+group.msgbody, group.time.toString(),diagroup.unread+1);
+      Dialogue.updateGrouoDialogues(group.groupid,"${user.nickname}:"+group.msgbody, group.time.toString(),diagroup.unread+1);
     }else {
-      Dialogue.CreateGroupDialogue(group.groupid,"${user.nickname}"+group.msgbody, group.time.toString());
+      Dialogue.CreateGroupDialogue(group.groupid,"${user.nickname}:"+group.msgbody, group.time.toString());
     }
     player.play("mp3/4082.mp3");
     bus.emit("group message",group);
-    NetWorkManage.Instance().ack(group.rek);
+    NetWorkManage.Instance().ack(group.rek,2);
   }
-  void pullOneMessage(Message message){
+  void pullOneMessage(Message message)async{
     var pullone=PullOneMessages.fromBuffer(message.body);
+    var reks=List<Int64>();
+    for(var one in pullone.messages) {
+      dbmessage.OneMessage.inster(one.rek.toInt(), one.sender, one.receiver, one.msgtype, one.msgbody, one.time,1);
+      var dia = await Dialogue.checkUserDialogues(one.sender);
+      var user = await User.GetUser(one.sender);
+      if (user == null) {
+        user = await getuser(one.sender);
+        User.insterUser(user.uid, user.nickname, user.headimage);
+      }
+      Notifications.oneMessageNotification(one.sender, user.nickname,
+          "[${dia == null ? 1 : dia.unread + 1}]条 " + one.msgbody,
+          user.headimage);
+
+      if (dia != null) {
+        await Dialogue.updateUserDialogues(
+            one.sender, one.msgbody, one.time.toString(), dia.unread + 1);
+      } else {
+        await Dialogue.CreateDialogue(
+            one.sender, one.msgbody, one.time.toString());
+      }
+      reks.add(one.rek);
+    }
+    if(pullone.messages.length>1) {
+      bus.emit("message", pullone.messages.last);
+      player.play("mp3/4082.mp3");
+      await NetWorkManage.Instance().ackmany(reks, 1);
+    }
   }
-  void pullGorupMessage(Message message){
+  void pullGorupMessage(Message message)async{
     var pullgroup=PullGroupMessages.fromBuffer(message.body);
+    var reks=List<Int64>();
+    for(var group in pullgroup.messages){
+
+      try {
+        dbmessage.GroupMessage.createGroupMessage(
+            group.groupid,
+            group.rek.toInt(),
+            group.sender,
+            group.msgtype,
+            group.msgbody,
+            group.time,
+            1);
+        var diagroup = await Dialogue.checkGroupDialogues(group.groupid);
+        var user = await User.GetUser(group.sender);
+        if (user == null) {
+          user = await getuser(group.sender);
+          User.insterUser(user.uid, user.nickname, user.headimage);
+        }
+        var groupUser = await User.GetGroup(group.groupid);
+        if (groupUser == null) {
+          groupUser = await getGropChat(group.groupid);
+          User.insterGroup(
+              groupUser.uid, groupUser.nickname, groupUser.headimage);
+        }
+        Notifications.oneMessageNotification(group.sender, groupUser.nickname,
+            "${user.nickname}" + group.msgbody, groupUser.headimage);
+        if (diagroup != null) {
+          Dialogue.updateGrouoDialogues(
+              group.groupid, "${user.nickname}" + group.msgbody,
+              group.time.toString(), diagroup.unread + 1);
+        } else {
+          Dialogue.CreateGroupDialogue(
+              group.groupid, "${user.nickname}" + group.msgbody,
+              group.time.toString());
+        }
+        reks.add(group.rek);
+      }catch(e) {
+        print(e);
+      }
+
+
+    }
+
+    if(pullgroup.messages.length>1) {
+      bus.emit("group message", pullgroup.messages.last);
+      player.play("mp3/4082.mp3");
+      NetWorkManage.Instance().ackmany(reks, 2);
+    }
   }
   void pullNotifies(Message message){
     var pullnotfie=PullNotifieMessage.fromBuffer(message.body);
@@ -179,6 +254,7 @@ class Handles {
     one.msgbody=agree.greet;
     one.time=time;
     one.msgtype=TypeMessage;
+
     bus.emit("message",one);
   }
   void friendNotife(Message message){

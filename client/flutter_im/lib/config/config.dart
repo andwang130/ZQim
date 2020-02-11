@@ -34,7 +34,7 @@ void friendInit()async{
   if (data.data["code"]==0){
     for(var v in  data.data["data"]){
       try {
-        Friend.createFriends(v["id"], v["nickname"], v["head_image"]);
+        await Friend.createFriends(v["id"], v["nickname"], v["head_image"]);
       }catch(e){
 
       }
@@ -46,9 +46,6 @@ void Init(data)async{
   var  token = data["data"]["token"];
   var  addr = data["data"]["ip"];
   var uid=data["data"]["user"]["ID"];
-  print(data);
-  print(addr.toString().split(":"));
-
   var ip=addr.toString().split(":")[0];
   var port=int.parse(addr.toString().split(":")[1]);
   SharedPreferences prefs = await  SharedPreferences.getInstance();
@@ -56,6 +53,7 @@ void Init(data)async{
   prefs.setString("ip", ip);
   prefs.setInt("prot",port);
   prefs.setInt("uid", uid);
+  await friendInit();
   me=uid;
   token=token;
   var workmange=NetWorkManage.getInstance(ip, port);

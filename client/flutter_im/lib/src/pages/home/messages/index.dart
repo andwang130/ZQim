@@ -44,11 +44,11 @@ class _Messages extends State<Messages>{
   groupmessagecallback(arg){
     var message=(arg as GroupMessage);
     for(var i=0;i<dialogues.length;i++){
-      if(dialogues[i].uid==message.sender&&dialogues[i].dtype==2){
+      if(dialogues[i].uid==message.groupid&&dialogues[i].dtype==2){
         dialogues[i].unread=dialogues[i].unread+1;
         if (mounted) {
               Dialogue.GetDialogues().then((values){
-      setState(() {
+        setState(() {
         dialogues=values;
       });
     });
@@ -122,8 +122,8 @@ class _Messages extends State<Messages>{
                   Container(
                     width: 62,
                     height: 62,
-                    child: Image.network(testImage,fit:BoxFit.fill ,width:62 ,height: 62),
-//                  child:Image.network(headimage!=null?headimage:testImage,fit:BoxFit.fill ,width:62 ,height: 62),
+//                    child: Image.network(testImage,fit:BoxFit.fill ,width:62 ,height: 62),
+                  child:Image.network(headimage!=null?headimage:testImage,fit:BoxFit.fill ,width:62 ,height: 62),
 
                 ),
                   unread!=0?Positioned(

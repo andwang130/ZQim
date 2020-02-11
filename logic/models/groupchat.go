@@ -4,6 +4,7 @@ import (
 	"errors"
 	"logic/config"
 	"logic/database"
+	"fmt"
 )
 
 type Groupchat struct {
@@ -19,8 +20,8 @@ type Groupchat struct {
 }
 type GroupchatUser struct {
 	BaseModel
-	Groupid uint32 `gorm:"not null"`
-	Userid  uint32 `gorm:"not null"`
+	Groupid uint32 `gorm:"not null" json:"groupid"`
+	Userid  uint32 `gorm:"not null" json:"userid"`
 }
 
 func GroupCreate(group *Groupchat,members []uint32) error {
@@ -54,7 +55,7 @@ func QuitGroup(gid, uid uint32) error {
 	if err:=config.GrouperDelete(gid);err!=nil{
 		return err
 	}
-	if err:=tx.Where("groupid = ? amd userid=?", gid, uid).Delete(&GroupchatUser{}).Error;err!=nil{
+	if err:=tx.Where("groupid = ? and userid=?", gid, uid).Delete(&GroupchatUser{}).Error;err!=nil{
 		tx.Callback()
 		return err
 	}
@@ -91,4 +92,57 @@ func GetGroup(gid uint32,uid uint32)(Groupchat,error)  {
 	}
 	database.GormPool.Model(&Groupchat{}).Where("id=?",gid).First(&groupchat)
 	return groupchat,nil
+}
+func GetGroupMembers(gid,uid uint32,page uint32)([]User,error)  {
+
+	var users []User
+	if database.GormPool.Model(&GroupchatUser{}).Where("groupid=? and userid=?",gid,uid).RecordNotFound(){
+		return users,errors.New("不属于该群组")
+	}
+	err:=database.GormPool.Model(&GroupchatUser{}).Select("users.*").Where("groupid=?",gid).
+		Joins("left join users on users.id=groupchat_users.userid").Scan(&users).Error
+
+	return users,err
+	
+}
+func GetGroupAllMembers(gid,uid uint32) ([]uint32,error) {
+	var groupuser []GroupchatUser
+
+	if database.GormPool.Model(&GroupchatUser{}).Where("groupid=? and userid=?",gid,uid).RecordNotFound(){
+		return []uint32{},errors.New("不属于该群组")
+	}
+	err:=database.GormPool.Model(&GroupchatUser{}).Where("groupid=?",gid).Scan(&groupuser).Error
+	var uids =make([]uint32,len(groupuser))
+	for index,v:=range groupuser{
+		uids[index]=v.Userid
+	}
+	return uids,err
+}
+func Invitation(gid,uid uint32,members []uint32)error  {
+
+	if database.GormPool.Model(&GroupchatUser{}).Where("groupid=? and userid=?",gid,uid).RecordNotFound(){
+		return errors.New("不属于该群组")
+	}
+	if config.GrouperDelete(gid)!=nil{
+		return errors.New("缓存错误")
+	}
+	var sql="INSERT INTO groupchat_users (groupid,userid) VALUES"
+	for index,v:=range members{
+		if index<len(members)-1 {
+			sql += fmt.Sprintf("(%d,%d),",gid,v)
+		}else{
+			sql+=fmt.Sprintf("(%d,%d);",gid,v)
+		}
+	}
+	return database.GormPool.Exec(sql).Error
+}
+func Removemembers(gid,uid uint32,members []uint32)error  {
+	if database.GormPool.Model(&Groupchat{}).Where("id=? and owner=?",gid,uid).RecordNotFound(){
+		return errors.New("不是群主")
+	}
+	if config.GrouperDelete(gid)!=nil{
+		return errors.New("缓存错误")
+	}
+	return database.GormPool.Where("groupid = ? and userid in (?)",gid,members).Delete(&GroupchatUser{}).Error
+
 }

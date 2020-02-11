@@ -74,3 +74,63 @@ func GetGroup(c *gin.Context)  {
 
 	}
 }
+//邀请成员
+func Invitation(c *gin.Context)  {
+	var parm request.InvitationParm
+	var _, uid = models.GetuidAndusername(c)
+	if err:=c.ShouldBind(&parm);err!=nil{
+		utils.ResponseError(c, 500, err)
+		return
+	}
+	if err:=models.Invitation(parm.GroupId,uid,parm.Members);err!=nil{
+		utils.ResponseError(c, 500, err)
+		return
+	}
+	utils.ResponseSuccess(c,nil)
+}
+//获取群成员
+func GetMembers(c *gin.Context)  {
+	var parm request.GetGetMembersParm
+	var _, uid = models.GetuidAndusername(c)
+	if err:=c.ShouldBind(&parm);err!=nil{
+		utils.ResponseError(c,500,err)
+		return
+	}
+	var users,err=models.GetGroupMembers(parm.GroupId,uid,parm.Page)
+	if err!=nil{
+		utils.ResponseError(c, 500, err)
+		return
+	}
+	utils.ResponseSuccess(c,users)
+
+}
+func GetAllMembers(c *gin.Context)  {
+	var parm request.GetAllMembersParm
+	var _, uid = models.GetuidAndusername(c)
+	if err:=c.ShouldBind(&parm);err!=nil{
+		utils.ResponseError(c,500,err)
+		return
+	}
+	all,err:=models.GetGroupAllMembers(parm.GroupId,uid)
+	if err!=nil{
+		utils.ResponseError(c, 500, err)
+		return
+	}
+	utils.ResponseSuccess(c,all)
+
+}
+//移除组员
+func Removemembers(c *gin.Context)  {
+	var parm request.InvitationParm
+	var _, uid = models.GetuidAndusername(c)
+	if err:=c.ShouldBind(&parm);err!=nil{
+		utils.ResponseError(c,500,err)
+		return
+	}
+	if err:=models.Removemembers(parm.GroupId,uid,parm.Members);err!=nil{
+		utils.ResponseError(c,500,err)
+		return
+	}
+	utils.ResponseSuccess(c,nil)
+
+}
