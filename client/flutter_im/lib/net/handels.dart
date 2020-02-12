@@ -104,6 +104,7 @@ class Handles {
     user=await getuser(one.sender);
     User.insterUser(user.uid, user.nickname, user.headimage);
   }
+  SetUsercache(user.uid,user.nickname,user.headimage);
   Notifications.oneMessageNotification(one.sender, user.nickname,"[${dia==null?1:dia.unread+1}]条 "+ one.msgbody, user.headimage);
 
   if (dia!=null){
@@ -125,6 +126,8 @@ class Handles {
       user=await getuser(group.sender);
       User.insterUser(user.uid, user.nickname, user.headimage);
     }
+
+    SetUsercache(user.uid,user.nickname,user.headimage);
     var groupUser=await User.GetGroup(group.groupid);
     if(groupUser==null){
       groupUser=await getGropChat(group.groupid);
@@ -152,6 +155,7 @@ class Handles {
         user = await getuser(one.sender);
         User.insterUser(user.uid, user.nickname, user.headimage);
       }
+      SetUsercache(user.uid,user.nickname,user.headimage);
       Notifications.oneMessageNotification(one.sender, user.nickname,
           "[${dia == null ? 1 : dia.unread + 1}]条 " + one.msgbody,
           user.headimage);
@@ -191,6 +195,7 @@ class Handles {
           user = await getuser(group.sender);
           User.insterUser(user.uid, user.nickname, user.headimage);
         }
+        SetUsercache(user.uid,user.nickname,user.headimage);
         var groupUser = await User.GetGroup(group.groupid);
         if (groupUser == null) {
           groupUser = await getGropChat(group.groupid);

@@ -113,7 +113,7 @@ func GorupMessageHandle(con *fxsrv.Connect,request *fxsrv.Request)error  {
 	groupmessage.Time=uint32(time.Now().Unix())
 	//获取该群聊的所有用户id
 	userlist,err:=rediscache.GetGroupUsers(groupmessage.Groupid)
-	fmt.Println(userlist)
+
 	if err!=nil||len(userlist)<1{
 		userlist=modle.GetGroupchatUser(groupmessage.Groupid)
 		//该群小于2个人
@@ -121,7 +121,7 @@ func GorupMessageHandle(con *fxsrv.Connect,request *fxsrv.Request)error  {
 			//todo
 			return errors.New("不存在的群组")
 		}
-		rediscache.GroupAddMembers(groupmessage.Groupid,userlist...)
+		rediscache.GroupAddMembers(groupmessage.Groupid,userlist)
 
 	}
 	//验证该用户是否在该群组
@@ -134,6 +134,7 @@ func GorupMessageHandle(con *fxsrv.Connect,request *fxsrv.Request)error  {
 	}
 	//用户不在该群组
 	if !flag{
+		fmt.Println(con.GetId())
 		SendAck(con,groupmessage.Rek,config.AckSaveFail,config.GorupMessage)
 		return errors.New("不在该群组")
 	}

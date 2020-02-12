@@ -1,6 +1,8 @@
 package modle
 
-import "time"
+import (
+	"time"
+)
 
 type Groupchat struct {
 	ID  uint32 `gorm:"primary_key"`
@@ -27,8 +29,10 @@ func GetGroupchatUser(gid uint32)[]uint32  {
 	imdb.Model(&GroupchatUser{}).Select([]string{"userid"}).Where("groupid=?",gid).Scan(&groupUsers)
 	var uids =make([]uint32,len(groupUsers))
 	for index,v:=range groupUsers{
+
 		uids[index]=v.Userid
 	}
+	print(groupUsers)
 	return uids
 
 }

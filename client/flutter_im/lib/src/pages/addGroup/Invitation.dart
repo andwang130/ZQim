@@ -5,7 +5,7 @@ import 'package:flutter_im/uitls/diouitls.dart';
 import 'package:flutter_im/component/toast.dart';
 import 'package:flutter_im/database/dialogue.dart';
 import 'package:flutter_im/src/pages/chat/grouochat.dart';
-import 'package:flutter_im/database/user.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 class Invitation extends StatefulWidget {
   int gid;
   Invitation(this.gid);
@@ -74,7 +74,7 @@ class _Invitation extends State<Invitation> {
                 var user=users[i];
                 var isde=inside(user.uid);
                 return Container(
-                  height: 52,
+                  height: ScreenUtil.getInstance().setHeight(160),
                   child: Row(
                     children: <Widget>[
                       Expanded(
@@ -98,10 +98,10 @@ class _Invitation extends State<Invitation> {
                       ),
                       Expanded(
                         child: Container(
-                          width: 25,
-                          height: 42,
-                          child: Image.network(testImage,
-                              fit: BoxFit.fill, width: 25, height: 42),
+                          width: ScreenUtil.getInstance().setWidth(45),
+                          height: ScreenUtil.getInstance().setHeight(140),
+                          child: Image.network(user.headimage,
+                              fit: BoxFit.fill, width: ScreenUtil.getInstance().setWidth(45), height: ScreenUtil.getInstance().setHeight(140)),
                         ),
                         flex: 1,
                       ),
@@ -172,7 +172,7 @@ class _Invitation extends State<Invitation> {
             child:Column(
               children: <Widget>[
                 SizedBox(
-                  height: 30,
+                  height: ScreenUtil.getInstance().setHeight(80),
                   child: Container(
                     padding:  EdgeInsets.only(left: 10),
                     alignment: Alignment.centerLeft,

@@ -7,6 +7,8 @@ import 'package:flutter_im/database/dialogue.dart';
 import 'package:flutter_im/src/pages/chat/grouochat.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:flutter_im/uitls/cropImage.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+
 class CreateGroup extends StatefulWidget {
   State<CreateGroup> createState() => _CreateGroup();
 }
@@ -51,7 +53,7 @@ class _CreateGroup extends State<CreateGroup> {
 
             var user=users[i];
             return Container(
-              height: 52,
+              height: ScreenUtil.getInstance().setHeight(160),
               child: Row(
                 children: <Widget>[
                   Expanded(
@@ -73,10 +75,10 @@ class _CreateGroup extends State<CreateGroup> {
                   ),
                   Expanded(
                     child: Container(
-                      width: 25,
-                      height: 42,
-                      child: Image.network(testImage,
-                          fit: BoxFit.fill, width: 25, height: 42),
+                      width: ScreenUtil.getInstance().setWidth(45),
+                      height: ScreenUtil.getInstance().setHeight(140),
+                      child: Image.network(user.headimage,
+                          fit: BoxFit.fill, width: 45, height: 140),
                     ),
                     flex: 1,
                   ),
@@ -169,7 +171,7 @@ class _CreateGroup extends State<CreateGroup> {
         child:Column(
           children: <Widget>[
             SizedBox(
-              height: 10,
+              height: ScreenUtil.getInstance().setHeight(40),
               child: Container(
                 padding:  EdgeInsets.only(left: 10),
 
@@ -179,8 +181,8 @@ class _CreateGroup extends State<CreateGroup> {
                 opimage();
               },
               child: Container(
-                  height: 100,
-                  width: 100,
+                  height: ScreenUtil.getInstance().setHeight(300),
+                  width: ScreenUtil.getInstance().setWidth(300),
                   decoration: BoxDecoration(
                       color: Colors.grey,
                       borderRadius: BorderRadius.all(Radius.circular(60))),
@@ -195,7 +197,7 @@ class _CreateGroup extends State<CreateGroup> {
             ),
           Container(
             alignment: Alignment.bottomLeft,
-            height: 50,
+            height: ScreenUtil.getInstance().setHeight(150),
 
           child:
           Form(
@@ -216,7 +218,7 @@ class _CreateGroup extends State<CreateGroup> {
 
             ),
         SizedBox(
-          height: 30,
+          height: ScreenUtil.getInstance().setHeight(80),
           child: Container(
             padding:  EdgeInsets.only(left: 10),
             alignment: Alignment.centerLeft,

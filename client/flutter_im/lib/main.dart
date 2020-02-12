@@ -14,7 +14,8 @@ import 'package:flutter_im/database/user.dart';
 import 'package:flutter_im/database/message.dart';
 import 'package:flutter_im/src/pages/notify/notify.dart';
 import 'package:flutter_im/net/handels.dart';
-import 'package:flutter_im/src/pages/addGroup/createGroup.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+
 import 'package:flutter_im/uitls/notifietion.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_im/uitls/diouitls.dart';
@@ -76,10 +77,11 @@ class _MyApp extends State<MyApp> with WidgetsBindingObserver {
 //
 //    }
 
+
     return MaterialApp(
 
         navigatorKey:navigatorKey,
-      home: Login()
+      home: SplashScreen()
     );
   }
 }
@@ -122,6 +124,8 @@ class _SplashScreen extends State<SplashScreen>{
   }
   @override
   Widget build(BuildContext context) {
+    ScreenUtil.instance = ScreenUtil(width:1080,height: 1920)..init(context);
+
     // TODO: implement build
     return Scaffold(
       body: Center(

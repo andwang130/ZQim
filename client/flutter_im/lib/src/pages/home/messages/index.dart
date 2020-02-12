@@ -4,6 +4,7 @@ import 'package:flutter_im/src/pages/chat/grouochat.dart';
 import 'package:flutter_im/net/networkmanage.dart';
 import 'package:flutter_im/database/dialogue.dart';
 import 'package:flutter_im/uitls/eventbus.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_im/proto/message.pb.dart';
 class Messages extends StatefulWidget{
   State<StatefulWidget> createState()=>_Messages();
@@ -88,7 +89,7 @@ class _Messages extends State<Messages>{
   Widget Title(){
     return Container(
       padding: EdgeInsets.only(top: 30,left: 20,right: 20,bottom: 0),
-      height: 60,
+      height: ScreenUtil.getInstance().setHeight(200),
       color: Colors.blueAccent,
       child: Row(
         children: <Widget>[
@@ -110,7 +111,7 @@ class _Messages extends State<Messages>{
 
       },
       child:Container(
-        height: 76,
+        height: ScreenUtil.getInstance().setHeight(200),
         child: Row(
           children: <Widget>[
 
@@ -120,16 +121,16 @@ class _Messages extends State<Messages>{
                   overflow: Overflow.visible,
                 children: <Widget>[
                   Container(
-                    width: 62,
-                    height: 62,
+                    width: ScreenUtil.getInstance().setWidth(152),
+                    height: ScreenUtil.getInstance().setHeight(150),
 //                    child: Image.network(testImage,fit:BoxFit.fill ,width:62 ,height: 62),
-                  child:Image.network(headimage!=null?headimage:testImage,fit:BoxFit.fill ,width:62 ,height: 62),
+                  child:Image.network(headimage!=null?headimage:testImage,fit:BoxFit.fill ,width:ScreenUtil.getInstance().setWidth(62),height: ScreenUtil.getInstance().setHeight(62)),
 
                 ),
                   unread!=0?Positioned(
                     child: Container(
-                    width: 18,
-                    height: 18,
+                    width: ScreenUtil.getInstance().setWidth(18),
+                    height: ScreenUtil.getInstance().setHeight(18),
                     alignment: Alignment.center,
                     decoration:BoxDecoration(borderRadius: BorderRadius.all(Radius.circular(360)),color: Colors.deepOrange),
                     child: Text(unread.toString()),) ,
@@ -150,17 +151,17 @@ class _Messages extends State<Messages>{
                     Row(children: <Widget>[
                       Expanded(
                         child: Text(nickname,style: TextStyle(
-                            fontSize: 16
+                            fontSize: ScreenUtil.getInstance().setSp(50)
 
                         ),),flex: 2,),
                       Expanded(child: Text(ctime,style: TextStyle(
-                          fontSize: 12,color: Colors.grey
+                          fontSize: ScreenUtil.getInstance().setSp(30),color: Colors.grey
                       ),) ,flex: 1,),
                     ],),
 
                     SizedBox(height: 10,),
                     Text(talk,style: TextStyle(
-                        fontSize: 12,color: Colors.grey
+                        fontSize: ScreenUtil.getInstance().setSp(45),color: Colors.grey
                     ),)
                   ],),
               ),
@@ -181,9 +182,7 @@ class _Messages extends State<Messages>{
 
         children: <Widget>[
           Title(),
-          Container(
-            height:MediaQuery.of(context).size.height-120,
-
+          Flexible(
             child:  ListView.builder(
               itemCount:dialogues.length,
               padding: EdgeInsets.only(top: 0),

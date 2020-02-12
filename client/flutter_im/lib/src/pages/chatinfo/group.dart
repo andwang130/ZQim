@@ -7,6 +7,9 @@ import 'package:flutter_im/uitls/diouitls.dart';
 import 'package:flutter_im/src/pages/addGroup/Invitation.dart';
 import 'package:flutter_im/src/pages/addGroup/delmembers.dart';
 import 'package:flutter_im/src/pages/home/index.dart';
+import 'package:flutter_im/src/pages/addGroup/groupmebers.dart';
+import 'package:flutter_im/component/customroute.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 class GroupChatInfo extends StatefulWidget{
   int  gid;
 
@@ -22,6 +25,7 @@ class _GroupChatInfo extends State<GroupChatInfo>{
   String notice;
   int owner;
   int count=0;
+  var page=1;
   List<Widget> list= List<Widget>();
   @override
   initState(){
@@ -48,7 +52,7 @@ class _GroupChatInfo extends State<GroupChatInfo>{
         list.insert(list.length,reduceItem());
       }
       setState(() {
-
+      page++;
       });
 
     }else{
@@ -61,7 +65,7 @@ class _GroupChatInfo extends State<GroupChatInfo>{
     if(data.data["code"]==0){
     await  Dialogue.deleteGroupdDialogue(widget.gid);
     await  GroupMessage.deleteGroupMessage(widget.gid);
-    Navigator.push(context, MaterialPageRoute(builder: (_)=>Home()));
+    Navigator.push(context, CustomRoute(Home()));
     }
 
   }
@@ -84,12 +88,12 @@ class _GroupChatInfo extends State<GroupChatInfo>{
     );
   }
   Widget userList(int count ){
-    double hight=count/5*120;
-    if(hight>400){
-      hight=300;
+    double hight=count/5*300;
+    if(hight>700){
+      hight=700;
     }
     return    Container(
-      height: hight,
+      height: ScreenUtil.getInstance().setHeight(hight),
       child: GridView.builder(
           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 5,
@@ -113,7 +117,7 @@ class _GroupChatInfo extends State<GroupChatInfo>{
         children: <Widget>[
           ClipRRect(
               borderRadius: BorderRadius.circular(10.0),
-              child: Image.network(head_image==""?testImage:head_image,fit:BoxFit.fill,width: 56,height: 52,)
+              child: Image.network(head_image==""?testImage:head_image,fit:BoxFit.fill,width: ScreenUtil.getInstance().setWidth(150),height: ScreenUtil.getInstance().setHeight(150),)
           ),
           Text(name)
 
@@ -127,13 +131,13 @@ class _GroupChatInfo extends State<GroupChatInfo>{
     return    FlatButton(
         padding: EdgeInsets.all(0),
         onPressed: (){
-          Navigator.push(context, MaterialPageRoute(builder: (_)=>DeleteMembers(widget.gid)));
+          Navigator.push(context, CustomRoute(DeleteMembers(widget.gid)));
         }, child:   Container(
       child:Column(
         children: <Widget>[
           ClipRRect(
               borderRadius: BorderRadius.circular(10.0),
-              child: Image.asset("assets/images/reduce.png",fit:BoxFit.fill,width: 56,height: 52,)
+              child: Image.asset("assets/images/reduce.png",fit:BoxFit.fill,width: ScreenUtil.getInstance().setWidth(150),height: ScreenUtil.getInstance().setHeight(150),)
           ),
         ],
       ),
@@ -144,13 +148,13 @@ class _GroupChatInfo extends State<GroupChatInfo>{
     FlatButton(
     padding: EdgeInsets.all(0),
     onPressed: (){
-      Navigator.push(context, MaterialPageRoute(builder: (_)=>Invitation(widget.gid)));
+      Navigator.push(context, CustomRoute(Invitation(widget.gid)));
     }, child:   Container(
       child:Column(
         children: <Widget>[
           ClipRRect(
               borderRadius: BorderRadius.circular(10.0),
-              child: Image.asset("assets/images/add.png",fit:BoxFit.fill,width: 56,height: 52,)
+              child: Image.asset("assets/images/add.png",fit:BoxFit.fill,width: ScreenUtil.getInstance().setWidth(150),height: ScreenUtil.getInstance().setHeight(150),)
           ),
         ],
       ),
@@ -166,7 +170,9 @@ class _GroupChatInfo extends State<GroupChatInfo>{
         children: <Widget>[
         SizedBox(height: 20,),
         this.userList(list.length),
-          count>list.length?FlatButton.icon(onPressed: (){},label: Text("更多组员"),):Container(
+          count>list.length?FlatButton(onPressed: (){
+            Navigator.push(context, CustomRoute( MebersAll(widget.gid)));
+          },child: Text("所有成员"),):Container(
             height: 1,
           ),
 
@@ -236,7 +242,7 @@ class _GroupChatInfo extends State<GroupChatInfo>{
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 Container(
-                  height: 47,
+                  height: ScreenUtil.getInstance().setHeight(47),
                   alignment: Alignment.center,
                   child: Text("删除并且退出",style: TextStyle(fontWeight: FontWeight.w600,color: Colors.redAccent),),)
               ],

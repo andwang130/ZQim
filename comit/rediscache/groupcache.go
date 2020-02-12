@@ -19,8 +19,12 @@ func GetGroupUsers(key uint32)([]uint32,error)  {
 	return userlist,nil
 }
 
-func GroupAddMembers(gid uint32,members ... uint32) error {
-	cmd:=rediscli.SAdd("groupid:"+strconv.Itoa(int(gid)),members)
+func GroupAddMembers(gid uint32,members []uint32) error {
+	var intefaces=make([]interface{},len(members))
+	for index,v:=range members{
+		intefaces[index]=v
+	}
+	cmd:=rediscli.SAdd("groupid:"+strconv.Itoa(int(gid)),intefaces...)
 	if cmd.Err()!=nil{
 		return cmd.Err()
 	}

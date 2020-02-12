@@ -12,6 +12,7 @@ import 'package:uuid/uuid.dart';
 const OssUrl="https://xkws.oss-cn-hangzhou.aliyuncs.com/";
 const String testImage="https://bkimg.cdn.bcebos.com/pic/4b90f603738da97784eaf36dba51f8198718e3ab@wm_1,g_7,k_d2F0ZXIvYmFpa2U4MA==,xp_5,yp_5";
 const WWW="http://192.168.0.106:8080";
+var MyHeadimage="";
 var me=0;
 var token;
 class UserCache{
@@ -19,19 +20,26 @@ class UserCache{
   String headImge;
 }
 
-Map<int,UserCache> Usercache=Map<int,UserCache>();
+Map<int,UserCache> Usercaches=Map<int,UserCache>();
 
+SetUsercache(int uid,String nickname, String headimage){
+
+  var usercache=UserCache();
+  usercache.nickname=nickname;
+  usercache.headImge=headimage;
+  Usercaches[uid]=usercache;
+}
 Future<UserCache> getUserCache(int uid)async{
-  var user=Usercache[uid];
-  if (Usercache.containsKey(uid)){
-    return  Usercache[uid];;
+  var user=Usercaches[uid];
+  if (Usercaches.containsKey(uid)){
+    return  Usercaches[uid];;
   }else{
-   var d= await User.GetUser(uid);
-   var user = UserCache();
-   user.nickname=d.nickname;
-   user.headImge=d.headimage;
-   Usercache[uid]=user;
-   return user;
+    var d= await User.GetUser(uid);
+    var user = UserCache();
+    user.nickname=d.nickname;
+    user.headImge=d.headimage;
+    Usercaches[uid]=user;
+    return user;
   }
 }
 
@@ -53,6 +61,7 @@ void Init(data)async{
   var  token = data["data"]["token"];
   var  addr = data["data"]["ip"];
   var uid=data["data"]["user"]["ID"];
+  var headimage=data["data"]["user"]["head_image"];
   var ip=addr.toString().split(":")[0];
   var port=int.parse(addr.toString().split(":")[1]);
   SharedPreferences prefs = await  SharedPreferences.getInstance();
@@ -63,6 +72,7 @@ void Init(data)async{
   await friendInit();
   me=uid;
   token=token;
+  MyHeadimage=headimage;
   var workmange=NetWorkManage.getInstance(ip, port);
   await workmange.init();
   workmange.auth(token);

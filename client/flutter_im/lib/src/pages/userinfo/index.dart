@@ -13,7 +13,6 @@ class UserInfo extends StatefulWidget{
   UserInfo(this.uid);
   State<StatefulWidget> createState()=>_UserInfo();
 }
-const String testImage="https://bkimg.cdn.bcebos.com/pic/4b90f603738da97784eaf36dba51f8198718e3ab@wm_1,g_7,k_d2F0ZXIvYmFpa2U4MA==,xp_5,yp_5";
 const String url="http://192.168.0.106:8080/user/get";
 const String addUrl="http://192.168.0.106:8080/friend/add";
 class _UserInfo extends State<UserInfo>{

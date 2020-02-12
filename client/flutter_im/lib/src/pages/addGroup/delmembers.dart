@@ -5,6 +5,7 @@ import 'package:flutter_im/uitls/diouitls.dart';
 import 'package:flutter_im/config/config.dart';
 import 'package:flutter_im/component/toast.dart';
 import 'package:flutter_im/src/pages/chat/grouochat.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 class DeleteMembers extends StatefulWidget{
   int gid;
   DeleteMembers(this.gid);
@@ -82,7 +83,7 @@ class _DeleteMembers extends State<DeleteMembers>{
                 var user=users[i];
 
                 return Container(
-                  height: 52,
+                  height: ScreenUtil.getInstance().setHeight(160),
                   child: Row(
                     children: <Widget>[
                       Expanded(
@@ -105,10 +106,10 @@ class _DeleteMembers extends State<DeleteMembers>{
                       ),
                       Expanded(
                         child: Container(
-                          width: 25,
-                          height: 42,
-                          child: Image.network(testImage,
-                              fit: BoxFit.fill, width: 25, height: 42),
+                          width: ScreenUtil.getInstance().setWidth(45),
+                          height: ScreenUtil.getInstance().setHeight(140),
+                          child: Image.network(user.headimage,
+                              fit: BoxFit.fill, width: ScreenUtil.getInstance().setWidth(45), height: ScreenUtil.getInstance().setHeight(140)),
                         ),
                         flex: 1,
                       ),
@@ -179,7 +180,7 @@ class _DeleteMembers extends State<DeleteMembers>{
             child:Column(
               children: <Widget>[
                 SizedBox(
-                  height: 30,
+                  height: ScreenUtil.getInstance().setHeight(80),
                   child: Container(
                     padding:  EdgeInsets.only(left: 10),
                     alignment: Alignment.centerLeft,

@@ -6,6 +6,7 @@ import 'package:flutter_im/database/user.dart';
 import 'package:flutter_im/src/pages/notify/notify.dart';
 import 'package:flutter_im/src/pages/addGroup/createGroup.dart';
 import 'package:flutter_im/config/config.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 class Friends extends StatefulWidget{
 
   State<StatefulWidget> createState()=>_Friends();
@@ -35,13 +36,13 @@ class _Friends extends State<Friends>{
 
   Widget Title(){
     return Container(
-      padding: EdgeInsets.only(top: 20,left: 20,right: 20,bottom: 0),
+      padding: EdgeInsets.only(top: ScreenUtil.getInstance().setHeight(80),left: 20,right: 20,bottom: 0),
       alignment: Alignment.centerLeft,
-      height: 60,
+      height: ScreenUtil.getInstance().setHeight(200),
       color: Colors.blueAccent,
       child: Row(
         children: <Widget>[
-          Expanded(child:Text("通信录",style: TextStyle(color: Colors.white,fontSize: 16),) ,flex: 6,),
+          Expanded(child:Text("通信录",style: TextStyle(color: Colors.white,fontSize: ScreenUtil.getInstance().setSp(50)),) ,flex: 6,),
           Expanded(child: Container(
             alignment: Alignment.topRight,
             child: PopupMenuButton(
@@ -91,14 +92,14 @@ class _Friends extends State<Friends>{
         );
       },
       child:Container(
-        height: 52,
+        height: ScreenUtil.getInstance().setHeight(150),
         child: Row(
           children: <Widget>[
 
             Expanded(child: Container(
-          width: 25,
-          height: 42,
-          child:Image.network(headimage!=null?headimage:testImage,fit:BoxFit.fill ,width:25 ,height: 42),
+          width: ScreenUtil.getInstance().setWidth(60),
+          height: ScreenUtil.getInstance().setHeight(142),
+          child:Image.network(headimage!=null?headimage:testImage,fit:BoxFit.fill ,width:ScreenUtil.getInstance().setWidth(25) ,height: ScreenUtil.getInstance().setHeight(42)),
 
         ), flex: 1,),
           Expanded(
@@ -108,7 +109,7 @@ class _Friends extends State<Friends>{
                 Expanded(child: Container(
                   alignment:Alignment.centerLeft,
                   child: Text(nickname!=null?nickname:"",style: TextStyle(
-                    fontSize: 16
+                    fontSize: ScreenUtil.getInstance().setSp(45)
                 )),)
                 ,flex: 3,),
 
@@ -135,14 +136,14 @@ class _Friends extends State<Friends>{
         );
       },
       child:Container(
-        height: 52,
+        height: ScreenUtil.getInstance().setHeight(150),
         child: Row(
           children: <Widget>[
 
             Expanded(child: Container(
               width: 25,
               height: 42,
-              child:Image.network(testImage,fit:BoxFit.fill ,width:25 ,height: 42),
+              child:Image.network(testImage,fit:BoxFit.fill ,width:ScreenUtil.getInstance().setWidth(25) ,height: ScreenUtil.getInstance().setHeight(42)),
 
             ), flex: 1,),
             Expanded(
@@ -181,10 +182,10 @@ class _Friends extends State<Friends>{
         children: <Widget>[
           Title(),
           notifytiem(),
-          SizedBox(height: 10,child:
+          SizedBox(height: ScreenUtil.getInstance().setHeight(10),child:
           Container(color: Colors.grey[200],),),
-          Container(
-            height:MediaQuery.of(context).size.height-190,
+          Flexible(
+//              height:ScreenUtil.getInstance().height-1500,
             child:
             RefreshIndicator(child:    ListView.builder(
                 itemCount: users.length,

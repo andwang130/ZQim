@@ -88,8 +88,8 @@ class _Chat extends State<Chat> with SingleTickerProviderStateMixin {
     );
   }
   Widget LeftMessageItem(int uid,String message,int time){
-    var user= getUserCache(uid);
-
+    var user= Usercaches[uid];
+    getUserCache(uid);
     num width=message.length>20?600:message.length*100;
     num height=(message.length/20).ceil()*100;
     return Container(
@@ -98,13 +98,13 @@ class _Chat extends State<Chat> with SingleTickerProviderStateMixin {
           children: <Widget>[
             Row(
               children: <Widget>[
-                ClipOval(child: Image.network(testImage,fit:BoxFit.fill,width: 52,height: 52,),),
+                ClipOval(child: Image.network(user.headImge,fit:BoxFit.fill,width: 52,height: 52,),),
                 Container(child: BubbleWidget(
                     ScreenUtil().setWidth(width),
                     ScreenUtil().setHeight(height),
                     Colors.white,
                     BubbleArrowDirection.left,child:Text(message,textAlign: TextAlign.start),
-                    length: ScreenUtil().setWidth(20)
+                    length: ScreenUtil().setWidth(40)
                 ),)
               ],
             ),
@@ -117,7 +117,7 @@ class _Chat extends State<Chat> with SingleTickerProviderStateMixin {
     );
   }
   Widget RightMessageItem(String message,int time,int status){
-    num width=message.length>20?600:message.length*100;
+    num width=message.length>11?700:message.length==1?120:message.length*85;
     num height=(message.length/20).ceil()*100;
     print(width);
     return Container(
@@ -134,9 +134,9 @@ class _Chat extends State<Chat> with SingleTickerProviderStateMixin {
                     ScreenUtil().setHeight(height),
                     Colors.blue,
                     BubbleArrowDirection.right,child:Text(message,textAlign: TextAlign.start),
-                    length: ScreenUtil().setWidth(20)
+                    length: ScreenUtil().setWidth(40)
                 ),),
-                ClipOval(child: Image.network(testImage,fit:BoxFit.fill,width: 52,height: 52,),),
+                ClipOval(child: Image.network(MyHeadimage,fit:BoxFit.fill,width: 52,height: 52,),),
               ],
             ),
             Container(
@@ -173,7 +173,6 @@ class _Chat extends State<Chat> with SingleTickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    ScreenUtil.instance = ScreenUtil.getInstance()..init(context);
 
     // TODO: implement build
     return Scaffold(

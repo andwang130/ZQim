@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_im/src/pages/userinfo/index.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_im/database/user.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 class Addfriend extends StatefulWidget{
 
   State<StatefulWidget> createState()=>_Addfriend();
@@ -64,7 +65,7 @@ class _Addfriend extends State<Addfriend>{
         Navigator.push(context, MaterialPageRoute(builder: (_)=>UserInfo(uid)));
       },
       child: Container(
-        height: 55,
+        height: ScreenUtil.getInstance().setHeight(55),
 
         child:Row(
 
