@@ -93,16 +93,26 @@ func GetGroup(gid uint32,uid uint32)(Groupchat,error)  {
 	database.GormPool.Model(&Groupchat{}).Where("id=?",gid).First(&groupchat)
 	return groupchat,nil
 }
-func GetGroupMembers(gid,uid uint32,page uint32)([]User,error)  {
 
-	var users []User
+type Member struct {
+	ID  uint32 `gorm:"primary_key"`
+	Nickname string `gorm:"type:varchar(10);not null" json:"nickname"` //昵称
+	Username string `gorm:"type:varchar(36);not null;unique" json:"username"` //登录用户名
+	HeadImage string `gorm:"varchar(200)" json:"head_image"`
+
+}
+func GetGroupMembers(gid,uid uint32,page uint32)([]Member,error,uint32)  {
+
+	var users []Member
+	var count uint32
 	if database.GormPool.Model(&GroupchatUser{}).Where("groupid=? and userid=?",gid,uid).RecordNotFound(){
-		return users,errors.New("不属于该群组")
+		return users,errors.New("不属于该群组"),count
 	}
-	err:=database.GormPool.Model(&GroupchatUser{}).Select("users.*").Where("groupid=?",gid).
-		Joins("left join users on users.id=groupchat_users.userid").Scan(&users).Error
+	err:=database.GormPool.Model(&GroupchatUser{}).Select("users.*").Where("groupid=?",gid).Count(&count).
+		Joins("left join users on users.id=groupchat_users.userid").Limit(20).Offset((page-1)*20).Scan(&users).Error
 
-	return users,err
+
+	return users,err,count
 	
 }
 func GetGroupAllMembers(gid,uid uint32) ([]uint32,error) {

@@ -4,6 +4,10 @@ import 'package:flutter_im/database/user.dart';
 import 'package:flutter_im/database/friends.dart';
 import 'package:flutter_im/src/pages/chat/onechat.dart';
 import 'package:flutter_im/component/toast.dart';
+import 'package:flutter_im/config/config.dart';
+import 'package:flutter_im/database/dialogue.dart';
+import 'package:flutter_im/database/message.dart';
+import 'package:flutter_im/src/pages/home/index.dart';
 class UserInfo extends StatefulWidget{
   int uid;
   UserInfo(this.uid);
@@ -13,8 +17,6 @@ const String testImage="https://bkimg.cdn.bcebos.com/pic/4b90f603738da97784eaf36
 const String url="http://192.168.0.106:8080/user/get";
 const String addUrl="http://192.168.0.106:8080/friend/add";
 class _UserInfo extends State<UserInfo>{
-  
-
   String nickanme="";
   String explain="";
   String headimage="";
@@ -53,6 +55,18 @@ class _UserInfo extends State<UserInfo>{
     Toast.toast(context, "已经发送请求");
     }
   }
+  void deleteFriend()async{
+    var url=WWW+"/friend/delete";
+    var data=await DioUtls.post(url,data:{"friendid":widget.uid});
+    if(data.data["code"]==0){
+     await Friend.deleteFriend(widget.uid);
+      await User.deleteuser(widget.uid);
+      await Dialogue.deleteUserdDialogue(widget.uid);
+      await OneMessage.deleteUserOneMessage(widget.uid, me);
+     Navigator.push(context, MaterialPageRoute(builder: (_)=>Home()));
+    }
+
+  }
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
@@ -75,20 +89,72 @@ class _UserInfo extends State<UserInfo>{
             ),
 
             SizedBox(height: 20,),
+        isfirend==true?
+          Column(children: <Widget>[
+            RaisedButton(
+            color: Colors.greenAccent,
+            child:Container(
+              decoration: BoxDecoration(borderRadius:BorderRadius.all(Radius.circular(10))),
+              alignment: Alignment.center,
+              width: 200,
+              height: 40,
+              child: Text("聊天",style: TextStyle(fontSize: 14,color: Colors.blue),),
+            ),onPressed: (){
 
-            isfirend==true?RaisedButton(
-              color: Colors.greenAccent,
-              child:Container(
-                decoration: BoxDecoration(borderRadius:BorderRadius.all(Radius.circular(10))),
-                alignment: Alignment.center,
-                width: 200,
-                height: 40,
-                child: Text("聊天",style: TextStyle(fontSize: 14,color: Colors.blue),),
-              ),onPressed: (){
+            Navigator.push(context, MaterialPageRoute(builder: (_)=>OneChat(widget.uid)));
 
-              Navigator.push(context, MaterialPageRoute(builder: (_)=>OneChat(widget.uid)));
+          },),
+            RaisedButton(
+          color: Colors.greenAccent,
+          child:Container(
+            decoration: BoxDecoration(borderRadius:BorderRadius.all(Radius.circular(10))),
+            alignment: Alignment.center,
+            width: 200,
+            height: 40,
+            child: Text("删除好友",style: TextStyle(fontSize: 14,color: Colors.red),),
+          ),onPressed: (){
 
-            },)
+
+              showDialog(context: context,builder:(BuildContext context){
+                return SimpleDialog(
+                  title: Text("删除联系人"),
+
+                  children: <Widget>[
+                    Center(
+                      child: Text('将联系人"${nickanme}"删除'),
+                    ),
+                    Container(
+                      child: Row(
+                        children: <Widget>[
+
+
+                          Expanded(
+                            child: FlatButton(
+                              child: Text('取消'),
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                              },
+                            ),
+                          ),
+                          Expanded(
+                            child:  FlatButton(
+                              child: Text('确定'),
+                              onPressed: () {
+                                deleteFriend();
+                                Navigator.of(context).pop();
+                              },
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                  ],
+                );
+              });
+
+        },)
+          ],)
+
             :RaisedButton(
               color: Colors.greenAccent,
               child:Container(
@@ -141,6 +207,7 @@ class _UserInfo extends State<UserInfo>{
               );
 
             },),
+
           ],
         ),
       )

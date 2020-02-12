@@ -35,6 +35,15 @@ dependencies:
   date_format: ^1.0.8
   #通知栏插件
   flutter_local_notifications: ^1.1.5+1
+  uuid: 2.0.4
+
+  #照相或者相册获取图像
+  image_picker: ^0.6.3+1
+
+  #图片剪裁
+  image_cropper: ^1.2.1
+
+
 
 
 dev_dependencies:
@@ -58,6 +67,7 @@ flutter:
      - assets/mp3/4082.mp3
      - assets/images/add.png
      - assets/images/reduce.png
+     - assets/images/Local Upload.png
   #  - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

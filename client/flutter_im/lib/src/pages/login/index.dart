@@ -5,6 +5,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_im/src/pages/home/index.dart';
 import 'package:flutter_im/net/networkmanage.dart';
 import 'package:flutter_im/config/config.dart';
+import 'package:flutter_im/component/toast.dart';
+import 'package:flutter_im/src/pages/register/index.dart';
 class Login extends StatefulWidget{
   State<StatefulWidget> createState()=>_Login();
 }
@@ -129,7 +131,10 @@ class _Login extends State<Login>{
               ),
             ),
             //点击快速注册、执行事件
-            onPressed: () {},
+            onPressed: () {
+
+              Navigator.push(context, MaterialPageRoute(builder: (_)=>Register()));
+            },
           )
         ],
       ),
@@ -145,6 +150,7 @@ class _Login extends State<Login>{
             SizedBox(height: 80,),
             this.LogArea(),
             SizedBox(height: 60,),
+
             this.InputArea(),
             SizedBox(height: 60,),
             this.LoginButtonArea(),
@@ -152,6 +158,7 @@ class _Login extends State<Login>{
             bottomArea()
           ],
         ),
+        resizeToAvoidBottomPadding:false ,
       );
     }
 
@@ -165,15 +172,16 @@ class _Login extends State<Login>{
         Dio dio = Dio();
         var res = await dio.post(
             loginUrl, data: {"username": username, "passwd": password});
-        print(res);
-        print(res.data);
+
         if (res.data["code"] == 0) {
            Init(res.data);
            Navigator.push(context,MaterialPageRoute(builder:(_)=> Home()));
+        }else{
+          Toast.toast(context, res.data["msg"]);
         }
 
       }catch(e){
-        print(e.toString());
+        Toast.toast(context, "服务器错误");
       }
 
 

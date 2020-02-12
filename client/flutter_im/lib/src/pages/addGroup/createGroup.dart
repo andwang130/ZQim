@@ -5,7 +5,8 @@ import 'package:flutter_im/uitls/diouitls.dart';
 import 'package:flutter_im/component/toast.dart';
 import 'package:flutter_im/database/dialogue.dart';
 import 'package:flutter_im/src/pages/chat/grouochat.dart';
-import 'package:flutter_im/database/user.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:flutter_im/uitls/cropImage.dart';
 class CreateGroup extends StatefulWidget {
   State<CreateGroup> createState() => _CreateGroup();
 }
@@ -15,7 +16,7 @@ class _CreateGroup extends State<CreateGroup> {
   var users=List<User>();
   var checklist=List<int>();
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
-
+  String avatar="";
   String groupname="";
   @override
   initState(){
@@ -111,11 +112,15 @@ class _CreateGroup extends State<CreateGroup> {
   Submit()async{
     var form = formKey.currentState;
     if(form.validate()){
+      if(avatar==""){
+        Toast.toast(context, "请上传一张头像");
+        return;
+      }
       form.save();
       try{
         var url=WWW+"/group/create";
         print(groupname);
-        var data= await DioUtls.post(url,data:{"group_name":groupname,"members":checklist});
+        var data= await DioUtls.post(url,data:{"group_name":groupname,"members":checklist,"avatar":avatar});
         if(data.data["code"]==0){
           var groupchat=data.data["data"];
           await User.insterGroup(groupchat["ID"], groupchat["group_name"], groupchat["avatar"]);
@@ -129,6 +134,16 @@ class _CreateGroup extends State<CreateGroup> {
       }
 
 
+    }
+  }
+  opimage()async{
+    var file=await ImagePicker.pickImage(source: ImageSource.gallery);
+    var filename=await cropImage(file);
+    if(filename!=""){
+      avatar=filename;
+      setState(() {
+
+      });
     }
   }
   @override
@@ -153,6 +168,31 @@ class _CreateGroup extends State<CreateGroup> {
       body: Container(
         child:Column(
           children: <Widget>[
+            SizedBox(
+              height: 10,
+              child: Container(
+                padding:  EdgeInsets.only(left: 10),
+
+              ),),
+            FlatButton(
+              onPressed: () {
+                opimage();
+              },
+              child: Container(
+                  height: 100,
+                  width: 100,
+                  decoration: BoxDecoration(
+                      color: Colors.grey,
+                      borderRadius: BorderRadius.all(Radius.circular(60))),
+                  child: avatar == ""
+                      ? Image.asset("assets/images/Local Upload.png")
+                      : ClipOval(
+                    child: Image.network(
+                      avatar,
+                      fit: BoxFit.fill,
+                    ),
+                  )),
+            ),
           Container(
             alignment: Alignment.bottomLeft,
             height: 50,
@@ -175,7 +215,6 @@ class _CreateGroup extends State<CreateGroup> {
 
 
             ),
-
         SizedBox(
           height: 30,
           child: Container(

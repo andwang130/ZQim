@@ -208,12 +208,12 @@ class Handles {
               group.groupid, "${user.nickname}" + group.msgbody,
               group.time.toString());
         }
-        reks.add(group.rek);
+
       }catch(e) {
         print(e);
       }
 
-
+      reks.add(group.rek);
     }
 
     if(pullgroup.messages.length>1) {

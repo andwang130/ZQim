@@ -47,7 +47,8 @@ func Register(c *gin.Context) {
 	var user models.User
 	user.Username = parm.Username
 	user.Nickname = parm.Nickname
-	user.Sex = parm.Sex
+	user.HeadImage=parm.HeadImage
+	user.Sex = "man"
 	user.Passwd = parm.Passwd
 	if err := models.UserAdd(&user); err != nil {
 		//log.WithFields(log.Fields{}).Info(err)
@@ -92,4 +93,18 @@ func Checklogin(c *gin.Context)  {
 	result["token"]=newtoken
 	result["user"]=user
 	utils.ResponseSuccess(c,&result)
+}
+func UpdateHeadImage(c *gin.Context)  {
+	var parm request.UpdateHeadImageParm
+	var _,uid=models.GetuidAndusername(c)
+	if err:=c.ShouldBind(&parm);err!=nil{
+		utils.ResponseError(c,500,err)
+		return
+	}
+	if err:=models.UpdateHeadImage(uid,parm.HeadImage);err!=nil{
+		utils.ResponseError(c,500,err)
+		return
+	}
+	utils.ResponseSuccess(c,nil)
+
 }

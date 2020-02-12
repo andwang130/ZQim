@@ -128,4 +128,16 @@ static updateGrouoDialogues(int gid,String talk,String ctime,int unread) async{
   var db=await SqlManager.getCurrentDatabase();
   db.update(tabname, {"talkcontent": talk, "ctime": ctime, "unread": unread}, where:"id='${digest.toString()}'");
 }
+static deleteUserdDialogue(int uid )async{
+  var db=await SqlManager.getCurrentDatabase();
+  var content = new Utf8Encoder().convert("user:" + uid.toString());
+  var digest = md5.convert(content);
+  var data=await db.delete(tabname,where: "id='${digest.toString()}'");
+}
+  static deleteGroupdDialogue(int gid )async{
+    var db=await SqlManager.getCurrentDatabase();
+    var content = new Utf8Encoder().convert("group:" + gid.toString());
+    var digest = md5.convert(content);
+    var data=await db.delete(tabname,where: "id='${digest.toString()}'");
+  }
 }

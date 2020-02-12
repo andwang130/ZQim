@@ -105,7 +105,9 @@ class _Addfriend extends State<Addfriend>{
   Widget build(BuildContext context) {
     // TODO: implement build
     return Scaffold(
-      appBar: AppBar(title:Container(
+      appBar: AppBar(
+          automaticallyImplyLeading: false,
+          title:Container(
         height: 40,
 
         alignment: Alignment.centerLeft,
@@ -130,6 +132,11 @@ class _Addfriend extends State<Addfriend>{
               onChanged: (text){
                 key=text;
               },
+              onSubmitted: (text){
+                users.clear();
+                page=1;
+                this.getUsers();
+              },
             ),
               flex: 6,
         ),
@@ -141,7 +148,7 @@ class _Addfriend extends State<Addfriend>{
                     page=1;
                     this.getUsers();
                   },
-                  child:Text("搜索",style: TextStyle(fontSize: 14,color: Colors.black),)),
+                  child:Text("搜索",style: TextStyle(fontSize: 16,color: Colors.white),)),
               flex: 1,
             )
 

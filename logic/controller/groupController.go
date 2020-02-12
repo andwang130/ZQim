@@ -96,12 +96,15 @@ func GetMembers(c *gin.Context)  {
 		utils.ResponseError(c,500,err)
 		return
 	}
-	var users,err=models.GetGroupMembers(parm.GroupId,uid,parm.Page)
+	var users,err,count=models.GetGroupMembers(parm.GroupId,uid,parm.Page)
 	if err!=nil{
 		utils.ResponseError(c, 500, err)
 		return
 	}
-	utils.ResponseSuccess(c,users)
+	var data=make(map[string]interface{})
+	data["members"]=users
+	data["count"]=count
+	utils.ResponseSuccess(c,data)
 
 }
 func GetAllMembers(c *gin.Context)  {

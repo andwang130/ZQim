@@ -13,7 +13,7 @@ class DeleteMembers extends StatefulWidget{
 }
 class _DeleteMembers extends State<DeleteMembers>{
 
-
+  ScrollController _scrollController = ScrollController(); //listview的控制器
   var members=List<int>();
   var users=List<User>();
   var page=1;
@@ -22,6 +22,12 @@ class _DeleteMembers extends State<DeleteMembers>{
   initState(){
     super.initState();
     meembers();
+    _scrollController.addListener(() {
+      if (_scrollController.position.pixels ==
+          _scrollController.position.maxScrollExtent) {
+        meembers();
+      }
+    });
   }
 
 
@@ -41,7 +47,7 @@ class _DeleteMembers extends State<DeleteMembers>{
     var data=await DioUtls.get(url,queryParameters: {"id":widget.gid,"page":page});
     if(data.data["code"]==0){
       print(data.data["data"]);
-      for(var d in data.data["data"]){
+      for(var d in data.data["data"]["members"]){
         print(d);
         var user=User();
         user.uid=d["ID"];
@@ -68,9 +74,10 @@ class _DeleteMembers extends State<DeleteMembers>{
     return
       Container(
           color: Colors.grey[100],
+
           child:  ListView.builder(
               itemCount: users.length,
-
+              controller: _scrollController,
               itemBuilder: (contex, i) {
                 var user=users[i];
 

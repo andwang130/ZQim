@@ -17,6 +17,7 @@ class DioUtls {
   CancelToken cancelToken,
   ProgressCallback onSendProgress,
   ProgressCallback onReceiveProgress}) async{
+
    var dio=await GetDio();
    var req= await dio.post(path,data:data,queryParameters: queryParameters,cancelToken: cancelToken,options: options
     ,onReceiveProgress: onReceiveProgress,onSendProgress: onSendProgress
@@ -32,6 +33,7 @@ class DioUtls {
   })async{
     var dio=await GetDio();
     var req=await dio.get(path,queryParameters: queryParameters,options: options,cancelToken: cancelToken,onReceiveProgress: onReceiveProgress);
+
     return req;
   }
 }

@@ -3,7 +3,7 @@ package request
 type CreateGroupParam struct {
 	GroupName  string `form:"group_name" json:"group_name" binding:"required"`
 	Members  []uint32 `form:"members" json:"members" binding:"required"`
-	Avatar  string `json:"avatar" form:"avatar"`
+	Avatar  string `json:"avatar" form:"avatar" binding:"required"`
 }
 
 type QuitGroupParam struct {

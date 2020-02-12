@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_im/component/menuitme.dart';
 import 'package:flutter_im/database/message.dart';
+import 'package:flutter_im/database/dialogue.dart';
 import 'package:flutter_im/config/config.dart';
 import 'package:flutter_im/uitls/diouitls.dart';
 import 'package:flutter_im/src/pages/addGroup/Invitation.dart';
 import 'package:flutter_im/src/pages/addGroup/delmembers.dart';
+import 'package:flutter_im/src/pages/home/index.dart';
 class GroupChatInfo extends StatefulWidget{
   int  gid;
 
@@ -19,6 +21,7 @@ class _GroupChatInfo extends State<GroupChatInfo>{
   String groupname;
   String notice;
   int owner;
+  int count=0;
   List<Widget> list= List<Widget>();
   @override
   initState(){
@@ -33,9 +36,12 @@ class _GroupChatInfo extends State<GroupChatInfo>{
     var data=await DioUtls.get(url,queryParameters: {"id":widget.gid,"page":1});
     if(data.data["code"]==0){
      var datas=data.data["data"];
-      for(var d in datas){
+     print(datas);
+      for(var d in datas["members"]){
+
         list.insert(list.length,piepoitem(d["head_image"], d["nickname"], d["ID"]));
       }
+     count=datas["count"];
      list.insert(list.length,addItem());
       print(owner);
       if(owner==me){
@@ -48,6 +54,16 @@ class _GroupChatInfo extends State<GroupChatInfo>{
     }else{
       print(data.data);
     }
+  }
+  quitegroup()async{
+    var url=WWW+"/group/quit";
+    var data=await DioUtls.post(url,data: {"id":widget.gid});
+    if(data.data["code"]==0){
+    await  Dialogue.deleteGroupdDialogue(widget.gid);
+    await  GroupMessage.deleteGroupMessage(widget.gid);
+    Navigator.push(context, MaterialPageRoute(builder: (_)=>Home()));
+    }
+
   }
   getgroupinfo()async{
     var url=WWW+"/group/get";
@@ -68,7 +84,10 @@ class _GroupChatInfo extends State<GroupChatInfo>{
     );
   }
   Widget userList(int count ){
-    double hight=count/5*130;
+    double hight=count/5*120;
+    if(hight>400){
+      hight=300;
+    }
     return    Container(
       height: hight,
       child: GridView.builder(
@@ -121,7 +140,6 @@ class _GroupChatInfo extends State<GroupChatInfo>{
     ));
   }
   Widget addItem(){
-
     return
     FlatButton(
     padding: EdgeInsets.all(0),
@@ -144,43 +162,89 @@ class _GroupChatInfo extends State<GroupChatInfo>{
     // TODO: implement build
     return Scaffold(
       appBar:this.title() ,
-      body: Column(
+      body: Container(child: ListView(
         children: <Widget>[
-          SizedBox(height: 20,),
-          this.userList(list.length),
-          SizeBoxGrey(20),
+        SizedBox(height: 20,),
+        this.userList(list.length),
+          count>list.length?FlatButton.icon(onPressed: (){},label: Text("更多组员"),):Container(
+            height: 1,
+          ),
+
+        SizeBoxGrey(20),
 //        MenuAare("查看聊天记录", null, (){}),
-          MenuAare("清除聊天记录", null, (){
+        MenuAare("清除聊天记录",  Icons.arrow_forward_ios, (){
 
-            showDialog(context: context,builder: (BuildContext context){
-              return AlertDialog(
-                title: Text("删除确认"),
-                actions: <Widget>[
-                  FlatButton(
-                      onPressed: () {
-                        Navigator.of(context).pop();
-                      },
-                      child: Text("取消")
-                  ),
-                  RaisedButton(
+          showDialog(context: context,builder: (BuildContext context){
+            return AlertDialog(
+              title: Text("删除确认"),
+              actions: <Widget>[
+                FlatButton(
                     onPressed: () {
-//                      OneMessage.deleteUserOneMessage(widget.sender, widget.receiver);
-
+                      Navigator.of(context).pop();
                     },
-                    child: Text(
-                      "确定",
-                      style: TextStyle(color: Colors.greenAccent),
-                    ),
+                    child: Text("取消")
+                ),
+                RaisedButton(
+                  onPressed: () {
+                    GroupMessage.deleteGroupMessage(widget.gid);
+                  },
+                  child: Text(
+                    "确定",
+                    style: TextStyle(color: Colors.greenAccent),
                   ),
-                ],
-              );
-            });
-          }),
-          SizeBoxGrey(20),
-          MenuAare("投诉", null, (){}),
-          SizeBoxGrey(20),
-        ],
-      ),
+                ),
+              ],
+            );
+          });
+        }),
+        MenuAare("导出聊天记录", Icons.arrow_forward_ios, (){}),
+        SizeBoxGrey(20),
+        MenuAare("聊天背景", Icons.arrow_forward_ios, (){}),
+        MenuAare("投诉", Icons.arrow_forward_ios, (){}),
+        SizeBoxGrey(20),
+        FlatButton(
+            onPressed: (){
+
+              showDialog(context: context,builder: (BuildContext context){
+                return AlertDialog(
+                  title: Text("群组删除确认"),
+
+                  actions: <Widget>[
+                    FlatButton(
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
+                        child: Text("取消")
+                    ),
+                    RaisedButton(
+                      onPressed: () {
+                        quitegroup();
+
+                      },
+                      child: Text(
+                        "确定",
+
+                      ),
+                    ),
+                  ],
+                );
+              });
+
+            },
+            child:Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Container(
+                  height: 47,
+                  alignment: Alignment.center,
+                  child: Text("删除并且退出",style: TextStyle(fontWeight: FontWeight.w600,color: Colors.redAccent),),)
+              ],
+            )
+        ),
+        SizeBoxGrey(40),
+      ],),)
+
     );
   }
 }

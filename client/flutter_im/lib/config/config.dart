@@ -1,8 +1,15 @@
+import 'dart:io';
+import 'dart:async';
+import 'package:dio/dio.dart';
 import 'package:flutter_im/database/user.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_im/net/networkmanage.dart';
 import 'package:flutter_im/uitls/diouitls.dart';
 import 'package:flutter_im/database/friends.dart';
+import 'package:path/path.dart';
+import 'package:uuid/uuid.dart';
+
+const OssUrl="https://xkws.oss-cn-hangzhou.aliyuncs.com/";
 const String testImage="https://bkimg.cdn.bcebos.com/pic/4b90f603738da97784eaf36dba51f8198718e3ab@wm_1,g_7,k_d2F0ZXIvYmFpa2U4MA==,xp_5,yp_5";
 const WWW="http://192.168.0.106:8080";
 var me=0;
@@ -59,5 +66,36 @@ void Init(data)async{
   var workmange=NetWorkManage.getInstance(ip, port);
   await workmange.init();
   workmange.auth(token);
+
+}
+getcurrent()async{
+  var url=WWW+"/getcurrent";
+  var data=await DioUtls.get(url);
+  return data.data;
+}
+Future<String> UploadImage(File file)async{
+  var res=await getcurrent();
+  var url=res["host"];
+  print(url);
+  String filename = Uuid().v4()+"."+basename(file.path).split(".").last;
+  var formdata=FormData.fromMap({
+    "key":res["dir"]+filename,
+    "OSSAccessKeyId":res["accessid"],
+   "policy":res["policy"],
+   "Signature":res["signature"],
+   "success_action_status":200,
+   "file": await  MultipartFile.fromFile(file.path)
+ });
+  print(file.lengthSync());
+
+
+    var data = await DioUtls.post(url, data: formdata);
+    if (data.statusCode==200){
+      return OssUrl+filename;
+    }else{
+      return "";
+    }
+
+
 
 }

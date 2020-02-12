@@ -43,5 +43,11 @@ class Friend {
       return true;
     }
   }
+  static deleteFriend(int uid )async{
+    var db= await SqlManager.getCurrentDatabase();
+    var content = new Utf8Encoder().convert("user:"+uid.toString());
+    var digest = md5.convert(content);
+    var data= await db.delete(table,where:"id='${digest.toString()}'");
+  }
 }
 

@@ -89,4 +89,10 @@ class User {
       return true;
     }
   }
+  static deleteuser(int uid)async{
+    var db= await SqlManager.getCurrentDatabase();
+    var content = new Utf8Encoder().convert("user:"+uid.toString());
+    var digest = md5.convert(content);
+    var data= await db.delete(tabname,where:"id='${digest.toString()}'");
+  }
 }

@@ -15,6 +15,8 @@ func InitRouter()  {
 	Route.POST("/register", controller.Register)
 	Route.POST("/logout", controller.Login)
 	Route.GET("/user/get",controller.GetUser)
+	Route.GET("/getcurrent",controller.GetOssSign)
+	authrization.POST("/user/updateHeadImage",controller.UpdateHeadImage)
 	authrization.GET("/checklogin",controller.Checklogin)
 	authrization.GET("/notify/list",controller.NotifyList)
 	authrization.POST("/notify/clear",controller.NotifyClear)

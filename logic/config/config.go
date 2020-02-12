@@ -12,8 +12,14 @@ var SecretKey = []byte("#2a56231!232&@3dsd1541")
 const FriendNotife=11
 const ServerName = ""
 const RgpcTimeOut = time.Second * 2
-
 const TokenOut = 3600000
+var(
+	Endpoint string
+
+	AccessKeyId string
+	AccessKeySecret string
+	BucketName string
+)
 
 func InitConfig() {
 	path, err := os.Getwd()
@@ -26,6 +32,10 @@ func InitConfig() {
 	if err := viper.ReadInConfig(); err != nil {
 		panic(err)
 	}
+	Endpoint=viper.GetString("oss.Endpoint")
+	AccessKeyId=viper.GetString("oss.AccessKeyId")
+	AccessKeySecret=viper.GetString("oss.AccessKeySecret")
+	BucketName=viper.GetString("oss.BucketName")
 	// 热更新配置文件
 	watchConfig()
 }

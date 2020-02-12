@@ -118,3 +118,8 @@ func GetUser(uid uint32)User {
 
 	return user
 }
+func UpdateHeadImage(uid uint32,headimage string)error  {
+
+	return  database.GormPool.Model(&User{}).Where("id=?",uid).Update("head_image",headimage).Error
+
+}
