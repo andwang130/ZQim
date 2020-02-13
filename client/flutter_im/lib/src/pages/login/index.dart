@@ -7,6 +7,7 @@ import 'package:flutter_im/net/networkmanage.dart';
 import 'package:flutter_im/config/config.dart';
 import 'package:flutter_im/component/toast.dart';
 import 'package:flutter_im/src/pages/register/index.dart';
+import 'package:flutter_im/component/customroute.dart';
 class Login extends StatefulWidget{
   State<StatefulWidget> createState()=>_Login();
 }
@@ -14,7 +15,7 @@ class _Login extends State<Login>{
   //全局 Key 用来获取 Form 表单组件
   GlobalKey<FormState> loginKey = GlobalKey<FormState>();
   final bottomsheetKey=GlobalKey<ScaffoldState>();
-  String loginUrl="http://192.168.0.106:8080/login";
+  String loginUrl=WWW+"/login";
   String  logo="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1578541323&di=59cc0c9276f62ecf25810f88ecee11ca&imgtype=jpg&er=1&src=http%3A%2F%2Fa4.mzstatic.com%2Fus%2Fr1000%2F116%2FPurple%2Fcd%2Ff8%2F87%2Fmzi.dafirwah.512x512-75.png";
   bool  _isShowPwd=false;
   String username;
@@ -133,7 +134,7 @@ class _Login extends State<Login>{
             //点击快速注册、执行事件
             onPressed: () {
 
-              Navigator.push(context, MaterialPageRoute(builder: (_)=>Register()));
+              Navigator.push(context, CustomRoute(Register()));
             },
           )
         ],
@@ -175,7 +176,7 @@ class _Login extends State<Login>{
 
         if (res.data["code"] == 0) {
            Init(res.data);
-           Navigator.push(context,MaterialPageRoute(builder:(_)=> Home()));
+           Navigator.pushAndRemoveUntil(context,CustomRoute( Home()),(route) => route == null);
         }else{
           Toast.toast(context, res.data["msg"]);
         }

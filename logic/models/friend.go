@@ -1,6 +1,7 @@
 package models
 
 import (
+	"logic/config"
 	"logic/database"
 	"time"
 )
@@ -39,6 +40,9 @@ func FriendAdd( uid,friendid,nid uint32)error  {
 	return nil
 }
 func FriendDelete(uid,friendid uint32 )error  {
+	if err:=config.FriendDelete(uid);err!=nil{
+		return err
+	}
 	return database.GormPool.Where("Userid=?",uid).Where("Friendid=?",friendid).Delete(&Friend{}).Error
 }
 

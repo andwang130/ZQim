@@ -18,7 +18,7 @@
     <application
 
         android:name="io.flutter.app.FlutterApplication"
-        android:label="flutter_im"
+        android:label="MyChat"
         android:icon="@mipmap/ic_launcher"
 
         >

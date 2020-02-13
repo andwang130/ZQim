@@ -1,6 +1,7 @@
 package rediscache
 
 import (
+	"comit/modle"
 	"encoding/json"
 	"github.com/go-redis/redis"
 	"strconv"
@@ -29,6 +30,10 @@ func SetUser(uid uint32,user User) error {
 	}
 	return rediscli.Set("userid:"+strconv.Itoa(int(uid)),value,0).Err()
 }
+func DeleteUser(uid uint32) error {
+	var key="userid:"+strconv.Itoa(int(uid))
+	return rediscli.Del(key).Err()
+}
 func GetUser(uid uint32)(User,error)  {
 
 	var user User
@@ -40,4 +45,24 @@ func GetUser(uid uint32)(User,error)  {
 		return user,err
 	}
 	return user,nil
+}
+func FriendCheck(uid uint32,friend uint32)bool  {
+	var key="friends:"+strconv.Itoa(int(uid))
+	if rediscli.Exists(key).Val()<1{
+
+		if firendIds,err:=modle.GetFriends(uid);err!=nil{
+			return false
+		}else{
+			rediscli.SAdd(key,firendIds...)
+			for _,v:=range firendIds{
+				if v==friend{
+					return true;
+				}
+			}
+			return false
+
+		}
+	}
+	return rediscli.SIsMember(key,friend).Val()
+
 }

@@ -24,15 +24,15 @@ type GroupchatUser struct {
 	Userid  uint32 `gorm:"not null"`
 }
 
-func GetGroupchatUser(gid uint32)[]uint32  {
+func GetGroupchatUser(gid uint32)([]uint32,error)  {
 	var groupUsers []*GroupchatUser
-	imdb.Model(&GroupchatUser{}).Select([]string{"userid"}).Where("groupid=?",gid).Scan(&groupUsers)
+	var err=imdb.Model(&GroupchatUser{}).Select([]string{"userid"}).Where("groupid=?",gid).Scan(&groupUsers).Error
 	var uids =make([]uint32,len(groupUsers))
 	for index,v:=range groupUsers{
 
 		uids[index]=v.Userid
 	}
 	print(groupUsers)
-	return uids
+	return uids,err
 
 }

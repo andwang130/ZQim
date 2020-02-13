@@ -7,11 +7,11 @@ type CreateGroupParam struct {
 }
 
 type QuitGroupParam struct {
-	GroupId  uint32 `form:"id" binding:"required"`
+	GroupId  uint32 `form:"id" json:"id" binding:"required"`
 }
 
 type DeleteGroupParam struct {
-	GroupId  uint32 `form:"id" binding:"required"`
+	GroupId  uint32 `form:"id" json:"id" binding:"required"`
 }
 
 type GetGroupParm struct {

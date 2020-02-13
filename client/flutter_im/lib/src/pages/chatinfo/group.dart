@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_im/component/menuitme.dart';
 import 'package:flutter_im/database/message.dart';
 import 'package:flutter_im/database/dialogue.dart';
+import 'package:flutter_im/database/user.dart';
 import 'package:flutter_im/config/config.dart';
 import 'package:flutter_im/uitls/diouitls.dart';
 import 'package:flutter_im/src/pages/addGroup/Invitation.dart';
@@ -62,10 +63,13 @@ class _GroupChatInfo extends State<GroupChatInfo>{
   quitegroup()async{
     var url=WWW+"/group/quit";
     var data=await DioUtls.post(url,data: {"id":widget.gid});
+    print(data.data);
     if(data.data["code"]==0){
+      print(data.data);
     await  Dialogue.deleteGroupdDialogue(widget.gid);
     await  GroupMessage.deleteGroupMessage(widget.gid);
-    Navigator.push(context, CustomRoute(Home()));
+    await  User.deletegroup(widget.gid);
+    Navigator.pushAndRemoveUntil(context, CustomRoute(Home()),(route) => route == null);
     }
 
   }
@@ -117,7 +121,7 @@ class _GroupChatInfo extends State<GroupChatInfo>{
         children: <Widget>[
           ClipRRect(
               borderRadius: BorderRadius.circular(10.0),
-              child: Image.network(head_image==""?testImage:head_image,fit:BoxFit.fill,width: ScreenUtil.getInstance().setWidth(150),height: ScreenUtil.getInstance().setHeight(150),)
+              child: Image.network(head_image==""?testImage:head_image,fit:BoxFit.fill,width: ScreenUtil.getInstance().setWidth(140),height: ScreenUtil.getInstance().setHeight(140),)
           ),
           Text(name)
 

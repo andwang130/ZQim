@@ -55,9 +55,37 @@ func QuitGroup(gid, uid uint32) error {
 	if err:=config.GrouperDelete(gid);err!=nil{
 		return err
 	}
+
 	if err:=tx.Where("groupid = ? and userid=?", gid, uid).Delete(&GroupchatUser{}).Error;err!=nil{
 		tx.Callback()
 		return err
+	}
+	var groupchat Groupchat
+	var err error
+	if groupchat,err=GetGroup(gid,uid);err!=nil{
+		return err
+	}
+	//群主退出群聊，换一个群主
+	if groupchat.Owner==uid{
+		var groupchatUser GroupchatUser
+		if tx.Model(&GroupchatUser{}).Where("groupid=?",gid).First(&groupchatUser).Error!=nil{
+			tx.Callback()
+			return err
+		}
+
+		//找不到其他成员，只剩自己,删除群
+		if groupchatUser.Userid==0{
+			if err:= tx.Where("groupid=?",gid).Delete(&Groupchat{}).Error;err!=nil{
+				tx.Callback()
+				return err
+			}
+		}else {
+			//更新新的群主
+			if err:=tx.Model(&Groupchat{}).Update("owner",groupchatUser.Userid).Error;err!=nil{
+				tx.Callback()
+				return err
+			}
+		}
 	}
 	if err:=tx.Commit().Error;err!=nil{
 		tx.Callback()

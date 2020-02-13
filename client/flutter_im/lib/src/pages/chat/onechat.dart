@@ -10,12 +10,14 @@ import 'package:flutter_im/net/networkmanage.dart';
 import 'package:fixnum/fixnum.dart';
 import 'dart:async';
 import 'package:flutter_im/uitls/uitls.dart';
-import 'package:flutter_im/src/pages/chat/component/loding.dart';
+import 'package:flutter_im/component/customroute.dart';
 import 'package:flutter_im/config/config.dart';
 import 'chat.dart';
+import 'package:flutter_im/component/toast.dart';
 class OneChat extends StatefulWidget{
   int uid;
-  OneChat(this.uid);
+  String title;
+  OneChat(this.uid,this.title);
   State<OneChat> createState()=>_OneChat();
 
 
@@ -50,7 +52,7 @@ class _OneChat extends State<OneChat> {
       bus.emit("zeroing",widget.uid);
     }else{
       print("init");
-     await Dialogue.CreateDialogue(widget.uid, "",DateTime.now().toString());
+     await Dialogue.CreateDialogue(widget.uid, "",(DateTime.now().millisecondsSinceEpoch/1000).toInt().toString());
     }
   }
   chatcallback(arg){
@@ -96,6 +98,10 @@ class _OneChat extends State<OneChat> {
     });
   }
   _handleSubmitted(String valeu){
+    if(!NetStaus){
+      Toast.toast(context, "无网络连接");
+      return;
+    }
     if(valeu!=""){
       var rek=Int64(int.parse(me.toString()+(DateTime.now().toLocal().millisecondsSinceEpoch/10).toInt().toString()));
       var time=(DateTime.now().toLocal().millisecondsSinceEpoch/1000).toInt();
@@ -118,8 +124,8 @@ class _OneChat extends State<OneChat> {
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
-    return Chat(list,_handleSubmitted,this.getmessage,"单聊",(){
-      Navigator.push(context, MaterialPageRoute(builder: (_)=>OneChatInfo(widget.uid)));
+    return Chat(list,_handleSubmitted,this.getmessage,widget.title,(){
+      Navigator.push(context, CustomRoute(OneChatInfo(widget.uid)));
     });
   }
 

@@ -7,6 +7,8 @@ import 'package:flutter_im/src/pages/notify/notify.dart';
 import 'package:flutter_im/src/pages/addGroup/createGroup.dart';
 import 'package:flutter_im/config/config.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_im/component/customroute.dart';
+import 'package:flutter_im/src/pages/groups/groups.dart';
 class Friends extends StatefulWidget{
 
   State<StatefulWidget> createState()=>_Friends();
@@ -16,14 +18,22 @@ const String testImage="https://bkimg.cdn.bcebos.com/pic/4b90f603738da97784eaf36
 
 class _Friends extends State<Friends>{
 
-  List<User> users=List<User>();
+  List<Widget> users=List<Widget>();
   initState(){
+
     friendsinit();
   }
   friendsinit(){
+    users.clear();
+    users.insert(users.length,notifytiem());
+    users.insert(users.length,groupItem());
+    users.insert(users.length,SizedBox(height: ScreenUtil.getInstance().setHeight(20),child:
+    Container(color: Colors.grey[200],),),);
     Friend.GetFriends().then((values){
       setState(() {
-        users=values;
+        for(var user in values){
+          users.insert(users.length,this.friendItem(user.uid,user.nickname,user.headimage));
+        }
       });
     });
   }
@@ -49,9 +59,9 @@ class _Friends extends State<Friends>{
               onSelected:(String value){
                 if(value=="add"){
 
-                  Navigator.push(context, MaterialPageRoute(builder: (_)=>Addfriend()));
+                  Navigator.push(context, CustomRoute(Addfriend()));
                 }else if(value=="create"){
-                  Navigator.push(context, MaterialPageRoute(builder: (_)=>CreateGroup()));
+                  Navigator.push(context, CustomRoute(CreateGroup()));
                 }
               },
                 icon: Icon(Icons.add_circle_outline,),
@@ -88,21 +98,21 @@ class _Friends extends State<Friends>{
     return  FlatButton(
       onPressed: (){
         Navigator.push(context,
-        MaterialPageRoute(builder: (_)=>UserInfo(uid))
+            CustomRoute(UserInfo(uid))
         );
       },
       child:Container(
-        height: ScreenUtil.getInstance().setHeight(150),
+        height: ScreenUtil.getInstance().setHeight(120),
         child: Row(
           children: <Widget>[
 
-            Expanded(child: Container(
-          width: ScreenUtil.getInstance().setWidth(60),
-          height: ScreenUtil.getInstance().setHeight(142),
-          child:Image.network(headimage!=null?headimage:testImage,fit:BoxFit.fill ,width:ScreenUtil.getInstance().setWidth(25) ,height: ScreenUtil.getInstance().setHeight(42)),
+            Container(
+              width:ScreenUtil.getInstance().setWidth(120) ,
+              height: ScreenUtil.getInstance().setHeight(100),
+          child:Image.network(headimage!=null?headimage:testImage,fit:BoxFit.fill),
 
-        ), flex: 1,),
-          Expanded(
+        ),
+          Flexible(
             child:Container(
               padding: EdgeInsets.only(left: 10),
               child: Column(children: <Widget>[
@@ -120,7 +130,7 @@ class _Friends extends State<Friends>{
                   Divider(color: Colors.grey,),),flex: 1)
 
               ],)),
-              flex: 6,),
+              ),
 
 
           ],
@@ -132,21 +142,21 @@ class _Friends extends State<Friends>{
     return  FlatButton(
       onPressed: (){
         Navigator.push(context,
-            MaterialPageRoute(builder: (_)=>Notify())
+            CustomRoute(Notify())
         );
       },
       child:Container(
-        height: ScreenUtil.getInstance().setHeight(150),
+        height: ScreenUtil.getInstance().setHeight(120),
         child: Row(
           children: <Widget>[
 
-            Expanded(child: Container(
-              width: 25,
-              height: 42,
-              child:Image.network(testImage,fit:BoxFit.fill ,width:ScreenUtil.getInstance().setWidth(25) ,height: ScreenUtil.getInstance().setHeight(42)),
+             Container(
+            width:ScreenUtil.getInstance().setWidth(120) ,
+             height: ScreenUtil.getInstance().setHeight(100),
+              child:Image.asset("assets/images/friend.png",fit:BoxFit.fill ),
 
-            ), flex: 1,),
-            Expanded(
+            ),
+            Flexible(
               child:Container(
                   padding: EdgeInsets.only(left: 10),
                   child: Column(children: <Widget>[
@@ -164,7 +174,51 @@ class _Friends extends State<Friends>{
                       Divider(color: Colors.grey,),),flex: 1)
 
                   ],)),
-              flex: 6,),
+              ),
+
+
+          ],
+        ),
+      ) ,
+    );
+  }
+
+  Widget groupItem(){
+    return  FlatButton(
+      onPressed: (){
+        Navigator.push(context, CustomRoute(Groups())
+        );
+      },
+      child:Container(
+        height: ScreenUtil.getInstance().setHeight(120),
+        child: Row(
+          children: <Widget>[
+
+           Container(
+              width:ScreenUtil.getInstance().setWidth(120) ,
+              height: ScreenUtil.getInstance().setHeight(100),
+              child:Image.asset("assets/images/group.png",fit:BoxFit.fill ),
+
+            ),
+            Flexible(
+              child:Container(
+                  padding: EdgeInsets.only(left: 10),
+                  child: Column(children: <Widget>[
+                    Expanded(child: Container(
+                      alignment:Alignment.centerLeft,
+                      child: Text("群组",style: TextStyle(
+                          fontSize: 16
+                      )),)
+                      ,flex: 3,),
+
+                    Expanded(child:
+                    Container(
+                      alignment: Alignment.bottomCenter,
+                      child:
+                      Divider(color: Colors.grey,),),flex: 1)
+
+                  ],)),
+              ),
 
 
           ],
@@ -181,9 +235,7 @@ class _Friends extends State<Friends>{
 
         children: <Widget>[
           Title(),
-          notifytiem(),
-          SizedBox(height: ScreenUtil.getInstance().setHeight(10),child:
-          Container(color: Colors.grey[200],),),
+
           Flexible(
 //              height:ScreenUtil.getInstance().height-1500,
             child:
@@ -191,8 +243,8 @@ class _Friends extends State<Friends>{
                 itemCount: users.length,
                 padding: EdgeInsets.only(top: 0),
                 itemBuilder:(context,i){
-                  var user=users[i];
-                  return this.friendItem(user.uid,user.nickname,user.headimage);
+                  var itme=users[i];
+                  return itme;
                 }
 
             ) , onRefresh: _handleRefresh)

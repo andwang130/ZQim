@@ -2,24 +2,47 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="65538046-9476-4831-8859-6aed20f35df5" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/../client/flutter_im/lib/src/pages/groups/groups.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../client/flutter_im/lib/uitls/android_back_desktop.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../comit/modle/friends.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../client/flutter_im/android/app/src/main/java/com/example/flutter_im/MainActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../client/flutter_im/android/app/src/main/java/com/example/flutter_im/MainActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../client/flutter_im/lib/component/customroute.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../client/flutter_im/lib/component/customroute.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../client/flutter_im/lib/config/config.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../client/flutter_im/lib/config/config.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../client/flutter_im/lib/database/user.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../client/flutter_im/lib/database/user.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../client/flutter_im/lib/main.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../client/flutter_im/lib/main.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../client/flutter_im/lib/net/handels.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../client/flutter_im/lib/net/handels.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../client/flutter_im/lib/net/networkmanage.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../client/flutter_im/lib/net/networkmanage.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../client/flutter_im/lib/src/pages/addGroup/Invitation.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../client/flutter_im/lib/src/pages/addGroup/Invitation.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../client/flutter_im/lib/src/pages/addGroup/createGroup.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../client/flutter_im/lib/src/pages/addGroup/createGroup.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../client/flutter_im/lib/src/pages/addGroup/delmembers.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../client/flutter_im/lib/src/pages/addGroup/delmembers.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../client/flutter_im/lib/src/pages/addfriend/index.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../client/flutter_im/lib/src/pages/addfriend/index.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../client/flutter_im/lib/src/pages/chat/chat.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../client/flutter_im/lib/src/pages/chat/chat.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../client/flutter_im/lib/src/pages/chat/grouochat.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../client/flutter_im/lib/src/pages/chat/grouochat.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../client/flutter_im/lib/src/pages/chat/onechat.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../client/flutter_im/lib/src/pages/chat/onechat.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../client/flutter_im/lib/src/pages/chatinfo/group.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../client/flutter_im/lib/src/pages/chatinfo/group.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../client/flutter_im/lib/src/pages/home/friends/index.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../client/flutter_im/lib/src/pages/home/friends/index.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../client/flutter_im/lib/src/pages/home/index.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../client/flutter_im/lib/src/pages/home/index.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../client/flutter_im/lib/src/pages/home/messages/index.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../client/flutter_im/lib/src/pages/home/messages/index.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../client/flutter_im/lib/src/pages/home/my/index.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../client/flutter_im/lib/src/pages/home/my/index.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../client/flutter_im/lib/src/pages/login/index.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../client/flutter_im/lib/src/pages/login/index.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../client/flutter_im/lib/src/pages/register/index.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../client/flutter_im/lib/src/pages/register/index.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../client/flutter_im/lib/src/pages/userinfo/index.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../client/flutter_im/lib/src/pages/userinfo/index.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../client/flutter_im/lib/uitls/cropImage.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../client/flutter_im/lib/uitls/cropImage.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../client/flutter_im/lib/uitls/notifietion.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../client/flutter_im/lib/uitls/notifietion.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../client/flutter_im/pubspec.lock" beforeDir="false" afterPath="$PROJECT_DIR$/../client/flutter_im/pubspec.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../client/flutter_im/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/../client/flutter_im/pubspec.yaml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../comit/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../comit/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../comit/handles/chathandle.go" beforeDir="false" afterPath="$PROJECT_DIR$/../comit/handles/chathandle.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../comit/modle/groupchat.go" beforeDir="false" afterPath="$PROJECT_DIR$/../comit/modle/groupchat.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../comit/rediscache/groupcache.go" beforeDir="false" afterPath="$PROJECT_DIR$/../comit/rediscache/groupcache.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../comit/rediscache/usercache.go" beforeDir="false" afterPath="$PROJECT_DIR$/../comit/rediscache/usercache.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../comit/router/router.go" beforeDir="false" afterPath="$PROJECT_DIR$/../comit/router/router.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/redis.go" beforeDir="false" afterPath="$PROJECT_DIR$/config/redis.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/controller/friendController.go" beforeDir="false" afterPath="$PROJECT_DIR$/controller/friendController.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/friend.go" beforeDir="false" afterPath="$PROJECT_DIR$/models/friend.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/groupchat.go" beforeDir="false" afterPath="$PROJECT_DIR$/models/groupchat.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/request/groupRequest.go" beforeDir="false" afterPath="$PROJECT_DIR$/request/groupRequest.go" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -30,28 +53,22 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/config/dev/config.yaml">
+        <entry file="file://$PROJECT_DIR$/models/groupchat.go">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-9">
-              <caret line="7" selection-start-line="7" selection-end-line="7" />
+            <state relative-caret-position="-46">
+              <caret line="85" column="26" lean-forward="true" selection-start-line="85" selection-start-column="26" selection-end-line="85" selection-end-column="26" />
+              <folding>
+                <element signature="e#16#77#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/models/base.go">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="92">
-              <caret line="8" column="35" selection-start-line="8" selection-start-column="4" selection-end-line="8" selection-end-column="35" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/main.go">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="253">
-              <caret line="11" column="13" lean-forward="true" selection-start-line="11" selection-start-column="13" selection-end-line="11" selection-end-column="13" />
+            <state relative-caret-position="106">
+              <caret line="15" column="24" lean-forward="true" selection-start-line="15" selection-start-column="24" selection-end-line="15" selection-end-column="24" />
               <folding>
                 <element signature="e#14#115#0" expanded="true" />
               </folding>
@@ -60,19 +77,19 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/request/userRequest.go">
+        <entry file="file://$PROJECT_DIR$/service/comitService.go">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="368">
-              <caret line="16" column="2" selection-start-line="16" selection-start-column="2" selection-end-line="16" selection-end-column="2" />
+            <state relative-caret-position="143">
+              <caret line="98" selection-start-line="98" selection-end-line="98" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/models/groupchat.go">
+        <entry file="file://$PROJECT_DIR$/config/redis.go">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="253">
-              <caret line="157" column="1" lean-forward="true" selection-start-line="157" selection-start-column="1" selection-end-line="157" selection-end-column="1" />
+            <state relative-caret-position="245">
+              <caret line="60" column="56" selection-start-line="60" selection-start-column="35" selection-end-line="60" selection-end-column="56" />
             </state>
           </provider>
         </entry>
@@ -80,26 +97,29 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/controller/friendController.go">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="3358">
-              <caret line="156" column="14" selection-start-line="156" selection-start-column="14" selection-end-line="156" selection-end-column="14" />
+            <state relative-caret-position="158">
+              <caret line="29" column="14" selection-start-line="29" selection-start-column="14" selection-end-line="29" selection-end-column="14" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/models/notify.go">
+        <entry file="file://$PROJECT_DIR$/models/friend.go">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="161">
-              <caret line="9" column="43" selection-start-line="9" selection-start-column="43" selection-end-line="9" selection-end-column="43" />
+            <state relative-caret-position="230">
+              <caret line="16" column="34" lean-forward="true" selection-start-line="16" selection-start-column="34" selection-end-line="16" selection-end-column="34" />
+              <folding>
+                <element signature="e#16#52#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/router/router.go">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="184">
-              <caret line="23" column="58" selection-start-line="23" selection-start-column="58" selection-end-line="23" selection-end-column="58" />
+            <state relative-caret-position="152">
+              <caret line="31" column="52" lean-forward="true" selection-start-line="31" selection-start-column="52" selection-end-line="31" selection-end-column="52" />
               <folding>
                 <element signature="e#16#94#0" expanded="true" />
               </folding>
@@ -108,10 +128,19 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/models/notify.go">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="126">
+              <caret line="33" column="17" selection-start-line="33" selection-start-column="11" selection-end-line="33" selection-end-column="17" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/controller/groupController.go">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-952">
-              <caret line="85" column="40" selection-start-line="85" selection-start-column="40" selection-end-line="85" selection-end-column="40" />
+            <state relative-caret-position="158">
+              <caret line="33" column="33" selection-start-line="33" selection-start-column="33" selection-end-line="33" selection-end-column="33" />
               <folding>
                 <element signature="e#20#136#0" expanded="true" />
               </folding>
@@ -120,10 +149,10 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/controller/osshandle.go">
+        <entry file="file://$PROJECT_DIR$/request/groupRequest.go">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="138">
-              <caret line="6" selection-start-line="6" selection-end-line="6" />
+            <state relative-caret-position="250">
+              <caret line="13" column="39" selection-start-line="13" selection-start-column="39" selection-end-line="13" selection-end-column="39" />
             </state>
           </provider>
         </entry>
@@ -153,6 +182,8 @@
       <find>now</find>
       <find>get_policy_token</find>
       <find>Up</find>
+      <find>Delete</find>
+      <find>Update</find>
     </findStrings>
   </component>
   <component name="GOROOT" path="D:\Go" />
@@ -166,14 +197,11 @@
         <option value="$PROJECT_DIR$/models/model_test.go" />
         <option value="$PROJECT_DIR$/utils/error.go" />
         <option value="$PROJECT_DIR$/models/notify.go" />
-        <option value="$PROJECT_DIR$/models/friend.go" />
         <option value="$PROJECT_DIR$/database/database.go" />
         <option value="$PROJECT_DIR$/models/base.go" />
         <option value="$PROJECT_DIR$/main.go" />
         <option value="$PROJECT_DIR$/middleware/authermiddle.go" />
         <option value="$PROJECT_DIR$/pkg/jwt/jwt.go" />
-        <option value="$PROJECT_DIR$/config/redis.go" />
-        <option value="$PROJECT_DIR$/controller/friendController.go" />
         <option value="$PROJECT_DIR$/config/dev/config.yaml" />
         <option value="$PROJECT_DIR$/config/config.go" />
         <option value="$PROJECT_DIR$/controller/osshandle.go" />
@@ -181,9 +209,12 @@
         <option value="$PROJECT_DIR$/request/userRequest.go" />
         <option value="$PROJECT_DIR$/models/user.go" />
         <option value="$PROJECT_DIR$/controller/userController.go" />
-        <option value="$PROJECT_DIR$/request/groupRequest.go" />
         <option value="$PROJECT_DIR$/controller/groupController.go" />
+        <option value="$PROJECT_DIR$/config/redis.go" />
+        <option value="$PROJECT_DIR$/models/friend.go" />
+        <option value="$PROJECT_DIR$/controller/friendController.go" />
         <option value="$PROJECT_DIR$/models/groupchat.go" />
+        <option value="$PROJECT_DIR$/request/groupRequest.go" />
       </list>
     </option>
   </component>
@@ -200,6 +231,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -226,18 +258,12 @@
             <path>
               <item name="logic" type="b2602c69:ProjectViewProjectNode" />
               <item name="logic" type="462c0819:PsiDirectoryNode" />
-              <item name="models" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="logic" type="b2602c69:ProjectViewProjectNode" />
-              <item name="logic" type="462c0819:PsiDirectoryNode" />
               <item name="router" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -390,12 +416,12 @@
     <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.2935657" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.29758713" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.3286119" />
-      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.5831099" weight="0.3512748" />
+      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.5831099" visible="true" weight="0.3512748" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -649,25 +675,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/config/redis.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="345">
-          <caret line="21" column="17" selection-start-line="21" selection-start-column="12" selection-end-line="21" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$USER_HOME$/go/pkg/mod/github.com/spf13/viper@v1.6.1/viper.go">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="143">
           <caret line="790" column="5" selection-start-line="790" selection-start-column="5" selection-end-line="790" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/README.md">
-      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-        <state split_layout="SPLIT">
-          <first_editor />
-          <second_editor />
         </state>
       </provider>
     </entry>
@@ -685,13 +696,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/service/comitService.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="143">
-          <caret line="98" selection-start-line="98" selection-end-line="98" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$USER_HOME$/go/pkg/mod/github.com/gin-gonic/gin@v1.5.0/context.go">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="143">
@@ -703,30 +707,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="225">
           <caret line="440" column="13" selection-start-line="440" selection-start-column="13" selection-end-line="440" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/models/friend.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="207">
-          <caret line="37" column="5" lean-forward="true" selection-start-line="37" selection-start-column="5" selection-end-line="37" selection-end-column="5" />
-          <folding>
-            <element signature="e#16#52#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/models/model_test.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="383">
-          <caret line="63" column="24" selection-start-line="63" selection-start-column="24" selection-end-line="63" selection-end-column="24" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/request/groupRequest.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="158">
-          <caret line="9" column="29" selection-start-line="9" selection-start-column="27" selection-end-line="9" selection-end-column="29" />
         </state>
       </provider>
     </entry>
@@ -747,20 +727,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/controller/userController.go">
+    <entry file="file://$PROJECT_DIR$/config/dev/config.yaml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="46">
-          <caret line="2" column="7" selection-start-line="2" selection-start-column="7" selection-end-line="2" selection-end-column="7" />
-          <folding>
-            <element signature="e#20#196#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/models/base.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="92">
-          <caret line="8" column="35" selection-start-line="8" selection-start-column="4" selection-end-line="8" selection-end-column="35" />
+        <state relative-caret-position="161">
+          <caret line="7" selection-start-line="7" selection-end-line="7" />
         </state>
       </provider>
     </entry>
@@ -771,17 +741,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/controller/friendController.go">
+    <entry file="file://$PROJECT_DIR$/models/base.go">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3358">
-          <caret line="156" column="14" selection-start-line="156" selection-start-column="14" selection-end-line="156" selection-end-column="14" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/models/notify.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="161">
-          <caret line="9" column="43" selection-start-line="9" selection-start-column="43" selection-end-line="9" selection-end-column="43" />
+        <state relative-caret-position="138">
+          <caret line="10" column="23" lean-forward="true" selection-start-line="8" selection-start-column="4" selection-end-line="10" selection-end-column="23" />
         </state>
       </provider>
     </entry>
@@ -792,46 +755,109 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/config/dev/config.yaml">
+    <entry file="file://$PROJECT_DIR$/controller/userController.go">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-9">
-          <caret line="7" selection-start-line="7" selection-end-line="7" />
+        <state relative-caret-position="-2079">
+          <caret line="7" column="18" lean-forward="true" selection-start-line="7" selection-start-column="18" selection-end-line="7" selection-end-column="18" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/controller/groupController.go">
+    <entry file="file://$PROJECT_DIR$/README.md">
+      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+        <state split_layout="SPLIT">
+          <first_editor />
+          <second_editor />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/models/model_test.go">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-952">
-          <caret line="85" column="40" selection-start-line="85" selection-start-column="40" selection-end-line="85" selection-end-column="40" />
+        <state relative-caret-position="383">
+          <caret line="63" column="24" selection-start-line="63" selection-start-column="24" selection-end-line="63" selection-end-column="24" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/models/friend.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="230">
+          <caret line="16" column="34" lean-forward="true" selection-start-line="16" selection-start-column="34" selection-end-line="16" selection-end-column="34" />
           <folding>
-            <element signature="e#20#136#0" expanded="true" />
+            <element signature="e#16#52#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/models/notify.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="126">
+          <caret line="33" column="17" selection-start-line="33" selection-start-column="11" selection-end-line="33" selection-end-column="17" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/models/groupchat.go">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="253">
-          <caret line="157" column="1" lean-forward="true" selection-start-line="157" selection-start-column="1" selection-end-line="157" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/main.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="253">
-          <caret line="11" column="13" lean-forward="true" selection-start-line="11" selection-start-column="13" selection-end-line="11" selection-end-column="13" />
+        <state relative-caret-position="-46">
+          <caret line="85" column="26" lean-forward="true" selection-start-line="85" selection-start-column="26" selection-end-line="85" selection-end-column="26" />
           <folding>
-            <element signature="e#14#115#0" expanded="true" />
+            <element signature="e#16#77#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/router/router.go">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="184">
-          <caret line="23" column="58" selection-start-line="23" selection-start-column="58" selection-end-line="23" selection-end-column="58" />
+        <state relative-caret-position="152">
+          <caret line="31" column="52" lean-forward="true" selection-start-line="31" selection-start-column="52" selection-end-line="31" selection-end-column="52" />
           <folding>
             <element signature="e#16#94#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/controller/groupController.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="158">
+          <caret line="33" column="33" selection-start-line="33" selection-start-column="33" selection-end-line="33" selection-end-column="33" />
+          <folding>
+            <element signature="e#20#136#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/request/groupRequest.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="250">
+          <caret line="13" column="39" selection-start-line="13" selection-start-column="39" selection-end-line="13" selection-end-column="39" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/service/comitService.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="143">
+          <caret line="98" selection-start-line="98" selection-end-line="98" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/config/redis.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="245">
+          <caret line="60" column="56" selection-start-line="60" selection-start-column="35" selection-end-line="60" selection-end-column="56" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/controller/friendController.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="158">
+          <caret line="29" column="14" selection-start-line="29" selection-start-column="14" selection-end-line="29" selection-end-column="14" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/main.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="106">
+          <caret line="15" column="24" lean-forward="true" selection-start-line="15" selection-start-column="24" selection-end-line="15" selection-end-column="24" />
+          <folding>
+            <element signature="e#14#115#0" expanded="true" />
           </folding>
         </state>
       </provider>

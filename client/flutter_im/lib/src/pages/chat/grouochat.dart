@@ -3,16 +3,18 @@ import 'package:flutter/material.dart';
 import 'package:fixnum/fixnum.dart';
 import 'chat.dart';
 import 'package:flutter_im/database/message.dart';
-import 'package:flutter_im/src/pages/chatinfo/index.dart';
+import 'package:flutter_im/component/toast.dart';
 import 'package:flutter_im/net/networkmanage.dart';
 import 'package:flutter_im/database/dialogue.dart';
 import 'package:flutter_im/uitls/eventbus.dart';
 import 'package:flutter_im/proto/message.pb.dart' as proto;
 import 'package:flutter_im/config/config.dart';
 import 'package:flutter_im/src/pages/chatinfo/group.dart';
+import 'package:flutter_im/component/customroute.dart';
 class GroupChat extends StatefulWidget{
   int gid;
-  GroupChat(this.gid);
+  String titile;
+  GroupChat(this.gid,this.titile);
   State<GroupChat> createState()=>_GroupChat();
 }
 
@@ -50,7 +52,7 @@ class _GroupChat extends State<GroupChat>{
       bus.emit("zeroing",widget.gid);
     }else{
 
-      Dialogue.CreateGroupDialogue(widget.gid, "",DateTime.now().toString());
+      Dialogue.CreateGroupDialogue(widget.gid, "",(DateTime.now().millisecondsSinceEpoch/1000).toInt().toString());
     }
   }
   chatcallback(arg){
@@ -89,6 +91,11 @@ class _GroupChat extends State<GroupChat>{
     }
   }
   _handleSubmitted(String valeu){
+    if(!NetStaus){
+      Toast.toast(context, "无网络连接");
+
+      return;
+    }
     if(valeu!=""){
       var rek=Int64(int.parse(me.toString()+(DateTime.now().toLocal().millisecondsSinceEpoch/10).toInt().toString()));
       var time=(DateTime.now().toLocal().millisecondsSinceEpoch/1000).toInt();
@@ -109,9 +116,9 @@ class _GroupChat extends State<GroupChat>{
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
-    return  Chat(list,_handleSubmitted,getmessage,"群聊",
+    return  Chat(list,_handleSubmitted,getmessage,widget.titile,
         (){
-          Navigator.push(context, MaterialPageRoute(builder: (_)=>GroupChatInfo(widget.gid)));
+          Navigator.push(context, CustomRoute(GroupChatInfo(widget.gid)));
         });
   }
 }

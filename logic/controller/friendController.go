@@ -27,6 +27,7 @@ func AddFriend(c *gin.Context)  {
 
 	if uid==parm.FriendID{
 		utils.ResponseError(c,20002,errors.New("can not self"))
+		return
 	}
 	if models.FirendQuery(uid,parm.FriendID){
 		//已经是好友关系了

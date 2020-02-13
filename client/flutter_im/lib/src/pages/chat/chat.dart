@@ -98,13 +98,13 @@ class _Chat extends State<Chat> with SingleTickerProviderStateMixin {
           children: <Widget>[
             Row(
               children: <Widget>[
-                ClipOval(child: Image.network(user.headImge,fit:BoxFit.fill,width: 52,height: 52,),),
+                ClipOval(child: Image.network(user==null?"":user.headImge,fit:BoxFit.fill,width: 52,height: 52,),),
                 Container(child: BubbleWidget(
                     ScreenUtil().setWidth(width),
                     ScreenUtil().setHeight(height),
-                    Colors.white,
+                    Colors.greenAccent,
                     BubbleArrowDirection.left,child:Text(message,textAlign: TextAlign.start),
-                    length: ScreenUtil().setWidth(40)
+                    length: ScreenUtil().setWidth(10)
                 ),)
               ],
             ),
@@ -134,7 +134,7 @@ class _Chat extends State<Chat> with SingleTickerProviderStateMixin {
                     ScreenUtil().setHeight(height),
                     Colors.blue,
                     BubbleArrowDirection.right,child:Text(message,textAlign: TextAlign.start),
-                    length: ScreenUtil().setWidth(40)
+                    length: ScreenUtil().setWidth(10)
                 ),),
                 ClipOval(child: Image.network(MyHeadimage,fit:BoxFit.fill,width: 52,height: 52,),),
               ],

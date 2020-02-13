@@ -68,6 +68,8 @@ flutter:
      - assets/images/add.png
      - assets/images/reduce.png
      - assets/images/Local Upload.png
+     - assets/images/friend.png
+     - assets/images/group.png
   #  - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

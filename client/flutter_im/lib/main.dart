@@ -98,15 +98,14 @@ class _SplashScreen extends State<SplashScreen>{
     var token=prefs.get("token");
     if(token!=""){
       var url=WWW+"/checklogin";
-
       try {
         var data = await DioUtls.get(url);
         print(data);
         if(data.data["code"]==0){
           await Init(data.data);
-          Navigator.push(context, MaterialPageRoute(builder: (_)=>Home()));
+          Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (_)=>Home()),(route) => route == null);
         }else{
-          Navigator.push(context, MaterialPageRoute(builder: (_)=>Login()));
+          Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (_)=>Login()),(route) => route == null);
         }
       }catch(e){
         print(e);

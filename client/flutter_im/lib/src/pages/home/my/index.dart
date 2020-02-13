@@ -1,11 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_im/component/menuitme.dart';
 import 'package:flutter_im/component/toast.dart';
-import 'package:flutter_im/net/handels.dart';
+import 'package:flutter_im/net/networkmanage.dart';
 import 'package:flutter_im/uitls/diouitls.dart';
 import 'package:flutter_im/config/config.dart';
 import 'package:flutter_im/uitls/cropImage.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_im/uitls/uitls.dart';
+import 'package:flutter_im/src/pages/login/index.dart';
+import 'package:flutter_im/component/customroute.dart';
+import 'package:flutter_im/database/dbmange.dart';
 class My extends  StatefulWidget{
   State<StatefulWidget> createState()=>_My();
 }
@@ -28,7 +33,8 @@ class _My extends State<My>{
       var d=data.data["data"];
       username=d["username"];
       nickname=d["nickname"];
-      headimage=d["head_image"]==""?null:d["head_image"];
+      headimage=d["head_image"];
+      MyHeadimage=d["head_image"];
       setState(() {
 
       });
@@ -37,16 +43,12 @@ class _My extends State<My>{
   updateimage(filename){
     var url=WWW+"/user/updateHeadImage";
     var data=DioUtls.post(url,data: {"head_image":filename});
-    if(data.data["code"]==0){
-      getMyInfo();
-    }
+    getMyInfo();
   }
   opimage()async{
     var file=await ImagePicker.pickImage(source: ImageSource.gallery);
     var filename=await cropImage(file);
-    if(filename!=""){
       updateimage(filename);
-    }
   }
   Widget HeadAare(){
     return Container(
@@ -88,7 +90,6 @@ class _My extends State<My>{
   Widget build(BuildContext context) {
     // TODO: implement build
     return Container(
-
       child: Column(
         children: <Widget>[
           SizedBox(height: 80,),
@@ -115,6 +116,32 @@ class _My extends State<My>{
           MenuAare("设置",Icons.settings,(){
             Toast.toast(context, "该功能还在开发中");
           }),
+          SizedBox(height: 40,child:
+          Container(color: Colors.grey[200],),),
+
+
+            FlatButton(
+                onPressed: (){
+
+                  cleanToken();
+                  NetWorkManage.Instance().close();
+                  Navigator.pushAndRemoveUntil(context, CustomRoute(Login()),(route)=>route==null);
+                },
+                child:Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Container(
+                      height: ScreenUtil.getInstance().setHeight(47),
+                      alignment: Alignment.center,
+                      child: Text("退出",style: TextStyle(fontWeight: FontWeight.w600,color: Colors.redAccent),),)
+                  ],
+                )
+            ),
+
+          SizedBox(height: 20,child:
+          Container(color: Colors.grey[200],),),
+
         ],
       ),
     );

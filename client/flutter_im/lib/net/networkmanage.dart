@@ -4,6 +4,8 @@ import 'dart:typed_data';
 import 'package:flutter_im/proto/message.pb.dart';
 import 'package:flutter_im/net/handels.dart';
 import 'package:fixnum/fixnum.dart';
+import 'package:flutter_im/config/config.dart';
+import 'package:flutter_im/uitls/eventbus.dart';
 const int TypeMessage=1;
 const int TypeImage=2;
 
@@ -30,8 +32,11 @@ class NetWorkManage{
   String ip;
   int port;
   Socket socket;
+  Timer rTimer;
  Int8List cacheData = Int8List(0);
   NetWorkManage(this.ip,this.port){
+
+
     handles=Handles();
   }
   static NetWorkManage getInstance(String ip,int port) {
@@ -44,12 +49,21 @@ class NetWorkManage{
     return _instance;
   }
   //重连
-  void reload(String ip,int prot){
-    this.ip=ip;
-    this.port=port;
-    this.init();
+  void reload()async{
+
+    await this.init();
+    print(token);
+    await this.auth(token);
   }
     void init() async{
+      rTimer= Timer.periodic(Duration(seconds: 3), (t){
+
+
+        print(t);
+        if(!NetStaus){
+          reload();
+        }
+      });
     socket= await Socket.connect(this.ip, this.port);
     print(socket.address.address);
     this.socket=socket;
@@ -59,6 +73,7 @@ class NetWorkManage{
       onError: onErrorhanle,
         cancelOnError:false
     );
+
 
   }
  void ping(){
@@ -90,8 +105,9 @@ class NetWorkManage{
     }
   }
   void onDonehandle(){
-    print("断开连接");
+    bus.emit("NetStatusChange",null);
     timer.cancel();
+    NetStaus=false;
   }
   void onErrorhanle(error, StackTrace trace){
 
@@ -180,5 +196,10 @@ class NetWorkManage{
     message.len=group.writeToBuffer().length;
     send(message);
   }
+  void close(){
+    socket.close();
+    rTimer.cancel();
+  }
+
 }
 //NetWorkManage netWorkManage=NetWorkManage.getInstance("192.168.0.106", 8080);

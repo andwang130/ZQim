@@ -26,7 +26,11 @@ func OneMessageHandle(con *fxsrv.Connect,request *fxsrv.Request)error  {
 		fmt.Println("Unmarshal")
 		return errors.New("id不一致")
 	}
-
+	if !rediscache.FriendCheck(msg.Receiver,msg.Sender){
+		fmt.Println(con.GetId())
+		SendAck(con,msg.Rek,config.AckSaveFail,config.GorupMessage)
+		return errors.New("非好友")
+	}
 	if err:=modle.AddOnemessage(&modle.Onemessage{
 		Rek:msg.Rek,
 		Sender:msg.Sender,
@@ -114,26 +118,9 @@ func GorupMessageHandle(con *fxsrv.Connect,request *fxsrv.Request)error  {
 	//获取该群聊的所有用户id
 	userlist,err:=rediscache.GetGroupUsers(groupmessage.Groupid)
 
-	if err!=nil||len(userlist)<1{
-		userlist=modle.GetGroupchatUser(groupmessage.Groupid)
-		//该群小于2个人
-		if len(userlist)<2 {
-			//todo
-			return errors.New("不存在的群组")
-		}
-		rediscache.GroupAddMembers(groupmessage.Groupid,userlist)
 
-	}
-	//验证该用户是否在该群组
-	var flag=false
-	for _,v:=range userlist{
-		if v==con.GetId(){
-			flag=true
-			break
-		}
-	}
 	//用户不在该群组
-	if !flag{
+	if !rediscache.GroupMebersCheck(groupmessage.Groupid,groupmessage.Sender){
 		fmt.Println(con.GetId())
 		SendAck(con,groupmessage.Rek,config.AckSaveFail,config.GorupMessage)
 		return errors.New("不在该群组")

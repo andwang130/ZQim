@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:flutter_im/config/config.dart';
-import 'dart:io';
+import 'package:flutter_im/component/customroute.dart';
 import 'package:flutter_im/component/toast.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:dio/dio.dart';
@@ -41,7 +41,7 @@ class _Register extends State<Register> {
         "head_image":headImage,
       });
       if(data.data["code"]==0){
-        Navigator.push(context, MaterialPageRoute(builder: (_)=>Login()));
+        Navigator.pushAndRemoveUntil(context, CustomRoute(Login()),(route)=>route==null);
       }else{
         Toast.toast(context, data.data["msg"]);
       }

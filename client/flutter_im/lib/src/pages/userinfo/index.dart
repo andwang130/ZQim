@@ -8,13 +8,13 @@ import 'package:flutter_im/config/config.dart';
 import 'package:flutter_im/database/dialogue.dart';
 import 'package:flutter_im/database/message.dart';
 import 'package:flutter_im/src/pages/home/index.dart';
+import 'package:flutter_im/component/customroute.dart';
 class UserInfo extends StatefulWidget{
   int uid;
   UserInfo(this.uid);
   State<StatefulWidget> createState()=>_UserInfo();
 }
-const String url="http://192.168.0.106:8080/user/get";
-const String addUrl="http://192.168.0.106:8080/friend/add";
+
 class _UserInfo extends State<UserInfo>{
   String nickanme="";
   String explain="";
@@ -30,12 +30,14 @@ class _UserInfo extends State<UserInfo>{
   
   void getuser()async{
 
+    const String url=WWW+"/user/get";
     var data=await DioUtls.get(url,queryParameters: {"uid":widget.uid});
     if(data.data["code"]==0){
       var d=data.data["data"];
       nickanme=d["nickname"];
       headimage=d["head_image"];
       explain=d["expl"];
+      User.updateUser(widget.uid, nickanme, headimage);
       isfirend= await Friend.isfriend(widget.uid);
       setState(() {
 
@@ -46,6 +48,7 @@ class _UserInfo extends State<UserInfo>{
   
   void Addfriend(String greet)async{
 
+    const String addUrl=WWW+"/friend/add";
     var data=await DioUtls.post(addUrl,data:{"friendid":widget.uid,"greet":greet});
     if(data.data["code"]==0){
       Toast.toast(context, "请求成功");
@@ -62,7 +65,7 @@ class _UserInfo extends State<UserInfo>{
       await User.deleteuser(widget.uid);
       await Dialogue.deleteUserdDialogue(widget.uid);
       await OneMessage.deleteUserOneMessage(widget.uid, me);
-     Navigator.push(context, MaterialPageRoute(builder: (_)=>Home()));
+     Navigator.push(context, CustomRoute(Home()));
     }
 
   }
@@ -100,7 +103,7 @@ class _UserInfo extends State<UserInfo>{
               child: Text("聊天",style: TextStyle(fontSize: 14,color: Colors.blue),),
             ),onPressed: (){
 
-            Navigator.push(context, MaterialPageRoute(builder: (_)=>OneChat(widget.uid)));
+            Navigator.push(context, MaterialPageRoute(builder: (_)=>OneChat(widget.uid,nickanme)));
 
           },),
             RaisedButton(

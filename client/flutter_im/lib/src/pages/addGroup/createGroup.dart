@@ -8,7 +8,7 @@ import 'package:flutter_im/src/pages/chat/grouochat.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:flutter_im/uitls/cropImage.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
+import 'package:flutter_im/component/customroute.dart';
 class CreateGroup extends StatefulWidget {
   State<CreateGroup> createState() => _CreateGroup();
 }
@@ -127,7 +127,7 @@ class _CreateGroup extends State<CreateGroup> {
           var groupchat=data.data["data"];
           await User.insterGroup(groupchat["ID"], groupchat["group_name"], groupchat["avatar"]);
           await Dialogue.CreateGroupDialogue(groupchat["ID"], "", DateTime.now().toString());
-          Navigator.push(context, MaterialPageRoute(builder: (_)=>GroupChat(groupchat["ID"])));
+          Navigator.push(context, CustomRoute( GroupChat(groupchat["ID"],groupname)));
         }else{
           Toast.toast(context, data.data["msg"]);
         }

@@ -6,6 +6,7 @@ import (
 	"comit/fxsrv"
 	"comit/handles"
 	"comit/middlehandles"
+	"comit/rediscache"
 	"fmt"
 )
 
@@ -43,4 +44,5 @@ func coonectHandle(con *fxsrv.Connect)  {
 }
 func CloseHandle(con *fxsrv.Connect)  {
 	manage.ConManage.DeleteConnect(con.GetId())
+	rediscache.DeleteUser(con.GetId())
 }

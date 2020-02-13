@@ -23,7 +23,7 @@ class Friend {
     var data=await db.rawQuery(sql);
     var list=List<User>();
     for(var d in data){
-      print(d);
+
       var user=User();
       user.headimage=d["headimage"];
       user.nickname=d["nickname"];

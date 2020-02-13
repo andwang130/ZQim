@@ -34,6 +34,21 @@ class User {
     data["utype"]=2;
     SqlManager.inster(tabname,data);
   }
+  static Future<List<User>> GetGroups()async{
+    var db= await SqlManager.getCurrentDatabase();
+    var data=await db.query(tabname,where: "utype=2");
+    var list=List<User>();
+    for(var d in data){
+      print(d);
+      var user=User();
+      user.headimage=d["headimage"];
+      user.nickname=d["nickname"];
+      user.uid=d["uid"];
+      list.add(user);
+
+    }
+    return list;
+  }
   static  Future<List<User>> GetUsers()async{
 
     var db= await SqlManager.getCurrentDatabase();
@@ -94,5 +109,19 @@ class User {
     var content = new Utf8Encoder().convert("user:"+uid.toString());
     var digest = md5.convert(content);
     var data= await db.delete(tabname,where:"id='${digest.toString()}'");
+  }
+  static deletegroup(int uid)async{
+    var db= await SqlManager.getCurrentDatabase();
+    var content = new Utf8Encoder().convert("group:"+uid.toString());
+    var digest = md5.convert(content);
+    var data= await db.delete(tabname,where:"id='${digest.toString()}'");
+  }
+  static updateUser(int uid,String nickname,String headimage)async{
+
+    var db= await SqlManager.getCurrentDatabase();
+    var content = new Utf8Encoder().convert("user:"+uid.toString());
+    var digest = md5.convert(content);
+
+    var data=await db.update(tabname, {"nickname":nickname,"headimage":headimage},where:"id='${digest.toString()}'" );
   }
 }

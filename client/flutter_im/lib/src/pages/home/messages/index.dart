@@ -6,6 +6,9 @@ import 'package:flutter_im/database/dialogue.dart';
 import 'package:flutter_im/uitls/eventbus.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_im/proto/message.pb.dart';
+import 'package:flutter_im/component/customroute.dart';
+import 'package:flutter_im/uitls/uitls.dart';
+import 'package:flutter_im/config/config.dart';
 class Messages extends StatefulWidget{
   State<StatefulWidget> createState()=>_Messages();
 
@@ -17,6 +20,15 @@ class _Messages extends State<Messages>{
   List<Dialogue> dialogues=List<Dialogue>();
   @override
   initState(){
+    bus.on("NetStatusChange",(arg){
+      if (mounted) {
+        Dialogue.GetDialogues().then((values){
+          setState(() {
+            dialogues=values;
+          });
+        });
+      }
+    });
     bus.on("message", messagecallback);
     bus.on("group message",groupmessagecallback);
     bus.on("zeroing", (arg){
@@ -85,6 +97,7 @@ class _Messages extends State<Messages>{
     bus.off("message",messagecallback);
     bus.off("group message",groupmessagecallback);
     bus.off("zeroing");
+    bus.off("NetStatusChange");
   }
   Widget Title(){
     return Container(
@@ -93,25 +106,32 @@ class _Messages extends State<Messages>{
       color: Colors.blueAccent,
       child: Row(
         children: <Widget>[
-          Text("消息(10)",style: TextStyle(color: Colors.white,fontSize: 16),)
+          Text("消息(${dialogues.length})",style: TextStyle(color: Colors.white,fontSize: 16),)
         ],
       ),
     );
   }
   Widget meassgeItem(int uid,String nickname,String talk,String ctime,String headimage,int unread,int dtype){
 
+    var time=0;
+    try{
+      time=int.parse(ctime);
+    }catch(e){
+
+    }
+
     return  FlatButton(
+      onLongPress: (){},
       onPressed: (){
         if(dtype==1){
-          Navigator.push(context,MaterialPageRoute(builder:(_)=> OneChat(uid)));
+          Navigator.push(context,CustomRoute( OneChat(uid,nickname)));
         }else{
-          Navigator.push(context,MaterialPageRoute(builder:(_)=> GroupChat(uid)));
+          Navigator.push(context,CustomRoute(GroupChat(uid,nickname)));
 
         }
-
       },
       child:Container(
-        height: ScreenUtil.getInstance().setHeight(200),
+        height: ScreenUtil.getInstance().setHeight(160),
         child: Row(
           children: <Widget>[
 
@@ -121,16 +141,16 @@ class _Messages extends State<Messages>{
                   overflow: Overflow.visible,
                 children: <Widget>[
                   Container(
-                    width: ScreenUtil.getInstance().setWidth(152),
-                    height: ScreenUtil.getInstance().setHeight(150),
+                    width: ScreenUtil.getInstance().setWidth(122),
+                    height: ScreenUtil.getInstance().setHeight(100),
 //                    child: Image.network(testImage,fit:BoxFit.fill ,width:62 ,height: 62),
                   child:Image.network(headimage!=null?headimage:testImage,fit:BoxFit.fill ,width:ScreenUtil.getInstance().setWidth(62),height: ScreenUtil.getInstance().setHeight(62)),
 
                 ),
                   unread!=0?Positioned(
                     child: Container(
-                    width: ScreenUtil.getInstance().setWidth(18),
-                    height: ScreenUtil.getInstance().setHeight(18),
+                    width: ScreenUtil.getInstance().setWidth(50),
+                    height: ScreenUtil.getInstance().setHeight(50),
                     alignment: Alignment.center,
                     decoration:BoxDecoration(borderRadius: BorderRadius.all(Radius.circular(360)),color: Colors.deepOrange),
                     child: Text(unread.toString()),) ,
@@ -151,27 +171,73 @@ class _Messages extends State<Messages>{
                     Row(children: <Widget>[
                       Expanded(
                         child: Text(nickname,style: TextStyle(
-                            fontSize: ScreenUtil.getInstance().setSp(50)
+                            fontSize: ScreenUtil.getInstance().setSp(45)
 
-                        ),),flex: 2,),
-                      Expanded(child: Text(ctime,style: TextStyle(
+                        ),),flex: 3,),
+                      Expanded(child: Text(UitlsFormatDate(DateTime.fromMillisecondsSinceEpoch(time*1000)),style: TextStyle(
                           fontSize: ScreenUtil.getInstance().setSp(30),color: Colors.grey
-                      ),) ,flex: 1,),
+                      ),) ,flex: 2,),
                     ],),
 
-                    SizedBox(height: 10,),
+                    SizedBox(height: 5,),
                     Text(talk,style: TextStyle(
-                        fontSize: ScreenUtil.getInstance().setSp(45),color: Colors.grey
+                        fontSize: ScreenUtil.getInstance().setSp(35),color: Colors.grey
                     ),)
                   ],),
               ),
-              flex: 5,
+              flex: 6,
             ),
-            
+           Container(
+             alignment: Alignment.center,
+             width:ScreenUtil.getInstance().setWidth(80) ,
+             child:  PopupMenuButton(
+               onSelected: (value){
+                 if(value=="delete"){
+                   if(dtype==1){
+                     Dialogue.deleteUserdDialogue(uid);
+
+                   }else{
+                     Dialogue.deleteGroupdDialogue(uid);
+                   }
+                   Dialogue.GetDialogues().then((values){
+                     setState(() {
+                       dialogues=values;
+                     });
+                   });
+                 }
+               },
+                 itemBuilder: (BuildContext context) => <PopupMenuEntry<String>>[
+                   PopupMenuItem(
+                     child: new Row(
+                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                       children: <Widget>[
+                         new Text('删除'),
+
+                       ],
+                     ),
+                     value: 'delete',
+                   ),
+
+                 ]),
+           )
 
           ],
         ),
       ) ,
+    );
+  }
+  Widget NetErrorItem(){
+
+    return Container(
+      color: Colors.pink[100],
+      padding: EdgeInsets.only(left: ScreenUtil.getInstance().setWidth(100)),
+      height: ScreenUtil.getInstance().setHeight(100),
+      child:Row(
+        children: <Widget>[
+          Icon(Icons.error,color: Colors.red,),
+          Text("网络连接不可用"),
+        ],
+      ),
     );
   }
   @override
@@ -182,6 +248,7 @@ class _Messages extends State<Messages>{
 
         children: <Widget>[
           Title(),
+        NetStaus==false?NetErrorItem():Container(height: 1,),
           Flexible(
             child:  ListView.builder(
               itemCount:dialogues.length,

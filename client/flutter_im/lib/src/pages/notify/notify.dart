@@ -3,7 +3,7 @@ import 'package:flutter_im/uitls/diouitls.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_im/database/notify.dart';
 import 'package:flutter_im/database/friends.dart';
-const String testImage="https://bkimg.cdn.bcebos.com/pic/4b90f603738da97784eaf36dba51f8198718e3ab@wm_1,g_7,k_d2F0ZXIvYmFpa2U4MA==,xp_5,yp_5";
+import 'package:flutter_im/config/config.dart';
 
 class Notify extends StatefulWidget{
   State<StatefulWidget> createState()=>_Notify();
@@ -34,7 +34,7 @@ class _Notify extends State<Notify>{
     _scrollController.dispose();
   }
   agree(int nid )async{
-    const String url="http://192.168.0.106:8080/friend/agree";
+    const String url=WWW+"/friend/agree";
     var data=await DioUtls.post(url,data: {
       "notify_id":nid
     });
@@ -71,7 +71,7 @@ class _Notify extends State<Notify>{
     }
   }
   clenr()async{
-    var url="http://192.168.0.106:8080/notify/clear";
+    var url=WWW+"/notify/clear";
     var data=await DioUtls.post(url);
 
     if (data.data["code"]==0){
@@ -82,7 +82,7 @@ class _Notify extends State<Notify>{
     }
   }
   getnotifys()async{
-    var url="http://192.168.0.106:8080/notify/list";
+    var url=WWW+"/notify/list";
     try {
       var data = await DioUtls.get(url, queryParameters: {
         "page": page

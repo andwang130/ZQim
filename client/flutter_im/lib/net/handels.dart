@@ -73,7 +73,8 @@ class Handles {
   }
 
   void auth(Message message){
-
+    bus.emit("NetStatusChange",null);
+    NetStaus=true;
   }
   void ack(Message message){
     var ackmessage=AckMessage.fromBuffer(message.body);
@@ -169,7 +170,7 @@ class Handles {
       }
       reks.add(one.rek);
     }
-    if(pullone.messages.length>1) {
+    if(pullone.messages.length>=1) {
       bus.emit("message", pullone.messages.last);
       player.play("mp3/4082.mp3");
       await NetWorkManage.Instance().ackmany(reks, 1);
@@ -221,7 +222,7 @@ class Handles {
       reks.add(group.rek);
     }
 
-    if(pullgroup.messages.length>1) {
+    if(pullgroup.messages.length>=1) {
       bus.emit("group message", pullgroup.messages.last);
       player.play("mp3/4082.mp3");
       NetWorkManage.Instance().ackmany(reks, 2);

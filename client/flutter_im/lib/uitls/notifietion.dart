@@ -5,6 +5,7 @@ import 'dart:convert';
 import 'package:flutter_im/src/pages/chat/onechat.dart';
 import 'package:flutter_im/src/pages/chat/grouochat.dart';
 import 'package:flutter_im/src/pages/notify/notify.dart';
+import 'package:flutter_im/database/dialogue.dart';
 $notifications.FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin;
 GlobalKey<NavigatorState> navigatorKey=GlobalKey();
 bool IsBack=false;
@@ -29,10 +30,12 @@ Future onSelectNotification(String payload)async{
     var pjson = jsonDecode(payload);
     if(pjson["msgtype"]==1){
 
-     await navigatorKey.currentState.push(MaterialPageRoute(builder:(_)=> OneChat(pjson["id"])));
+      var user=await Dialogue.checkUserDialogues(pjson["id"]);
+     await navigatorKey.currentState.push(MaterialPageRoute(builder:(_)=> OneChat(pjson["id"],user.user.nickname)));
     }
     if(pjson["msgtype"]==2){
-      await navigatorKey.currentState.push(MaterialPageRoute(builder:(_)=> GroupChat(pjson["id"])));
+      var group=await Dialogue.checkGroupDialogues(pjson["id"]);
+      await navigatorKey.currentState.push(MaterialPageRoute(builder:(_)=> GroupChat(pjson["id"],group.user.nickname)));
     }
     if(pjson["msgtype"]==3){
       await navigatorKey.currentState.push(MaterialPageRoute(builder:(_)=> Notify()));

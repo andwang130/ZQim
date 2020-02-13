@@ -57,3 +57,7 @@ func GroupreduceMembers(gid uint32,member uint32)error  {
 func GrouperDelete(gid uint32) error {
 	return Rediscli.Del("groupid:"+strconv.Itoa(int(gid))).Err()
 }
+func FriendDelete(uid uint32)error  {
+	return Rediscli.Del("friends:"+strconv.Itoa(int(uid))).Err()
+
+}

@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'dart:async';
 import 'package:dio/dio.dart';
+import 'package:flutter_im/database/dbmange.dart';
 import 'package:flutter_im/database/user.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_im/net/networkmanage.dart';
@@ -8,10 +9,11 @@ import 'package:flutter_im/uitls/diouitls.dart';
 import 'package:flutter_im/database/friends.dart';
 import 'package:path/path.dart';
 import 'package:uuid/uuid.dart';
-
 const OssUrl="https://xkws.oss-cn-hangzhou.aliyuncs.com/";
 const String testImage="https://bkimg.cdn.bcebos.com/pic/4b90f603738da97784eaf36dba51f8198718e3ab@wm_1,g_7,k_d2F0ZXIvYmFpa2U4MA==,xp_5,yp_5";
 const WWW="http://192.168.0.106:8080";
+
+bool NetStaus=false;
 var MyHeadimage="";
 var me=0;
 var token;
@@ -36,10 +38,12 @@ Future<UserCache> getUserCache(int uid)async{
   }else{
     var d= await User.GetUser(uid);
     var user = UserCache();
-    user.nickname=d.nickname;
-    user.headImge=d.headimage;
-    Usercaches[uid]=user;
-    return user;
+    if(user!=null) {
+      user.nickname = d.nickname;
+      user.headImge = d.headimage;
+      Usercaches[uid] = user;
+      return user;
+    }
   }
 }
 
@@ -58,21 +62,23 @@ void friendInit()async{
 
 }
 void Init(data)async{
-  var  token = data["data"]["token"];
+  var  _token = data["data"]["token"];
   var  addr = data["data"]["ip"];
   var uid=data["data"]["user"]["ID"];
   var headimage=data["data"]["user"]["head_image"];
   var ip=addr.toString().split(":")[0];
   var port=int.parse(addr.toString().split(":")[1]);
   SharedPreferences prefs = await  SharedPreferences.getInstance();
-  prefs.setString("token", token);
+  prefs.setString("token", _token);
   prefs.setString("ip", ip);
   prefs.setInt("prot",port);
   prefs.setInt("uid", uid);
-  await friendInit();
+
   me=uid;
-  token=token;
+  token=_token;
   MyHeadimage=headimage;
+  await SqlManager.init();
+  await friendInit();
   var workmange=NetWorkManage.getInstance(ip, port);
   await workmange.init();
   workmange.auth(token);

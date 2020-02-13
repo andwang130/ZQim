@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_im/component/menuitme.dart';
 import 'package:flutter_im/database/message.dart';
 import 'package:flutter_im/config/config.dart';
+import 'package:flutter_im/uitls/diouitls.dart';
+import 'package:flutter_im/database/user.dart';
 const String testImage="https://bkimg.cdn.bcebos.com/pic/4b90f603738da97784eaf36dba51f8198718e3ab@wm_1,g_7,k_d2F0ZXIvYmFpa2U4MA==,xp_5,yp_5";
 
 class OneChatInfo extends StatefulWidget{
@@ -12,7 +14,10 @@ class OneChatInfo extends StatefulWidget{
 
 }
 class _OneChatInfo extends State<OneChatInfo>{
-
+  String nickanme="";
+  String explain="";
+  String headimage="";
+  String greet="";
   Widget title(){
     return AppBar(
       title: Text("聊天详情",style: TextStyle(color: Colors.black),),
@@ -20,9 +25,23 @@ class _OneChatInfo extends State<OneChatInfo>{
     );
   }
 
+  void getuser()async{
+    const String url=WWW+"/user/get";
+    var data=await DioUtls.get(url,queryParameters: {"uid":widget.sender});
+    if(data.data["code"]==0){
+      var d=data.data["data"];
+      nickanme=d["nickname"];
+      headimage=d["head_image"];
+      explain=d["expl"];
+      User.updateUser(widget.sender, nickanme, headimage);
+      setState(() {
+
+      });
+    }
+
+  }
 
   Widget piepoitem(String headimage,name,int uid){
-
    return FlatButton(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,

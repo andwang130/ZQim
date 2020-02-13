@@ -6,6 +6,7 @@ import 'package:flutter_im/config/config.dart';
 import 'package:flutter_im/component/toast.dart';
 import 'package:flutter_im/src/pages/chat/grouochat.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_im/component/customroute.dart';
 class DeleteMembers extends StatefulWidget{
   int gid;
   DeleteMembers(this.gid);
@@ -81,9 +82,11 @@ class _DeleteMembers extends State<DeleteMembers>{
               controller: _scrollController,
               itemBuilder: (contex, i) {
                 var user=users[i];
-
+                if (user.uid==me){
+                  return Container(height: 0,);
+                }
                 return Container(
-                  height: ScreenUtil.getInstance().setHeight(160),
+                  height: ScreenUtil.getInstance().setHeight(120),
                   child: Row(
                     children: <Widget>[
                       Expanded(
@@ -107,9 +110,9 @@ class _DeleteMembers extends State<DeleteMembers>{
                       Expanded(
                         child: Container(
                           width: ScreenUtil.getInstance().setWidth(45),
-                          height: ScreenUtil.getInstance().setHeight(140),
+                          height: ScreenUtil.getInstance().setHeight(110),
                           child: Image.network(user.headimage,
-                              fit: BoxFit.fill, width: ScreenUtil.getInstance().setWidth(45), height: ScreenUtil.getInstance().setHeight(140)),
+                              fit: BoxFit.fill),
                         ),
                         flex: 1,
                       ),
@@ -148,7 +151,7 @@ class _DeleteMembers extends State<DeleteMembers>{
       var url=WWW+"/group/remove";
       var data= await DioUtls.post(url,data:{"id":widget.gid,"members":checklist});
       if(data.data["code"]==0){
-        Navigator.push(context, MaterialPageRoute(builder: (_)=>GroupChat(widget.gid)));
+        Navigator.pop(context);
       }else{
         Toast.toast(context, data.data["msg"]);
       }
