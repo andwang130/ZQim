@@ -23,6 +23,7 @@ type ComitManages struct {
 }
 func (this *ComitManages)AddComitServer(key,addr string)error  {
 
+	fmt.Println("添加一个rpc服务:",key,"ip:",addr)
 	grpcserver, err := NewComitServer(addr)
 	if err != nil {
 		fmt.Println(err)
@@ -30,7 +31,7 @@ func (this *ComitManages)AddComitServer(key,addr string)error  {
 		//todo log
 	}
 	this.rwmutex.Lock()
-	fmt.Println("添加一个rpc服务:",key,"ip:",addr)
+
 	defer this.rwmutex.Unlock()
 	this.comits[key]=grpcserver
 	return nil

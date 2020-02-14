@@ -8,6 +8,7 @@ import (
 	"errors"
 	"fmt"
 	"github.com/gogo/protobuf/proto"
+	"github.com/sirupsen/logrus"
 )
 
 func PullOneMessage(con *fxsrv.Connect,request *fxsrv.Request)error  {
@@ -88,8 +89,8 @@ func PullNotifie(con *fxsrv.Connect,request *fxsrv.Request)error  {
 	req.Body=buf
 	req.BodyLen=uint32(len(buf))
 	con.Write(&req)
-	if modle.DeleteNotifieList(ids)!=nil{
-		//todo log
+	if err:=modle.DeleteNotifieList(ids);err!=nil{
+		logrus.Error(err)
 	}
 	return nil
 }

@@ -18,6 +18,12 @@ class _OneChatInfo extends State<OneChatInfo>{
   String explain="";
   String headimage="";
   String greet="";
+
+  @override
+  initState(){
+    super.initState();
+    getuser();
+  }
   Widget title(){
     return AppBar(
       title: Text("聊天详情",style: TextStyle(color: Colors.black),),
@@ -29,6 +35,7 @@ class _OneChatInfo extends State<OneChatInfo>{
     const String url=WWW+"/user/get";
     var data=await DioUtls.get(url,queryParameters: {"uid":widget.sender});
     if(data.data["code"]==0){
+
       var d=data.data["data"];
       nickanme=d["nickname"];
       headimage=d["head_image"];
@@ -81,7 +88,7 @@ class _OneChatInfo extends State<OneChatInfo>{
         children: <Widget>[
 
 //          this.userList(15),
-        piepoitem(testImage,"王晶",1),
+        piepoitem(headimage,"王晶",1),
           SizeBoxGrey(20),
 //        MenuAare("查看聊天记录", null, (){}),
           MenuAare("清除聊天记录",  Icons.arrow_forward_ios, (){

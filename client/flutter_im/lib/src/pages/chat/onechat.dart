@@ -67,11 +67,12 @@ class _OneChat extends State<OneChat> {
       one.msgtype=message.msgtype;
       list.add(one);
       if (mounted) {
-        bus.emit("zeroing",widget.uid);
-        bus.emit("scrojump",widget.uid);
         setState(() {
 //          scrollController();
         });
+
+        bus.emit("zeroing",widget.uid);
+        bus.emit("scrojump",widget.uid);
 
 
       }

@@ -38,7 +38,7 @@ func GroupMebersCheck(gid uint32,uid uint32)bool  {
 	var key="groupid:"+strconv.Itoa(int(gid))
 	if rediscli.Exists(key).Val()<1{
 
-		if groupmebers,err:=modle.GetGroupchatUser(uid);err!=nil{
+		if groupmebers,err:=modle.GetGroupchatUser(gid);err!=nil{
 			return false
 		}else{
 			GroupAddMembers(gid,groupmebers)

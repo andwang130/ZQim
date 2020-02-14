@@ -30,7 +30,7 @@ class _Login extends State<Login>{
     return Container(
       alignment: Alignment.topCenter,
       child: ClipOval(
-        child:Image.network(logo,
+        child:Image.asset("assets/images/ic_launcher.png",
         width: 120,height: 120,fit:BoxFit.fill),
       ),
     );

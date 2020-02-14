@@ -32,9 +32,14 @@ class _Messages extends State<Messages>{
     bus.on("message", messagecallback);
     bus.on("group message",groupmessagecallback);
     bus.on("zeroing", (arg){
+      var id=(arg as int);
       for(var i=0;i<dialogues.length;i++){
         if(dialogues[i].uid==(arg as int)){
-          dialogues[i].unread=0;
+          if(dialogues[i].dtype==1) {
+            Dialogue.dialoguesZeroing(id);
+          }else{
+            Dialogue.diagroupZeroing(id);
+          }
           if (mounted) {
             Dialogue.GetDialogues().then((values){
               setState(() {
@@ -56,35 +61,23 @@ class _Messages extends State<Messages>{
 
   groupmessagecallback(arg){
     var message=(arg as GroupMessage);
-    for(var i=0;i<dialogues.length;i++){
-      if(dialogues[i].uid==message.groupid&&dialogues[i].dtype==2){
-        dialogues[i].unread=dialogues[i].unread+1;
-        if (mounted) {
-              Dialogue.GetDialogues().then((values){
+    if (mounted) {
+      Dialogue.GetDialogues().then((values){
         setState(() {
-        dialogues=values;
+          dialogues=values;
+        });
       });
-    });
-        }
-        break;
-      }
-    }
 
+  }
   }
   messagecallback(arg){
     var message=(arg as OneMessage);
-    for(var i=0;i<dialogues.length;i++){
-      if(dialogues[i].uid==message.sender){
-        dialogues[i].unread=dialogues[i].unread+1;
-        if (mounted) {
-          Dialogue.GetDialogues().then((values){
-            setState(() {
-              dialogues=values;
-            });
-          });
-      }
-        break;
-      }
+    if (mounted) {
+      Dialogue.GetDialogues().then((values){
+        setState(() {
+          dialogues=values;
+        });
+      });
     }
 
 

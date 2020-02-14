@@ -1,11 +1,18 @@
 package config
 
-import "time"
+import (
+	"os"
+	"time"
+	"github.com/spf13/viper"
+	"github.com/sirupsen/logrus"
+	uuid "github.com/satori/go.uuid"
+)
 
-const ServerName string="im2"
-const Addr="192.168.0.106"
-const Port=8777
-const Grpcaddr=Addr+":8999"
+var ServerName string;
+var ImIp string
+var ImPort uint32
+var GrpcIp string
+var GrpcPort uint32
 
 const GrpcTimeOut  =time.Second*5
 const (
@@ -39,3 +46,50 @@ const(
 	AckSuccess=iota
 	AckSaveFail
 )
+func init()  {
+
+	path, err := os.Getwd()
+	if err != nil {
+		panic(err)
+	}
+	viper.AddConfigPath(path + "/config")
+	viper.SetConfigName("config")
+	viper.SetConfigType("yaml")
+	if err := viper.ReadInConfig(); err != nil {
+		panic(err)
+	}
+	ServerName=viper.GetString("imserver.servername")
+	ImIp=viper.GetString("imserver.ip")
+	ImPort=viper.GetUint32("imserver.port")
+	GrpcIp=viper.GetString("grpcserver.ip")
+	GrpcPort=viper.GetUint32("grpcserver.port")
+
+}
+func InitLog() {
+	uuids := uuid.NewV1()
+	logrus.AddHook(NewTraceIdHook(uuids.String() +" "))
+	timeStr:=time.Now().Format("2006-01-02")
+	file, _ := os.OpenFile("log/"+timeStr+".log", os.O_CREATE|os.O_WRONLY, 0666)
+	logrus.SetOutput(file)
+	//设置最低loglevel
+	logrus.SetLevel(logrus.InfoLevel)
+}
+type TraceIdHook struct {
+	TraceId  string
+}
+
+func NewTraceIdHook(traceId string) logrus.Hook {
+	hook := TraceIdHook{
+		TraceId:  traceId,
+	}
+	return &hook
+}
+
+func (hook *TraceIdHook) Fire(entry *logrus.Entry) error {
+	entry.Data["traceId"] = hook.TraceId
+	return nil
+}
+
+func (hook *TraceIdHook) Levels() []logrus.Level {
+	return logrus.AllLevels
+}

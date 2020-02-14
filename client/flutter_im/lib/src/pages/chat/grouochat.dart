@@ -67,11 +67,12 @@ class _GroupChat extends State<GroupChat>{
       one.msgtype=message.msgtype;
       list.add(one);
       if (mounted) {
-        bus.emit("zeroing",widget.gid);
-        bus.emit("scrojump",widget.gid);
         setState(() {
 //          scrollController();
         });
+        bus.emit("zeroing",widget.gid);
+        bus.emit("scrojump",widget.gid);
+
 
 
       }

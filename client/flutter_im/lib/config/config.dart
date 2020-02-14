@@ -11,8 +11,8 @@ import 'package:path/path.dart';
 import 'package:uuid/uuid.dart';
 const OssUrl="https://xkws.oss-cn-hangzhou.aliyuncs.com/";
 const String testImage="https://bkimg.cdn.bcebos.com/pic/4b90f603738da97784eaf36dba51f8198718e3ab@wm_1,g_7,k_d2F0ZXIvYmFpa2U4MA==,xp_5,yp_5";
-const WWW="http://192.168.0.106:8080";
-
+const WWW="http://Mychat.carzy.wang";
+bool isLogin=false;
 bool NetStaus=false;
 var MyHeadimage="";
 var me=0;
@@ -48,7 +48,7 @@ Future<UserCache> getUserCache(int uid)async{
 }
 
 void friendInit()async{
-  const String url="http://192.168.0.106:8080/friend/list";
+  const String url=WWW+"/friend/list";
   var data=await DioUtls.get(url);
   if (data.data["code"]==0){
     for(var v in  data.data["data"]){
@@ -79,9 +79,17 @@ void Init(data)async{
   MyHeadimage=headimage;
   await SqlManager.init();
   await friendInit();
+ var users= await User.GetUsers();
+  for(var u in users){
+    var user = UserCache();
+      user.nickname = u.nickname;
+      user.headImge = u.headimage;
+      Usercaches[uid] = user;
+  }
   var workmange=NetWorkManage.getInstance(ip, port);
   await workmange.init();
   workmange.auth(token);
+  isLogin=true;
 
 }
 getcurrent()async{

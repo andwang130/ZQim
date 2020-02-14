@@ -35,7 +35,12 @@ class NetWorkManage{
   Timer rTimer;
  Int8List cacheData = Int8List(0);
   NetWorkManage(this.ip,this.port){
-
+    rTimer = Timer.periodic(Duration(seconds: 3), (t) {
+      if (!NetStaus&&isLogin) {
+        print(t);
+        reload();
+      }
+    });
 
     handles=Handles();
   }
@@ -51,28 +56,29 @@ class NetWorkManage{
   //重连
   void reload()async{
 
-    await this.init();
-    print(token);
-    await this.auth(token);
+    try {
+      await this.init();
+
+      await this.auth(token);
+    }catch(e){
+
+    }
   }
     void init() async{
-      rTimer= Timer.periodic(Duration(seconds: 3), (t){
+    try {
 
+      socket = await Socket.connect(this.ip, this.port);
+      print(socket.address.address);
+      this.socket = socket;
+      socket.listen(
+          this.decodehandle,
+          onDone: onDonehandle,
+          onError: onErrorhanle,
+          cancelOnError: false
+      );
+    }catch(e){
 
-        print(t);
-        if(!NetStaus){
-          reload();
-        }
-      });
-    socket= await Socket.connect(this.ip, this.port);
-    print(socket.address.address);
-    this.socket=socket;
-    socket.listen(
-        this.decodehandle,
-      onDone:onDonehandle,
-      onError: onErrorhanle,
-        cancelOnError:false
-    );
+    }
 
 
   }
@@ -183,7 +189,6 @@ class NetWorkManage{
     send(message);
   }
   void pushGroupMessage(String msg,int sender,gid,Int64 rek){
-
     var group=GroupMessage();
     group.rek=rek;
     group.sender=sender;
@@ -198,7 +203,7 @@ class NetWorkManage{
   }
   void close(){
     socket.close();
-    rTimer.cancel();
+
   }
 
 }

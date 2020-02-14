@@ -113,9 +113,10 @@ class Handles {
   }else {
    await  Dialogue.CreateDialogue(one.sender, one.msgbody, one.time.toString());
   }
+  await NetWorkManage.Instance().ack(one.rek,1);
    player.play("mp3/4082.mp3");
   bus.emit("message",one);
- await NetWorkManage.Instance().ack(one.rek,1);
+
 
 }
   void gorupMessage(Message message)async{
@@ -141,9 +142,10 @@ class Handles {
     }else {
       Dialogue.CreateGroupDialogue(group.groupid,"${user.nickname}:"+group.msgbody, group.time.toString());
     }
+    NetWorkManage.Instance().ack(group.rek,2);
     player.play("mp3/4082.mp3");
     bus.emit("group message",group);
-    NetWorkManage.Instance().ack(group.rek,2);
+
   }
   void pullOneMessage(Message message)async{
     var pullone=PullOneMessages.fromBuffer(message.body);
@@ -171,9 +173,10 @@ class Handles {
       reks.add(one.rek);
     }
     if(pullone.messages.length>=1) {
+      await NetWorkManage.Instance().ackmany(reks, 1);
       bus.emit("message", pullone.messages.last);
       player.play("mp3/4082.mp3");
-      await NetWorkManage.Instance().ackmany(reks, 1);
+
     }
   }
   void pullGorupMessage(Message message)async{
@@ -223,9 +226,10 @@ class Handles {
     }
 
     if(pullgroup.messages.length>=1) {
+      NetWorkManage.Instance().ackmany(reks, 2);
       bus.emit("group message", pullgroup.messages.last);
       player.play("mp3/4082.mp3");
-      NetWorkManage.Instance().ackmany(reks, 2);
+
     }
   }
   void pullNotifies(Message message){
@@ -251,7 +255,7 @@ class Handles {
     var time=(DateTime.now().toLocal().millisecondsSinceEpoch/1000).toInt();
     var rek=Int64(int.parse(me.toString()+(DateTime.now().toLocal().millisecondsSinceEpoch/10).toInt().toString()));
     await Dialogue.CreateDialogue(user.uid ,agree.greet,time.toString());
-    await dbmessage.OneMessage.inster(rek.toInt(), me, agree.receiver, 1, agree.greet, time, 1);
+    await dbmessage.OneMessage.inster(rek.toInt(), me, agree.receiver, 1, agree.greet, time, 0);
     NetWorkManage.Instance().pushOneMessage(agree.greet, agree.uid, agree.receiver,rek,time);
     var one=OneMessage();
     one.rek=rek;
@@ -273,7 +277,7 @@ class Handles {
 
 
 Future<User> getuser(int uid)async{
-  const String url="http://192.168.0.106:8080/user/get";
+  const String url=WWW+"/user/get";
   var data=await DioUtls.get(url,queryParameters: {"uid":uid});
   if(data.data["code"]==0){
     var d=data.data["data"];
@@ -288,7 +292,7 @@ Future<User> getuser(int uid)async{
 
 }
 Future<User> getGropChat(int gid)async{
-  const String url="http://192.168.0.106:8080/group/get";
+  const String url=WWW+"/group/get";
   var data=await DioUtls.get(url,queryParameters: {"id":gid});
   if(data.data["code"]==0){
     var d=data.data["data"];

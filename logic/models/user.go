@@ -23,7 +23,7 @@ type User struct {
 	Expl string `gorm:"varcahr(200)" json:"expl"`
 	Last time.Time `json:"last"`    //上次登录时间
 	Lastip string `gorm:"type:varchar(16)" json:"lastip"`
-	Friends []User `gorm:"many2many:friends;ForeignKey:userid;AssociationForeignKey:userid" json:"friends"`
+	//Friends []User `gorm:"many2many:friends;ForeignKey:userid;AssociationForeignKey:userid" json:"friends"`
 	//Groupchats []Groupchat `gorm:"many2many:groupchat_users;ForeignKey:userid;AssociationForeignKey:id" json:"groupchats"`
 }
 

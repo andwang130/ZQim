@@ -139,8 +139,8 @@ func GorupMessageHandle(con *fxsrv.Connect,request *fxsrv.Request)error  {
 		return errors.New("写入数据库失败")
 	}
 
-	var usermessages=make([]*modle.GroupUserMessage,0,len(userlist)-1)
-	var locclient =make([]*fxsrv.Connect,0,len(userlist)-1)
+	var usermessages=make([]*modle.GroupUserMessage,0,len(userlist))
+	var locclient =make([]*fxsrv.Connect,0,len(userlist))
 	var remoteclient=make(map[string][]uint32)
 	for i:=0;i<len(userlist);i++{
 		uid:=userlist[i]

@@ -46,7 +46,7 @@ func InitMysql() {
 	GormPool, err = gorm.Open(driver, dsn)
     //fmt.Println(dsn)
 	//链接池设置
-	GormPool.LogMode(true)
+	//GormPool.LogMode(true)
 
 	if err != nil {
 		fmt.Printf("mysql connect error %v", err)

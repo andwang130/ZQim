@@ -5,6 +5,7 @@ import (
 	"comit/manage"
 	"context"
 	"github.com/coreos/etcd/clientv3"
+	"github.com/sirupsen/logrus"
 	"strings"
 	"time"
 	"fmt"
@@ -92,8 +93,9 @@ func (this *RegistrationDiscovery)Watch() {
 					continue
 				}
 				if v.Type.String()=="PUT"{
-					if manage.ComitManage.AddComitServer(key, value)!=nil{
-						//todo log
+					if err:=manage.ComitManage.AddComitServer(key, value);err!=nil{
+
+						logrus.Error(err)
 					}
 				}
 				if v.Type.String()=="DELETE"{

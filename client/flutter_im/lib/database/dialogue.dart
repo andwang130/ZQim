@@ -90,6 +90,7 @@ class Dialogue{
     dia.ctime=r["ctime"];
     dia.talkcontent=r["talkcontent"];
     dia.unread=r["unread"];
+    dia.user= await User.GetUser(uid);
     return dia;
   }else{
     return null;
@@ -109,6 +110,7 @@ class Dialogue{
      dia.talkcontent=r["talkcontent"];
      dia.unread=r["unread"];
      dia.dtype=r["dtype"];
+     dia.user= await User.GetGroup(gid);
      return dia;
    }else{
      return null;

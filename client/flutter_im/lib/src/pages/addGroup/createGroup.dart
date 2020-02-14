@@ -127,7 +127,7 @@ class _CreateGroup extends State<CreateGroup> {
           var groupchat=data.data["data"];
           await User.insterGroup(groupchat["ID"], groupchat["group_name"], groupchat["avatar"]);
           await Dialogue.CreateGroupDialogue(groupchat["ID"], "", DateTime.now().toString());
-          Navigator.push(context, CustomRoute( GroupChat(groupchat["ID"],groupname)));
+          Navigator.pushAndRemoveUntil(context, CustomRoute( GroupChat(groupchat["ID"],groupname)),(route)=>route==null);
         }else{
           Toast.toast(context, data.data["msg"]);
         }

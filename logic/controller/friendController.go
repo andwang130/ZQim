@@ -3,6 +3,7 @@ package controller
 import (
 	"context"
 	"errors"
+	"fmt"
 	"github.com/gin-gonic/gin"
 	"github.com/sirupsen/logrus"
 	"logic/config"
@@ -47,7 +48,8 @@ func AddFriend(c *gin.Context)  {
 	}
 	//todo 向链接服务器发送一个推送，让用户有拉取好友添加请求
 	user,err:=config.GetUserFromRedis(parm.FriendID)
-	if err==nil{
+	fmt.Println(user)
+	if user.Uid!=0{
 		gcleint,ok:=service.ComitManage.GetComitServer(user.Srvname)
 		if ok{
 			print("FriendNotify")
@@ -57,11 +59,14 @@ func AddFriend(c *gin.Context)  {
 				Uid:uid,
 				Receiver:parm.FriendID,
 			}
-			if err==nil {
+
 				ctx, cancle := context.WithTimeout(context.TODO(), config.RgpcTimeOut)
 				defer cancle()
-				gcleint.Client.FriendNotify(ctx, notife)
-			}
+				_,err:=gcleint.Client.FriendNotify(ctx, notife)
+				if err!=nil{
+					logrus.Error(err)
+				}
+
 		}
 	}
 
@@ -90,13 +95,13 @@ func Agree(c *gin.Context) {
 	}
 	//todo 添加好友成功，发送一条推送信息
 	user, err := config.GetUserFromRedis(notify.Sender)
-	if err == nil {
+	if user.Uid!=0 {
 		gcleint, ok := service.ComitManage.GetComitServer(user.Srvname)
 		if ok {
 
 			ctx, cancle := context.WithTimeout(context.TODO(), config.RgpcTimeOut)
 			defer cancle()
-			gcleint.Client.FriendAgree(ctx, &intercom.Agree{
+			_,err:=gcleint.Client.FriendAgree(ctx, &intercom.Agree{
 				Notife: &intercom.FriendNotife{
 					Greet:    notify.Greet,
 					Nid:      notify.ID,
@@ -104,11 +109,14 @@ func Agree(c *gin.Context) {
 					Receiver: notify.Receive,
 				},
 			})
+			if err!=nil{
+				logrus.Error(err)
+			}
 		} else {
 			gcleint := service.ComitManage.RandComitServer()
 			ctx, cancle := context.WithTimeout(context.TODO(), config.RgpcTimeOut)
 			defer cancle()
-			gcleint.Client.FriendAgree(ctx, &intercom.Agree{
+			_,err:=gcleint.Client.FriendAgree(ctx, &intercom.Agree{
 				Notife: &intercom.FriendNotife{
 					Greet:    notify.Greet,
 					Nid:      notify.ID,
@@ -116,6 +124,10 @@ func Agree(c *gin.Context) {
 					Receiver: notify.Receive,
 				},
 			})
+			if err!=nil{
+				logrus.Error(err)
+			}
+
 		}
 
 	}

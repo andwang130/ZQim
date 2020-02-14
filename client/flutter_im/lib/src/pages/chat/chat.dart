@@ -33,7 +33,9 @@ class _Chat extends State<Chat> with SingleTickerProviderStateMixin {
     super.initState();
     bus.on("scrojump", scrollController);
     bus.on("ack",ackevent);
+    Timer(Duration(milliseconds: 500), () => _scrollController.jumpTo(_scrollController.position.maxScrollExtent));
   }
+
 
   @override
   void dispose() {

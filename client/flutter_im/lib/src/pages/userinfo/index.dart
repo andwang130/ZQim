@@ -197,6 +197,7 @@ class _UserInfo extends State<UserInfo>{
                             child: Text('添加'),
                             onPressed: () {
                               Addfriend(greet);
+                              Navigator.of(context).pop();
                             },
                           ),
                         )

@@ -14,6 +14,12 @@ type Friend struct {
 
 func FriendAdd( uid,friendid,nid uint32)error  {
 
+	if err:=config.FriendDelete(uid);err!=nil{
+		return err
+	}
+	if err:=config.FriendDelete(friendid);err!=nil{
+		return err
+	}
 	tx:= database.GormPool.Begin()
 	var friend1 Friend
 	friend1.Userid=uid

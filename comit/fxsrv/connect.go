@@ -5,6 +5,7 @@ import (
 	"encoding/binary"
 	"errors"
 	"fmt"
+	"github.com/sirupsen/logrus"
 	"net"
 	"sync"
 	"sync/atomic"
@@ -149,7 +150,8 @@ func (this *Connect)routesRun(req *Request){
 			route,ok:=this.routes[req.Type]
 			if ok{
 				for _,h:=range route.middleware{
-					if h(this,req)!=nil{
+					if err:=h(this,req);err!=nil{
+						logrus.Error(err)
 						return
 					}
 				}
@@ -157,6 +159,7 @@ func (this *Connect)routesRun(req *Request){
 				if route.handle!=nil{
 					err:=route.handle(this,req)
 					if err!=nil{
+						logrus.Error(err)
 						fmt.Println(err.Error())
 					}
 				}

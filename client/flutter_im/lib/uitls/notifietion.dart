@@ -31,6 +31,7 @@ Future onSelectNotification(String payload)async{
     if(pjson["msgtype"]==1){
 
       var user=await Dialogue.checkUserDialogues(pjson["id"]);
+      print(user.user.nickname);
      await navigatorKey.currentState.push(MaterialPageRoute(builder:(_)=> OneChat(pjson["id"],user.user.nickname)));
     }
     if(pjson["msgtype"]==2){
@@ -78,21 +79,24 @@ Future<void> onDidReceiveLocalNotification(
 
 class Notifications {
   static oneMessageNotification(int uid,String name,msg,String head)async{
-    
+
+    if(!IsBack){
+      return;
+    }
     var pyload=jsonEncode({"id":uid,"msgtype":1});
     _show(uid, name, msg, head,pyload);
   }
   static groupMessageNotification(int gid,String name,msg,String head){
+    if(!IsBack){
+      return;
+    }
     var pyload=jsonEncode({"id":gid,"msgtype":2});
     _show(gid, name, msg, head,pyload,channelId: "group",channelName:"group message",channelDescription:"群聊推送");
   }
   static _show(int id,String  title,msg,String head,pyload,{String channelId="one",channelName="one message",channelDescription="单聊推送"})async{
-    if(!IsBack){
-      return;
-    }
+
     var androidPlatformChannelSpecifics = new $notifications.AndroidNotificationDetails(
         channelId, channelName,channelDescription,visibility:$notifications.NotificationVisibility.Public,
-        icon:head,
         enableLights:true,
         importance: $notifications.Importance.Max, priority: $notifications.Priority.Max);
     //IOS的通知配置

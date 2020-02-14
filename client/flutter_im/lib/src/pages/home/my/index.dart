@@ -125,6 +125,7 @@ class _My extends State<My>{
 
                   cleanToken();
                   NetWorkManage.Instance().close();
+                  isLogin=false;
                   Navigator.pushAndRemoveUntil(context, CustomRoute(Login()),(route)=>route==null);
                 },
                 child:Row(
